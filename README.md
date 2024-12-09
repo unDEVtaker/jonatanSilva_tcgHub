@@ -36,7 +36,7 @@ Como parte del desarrollo de **TCG Hub**, investigue y analice diferentes sitios
 A continuación, se presentan cinco referentes  que sirvieron de inspiración:
 
 1. **[Mercado Libre](https://www.mercadolibre.com.ar/)**  
-   - **Motivo**: Es uno de los marketplaces más grandes de Latinoamérica, conocido por su interfaz sencilla, opciones avanzadas de búsqueda y filtros. Sirve como referencia para implementar una experiencia de usuario eficiente.
+   - **Motivo**: Es uno de los marketplaces más grandes de Latinoamérica, conocido y utilizado por todos. Sirve como referencia para implementar una experiencia de usuario eficiente.
    ![mercadoLibre](/design/Inspiracion/ML.png "MercadoLibre")
 
 2. **[Total Cards](https://totalcards.net/)**  
