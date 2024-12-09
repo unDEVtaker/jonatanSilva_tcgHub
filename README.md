@@ -55,8 +55,6 @@ A continuación, se presentan cinco referentes  que sirvieron de inspiración:
    - **Motivo**: La tienda oficial de Pokémon tiene un diseño limpio, accesible y atractivo para los fanáticos.
    ![PokemonCenter](/design/Inspiracion/pokemonCenter.png "PokemonCenter")
 
----
-
 Estos sitios fueron seleccionados por su relevancia en términos de productos, estética, funcionalidades, y público objetivo.
 **TCG Hub** busca combinar lo mejor de cada uno para crear una experiencia única para jugadores y coleccionistas.
 
