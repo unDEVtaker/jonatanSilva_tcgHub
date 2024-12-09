@@ -1,6 +1,6 @@
 # TCG Hub: Inventory & Store
 
-![TCG Hub Logo](/design/TCGHUb.png "TCG Hub")
+![TCG Hub Logo](/design/TCGportada.png "TCG Hub")
 
 ## 📖 Descripción
 
