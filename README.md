@@ -72,7 +72,7 @@ Para el diseño y planificación de la interfaz de usuario de **TCG Hub**, he cr
   [Visualiza el mockup aquí](https://www.figma.com/design/e1qgiJAf7XDs0RHM8eHJ6e/TCG-Hub?node-id=0-1&t=DamcoFGHcnCwnFY3-1)  
   El mockup incluye los estilos, colores, y elementos visuales detallados que definen la apariencia final del sitio. Sirve como guía para mantener consistencia durante el desarrollo.
 
-- **Tipografía**: La fuente principal utilizada en el sitio es **ANTON SC**. Esta fuente fue seleccionada para asegurar una lectura clara y una estética moderna.
+- **Tipografía**: La fuente principal utilizada en el sitio es [Anton SC](https://fonts.google.com/specimen/Anton+SC). Esta fuente fue seleccionada para asegurar una lectura clara y una estética moderna.
 
 - **Colores**: Los colores seleccionados para el diseño son principalmente neutros (Hex: #000000, Hex: #ededed). Esto se debe a que las cartas de Pokémon y otros productos relacionados tienen colores muy llamativos, por lo que se buscó evitar saturar la pantalla y permitir que el diseño y los colores del sitio no interfieran con las imágenes de los productos.
 ![estilos](/design/estilos.png "estilos")
