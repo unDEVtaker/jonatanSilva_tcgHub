@@ -1,5 +1,7 @@
 # TCG Hub: Inventory & Store
 
+![TCG Hub Logo](/design/TCGHUb.png "TCG Hub")
+
 ## 📖 Descripción
 
 **TCG Hub** es un marketplace especializado en la compra, venta y gestión de cartas coleccionables de juegos de mesa y trading card games (TCG), con un enfoque principal en **Pokémon TCG**. Nuestro objetivo es ofrecer a jugadores y coleccionistas un espacio confiable y fácil de usar para encontrar cartas, sets y productos relacionados con sus intereses.
