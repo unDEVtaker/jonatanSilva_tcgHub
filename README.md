@@ -2,6 +2,10 @@
 
 ![TCG Hub](/design/Inspiracion/TCGHUbportada.png "TCG Hub")
 
+## 📋 Tablero del Proyecto
+
+[Tablero del proyecto](https://github.com/users/unDEVtaker/projects/5)
+
 ## 📖 Descripción
 
 **TCG Hub** es un marketplace especializado en la compra, venta y gestión de cartas coleccionables de juegos de mesa y trading card games (TCG), con un enfoque principal en **Pokémon TCG**. 
