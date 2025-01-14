@@ -29,6 +29,8 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+console.log(`Server running on port ${port}`);
+
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -70,7 +72,11 @@ function onError(error) {
       break;
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
-      process.exit(1);
+      console.log('Trying another port...');
+      setTimeout(() => {
+        server.close();
+        server.listen(normalizePort(port + 1));
+      }, 1000);
       break;
     default:
       throw error;
@@ -87,4 +93,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log(`Server is listening on ${bind}`);
 }
