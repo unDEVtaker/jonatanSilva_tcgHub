@@ -1,6 +1,6 @@
 # TCG Hub: Inventory & Store
 
-![TCG Hub](/design/Inspiracion/TCGHUbportada.png "TCG Hub")
+![TCG Hub](/uxiu/Inspiracion/TCGHUbportada.png "TCG Hub")
 
 ## 📋 Tablero del Proyecto
 
@@ -41,23 +41,23 @@ A continuación, se presentan cinco referentes  que sirvieron de inspiración:
 
 1. **[Mercado Libre](https://www.mercadolibre.com.ar/)**  
    - **Motivo**: Es uno de los marketplaces más grandes de Latinoamérica, conocido y utilizado por todos. Sirve como referencia para implementar una experiencia de usuario eficiente.
-   ![mercadoLibre](/design/Inspiracion/ML.png "MercadoLibre")
+   ![mercadoLibre](/uxiu/Inspiracion/ML.png "MercadoLibre")
 
 2. **[Total Cards](https://totalcards.net/)**  
    - **Motivo**: Sitio especializado en TCGs, con un enfoque claro en cartas individuales y productos relacionados. Su diseño intuitivo y categorización de productos los utilizo como inspiración para el desarrollo de **TCG Hub**.
-    ![totalCards](/design/Inspiracion/TotalCards.png "TotalCards")
+    ![totalCards](/uxiu/Inspiracion/TotalCards.png "TotalCards")
 
 3. **[TCGplayer](https://www.tcgplayer.com/)**  
    - **Motivo**: Es uno de los sitios más populares en la comunidad de cartas coleccionables. Inspiró funcionalidades como la integración de precios de mercado, historial de valores y opciones de compra/venta para usuarios.
-    ![TCGPlayer](/design/Inspiracion/TCGPlayers.png "TCG Players")
+    ![TCGPlayer](/uxiu/Inspiracion/TCGPlayers.png "TCG Players")
 
 4. **[Cardmarket](https://www.cardmarket.com/es/Pokemon)**  
    - **Motivo**: Sitio especializado en la compra y venta de cartas coleccionables de Pokémon. Su funcionalidad de gráficos para analizar precios de mercado y tendencias inspiró la idea de incluir una herramienta similar en **TCG Hub** para ofrecer a los usuarios datos útiles sobre la valorización de sus cartas.
-   ![Cardmarket](/design/Inspiracion/CardMarket.png "Carmarket")
+   ![Cardmarket](/uxiu/Inspiracion/CardMarket.png "Carmarket")
 
 5. **[Pokémon Center](https://www.pokemoncenter.com/)**  
    - **Motivo**: La tienda oficial de Pokémon tiene un diseño limpio, accesible y atractivo para los fanáticos.
-   ![PokemonCenter](/design/Inspiracion/pokemonCenter.png "PokemonCenter")
+   ![PokemonCenter](/uxiu/Inspiracion/pokemonCenter.png "PokemonCenter")
 
 Estos sitios fueron seleccionados por su relevancia en términos de productos, estética, funcionalidades, y público objetivo.
 **TCG Hub** busca combinar lo mejor de cada uno para crear una experiencia única para jugadores y coleccionistas.
@@ -79,5 +79,5 @@ Para el diseño y planificación de la interfaz de usuario de **TCG Hub**, he cr
 - **Tipografía**: La fuente principal utilizada en el sitio es [Anton SC](https://fonts.google.com/specimen/Anton+SC). Esta fuente fue seleccionada para asegurar una lectura clara y una estética moderna.
 
 - **Colores**: Los colores seleccionados para el diseño son principalmente neutros (Hex: #000000, Hex: #ededed). Esto se debe a que las cartas de Pokémon y otros productos relacionados tienen colores muy llamativos, por lo que se buscó evitar saturar la pantalla y permitir que el diseño y los colores del sitio no interfieran con las imágenes de los productos.
-![estilos](/design/estilos.png "estilos")
+![estilos](/uxiu/estilos.png "estilos")
 ---
