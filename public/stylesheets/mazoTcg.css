@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --font-anton: 'Anton', sans-serif;
+    --font-anton-sc: 'Anton SC', sans-serif;
+    --font-antonio: 'Antonio', sans-serif;
+    --color1: #ffffff;
+    --color2: #ffffff;
+    --light-effect: rgba(255, 255, 255, 0.6); /* Color de la luz */
+    --negro: #000000;
+    --azulML: #3483fa;
+    --blanco: #FFFFFF;
+    --grisML: #EBEBEB;
+    --verdeML:#14AD5E;
+  }
+
+.swiper-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--blanco);
+    min-height: 60vh;
+    overflow: hidden;
+    flex-direction: row; /* Cambiar la dirección del flex a fila */
+    border-radius: 25px;
+}
+
+.swiper {
+    width: 280px; /* Ajusta el tamaño según lo que necesites */
+    height: 390px; /* Ajusta el tamaño según lo que necesites */
+    padding: 10px 10px; /* Ajusta el padding si es necesario */
+    margin: 10px 10px; /* Añadir margen entre los swipers */
+    background-size: contain; /* La imagen se ajustará dentro del contenedor sin perder la simetría */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.swiper-slide{
+    position: relative;
+    box-shadow: 0 10px 10px rgb(0, 0, 0, 0.5);
+    border-radius: 20px;
+}
+.swiper-slide:hover{
+    cursor: pointer;;
+}
+
+.swiper-slide h3{
+    font-family: var(--font-antonio);
+    color: var(--blanco);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 7px 10px;
+    margin: 20px 20px 20px 20px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    word-spacing: -1px;
+    background-color:var(--verdeML);
+}
+
+
+.swiper h2 {
+    font-family: var(--font-antonio);
+    font-size: 1.2rem; /* Ajusta el tamaño según lo que necesites */
+    color: black; /* Ajusta el color si es necesario */
+    margin: 0 0 10px 0; /* Ajusta el margen si es necesario */
+}
+
+.swiper-slide h2{
+    font-family: var(--font-antonio);
+    position: absolute;
+    width: 50%;
+    bottom: 0;
+    left: 0;
+    color: var(--blanco);
+    font-size: 1.2rem;
+    margin: 0 0 20px 20px;
+}
+.swiper1 .swiper-slide:nth-child(1) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/eveevolutions/SV8pt5_EN_6.png");
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+.swiper1 .swiper-slide:nth-child(2) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/eveevolutions/SV8pt5_EN_14.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.swiper1 .swiper-slide:nth-child(3) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/eveevolutions/SV8pt5_EN_23.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper1 .swiper-slide:nth-child(4) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/eveevolutions/SV8pt5_EN_26.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper1 .swiper-slide:nth-child(5) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/eveevolutions/SV8pt5_EN_75.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper1 .swiper-slide:nth-child(6) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/eveevolutions/SV8pt5_EN_34.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper1 .swiper-slide:nth-child(7) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/eveevolutions/SV8pt5_EN_60.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper1 .swiper-slide:nth-child(8) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/eveevolutions/SV8pt5_EN_30.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.swiper2 .swiper-slide:nth-child(1) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/charizardex/SV03_EN_215.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.swiper2 .swiper-slide:nth-child(2) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/charizardex/SV03_EN_223.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.swiper2 .swiper-slide:nth-child(3) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/charizardex/SV3pt5_EN_6.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper2 .swiper-slide:nth-child(4) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/charizardex/SV01_EN_224.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper2 .swiper-slide:nth-child(5) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/charizardex/SV3pt5_EN_199.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper2 .swiper-slide:nth-child(6) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/charizardex/SV3pt5_EN_183.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper3 .swiper-slide:nth-child(1) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/teraex/SV04_EN_3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.swiper3 .swiper-slide:nth-child(2) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/teraex/SV04_EN_38.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.swiper3 .swiper-slide:nth-child(3) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/teraex/SV04_EN_46.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper3 .swiper-slide:nth-child(4) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/teraex/SV04_EN_58.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper3 .swiper-slide:nth-child(5) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/teraex/SV04_EN_98.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.swiper3 .swiper-slide:nth-child(6) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("../images/tcg/teraex/SV04_EN_100.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (max-width: 1024px) {
+    .swiper {
+        width: 240px; /* Ajusta el tamaño para pantallas medianas */
+        height: 340px; /* Ajusta el tamaño para pantallas medianas */
+    }
+    .swiper h2 {
+        font-size: 0.9rem; /* Ajusta el tamaño de la fuente para pantallas medianas */
+    }
+    .swiper-slide h2 {
+        font-size: 0.9rem; /* Ajusta el tamaño de la fuente para pantallas medianas */
+    }
+}
+
+@media (max-width: 768px) {
+    .swiper {
+        width: 200px; /* Ajusta el tamaño para pantallas pequeñas */
+        height: 300px; /* Ajusta el tamaño para pantallas pequeñas */
+    }
+    .swiper h2 {
+        font-size: 0.8rem; /* Ajusta el tamaño de la fuente para pantallas pequeñas */
+    }
+    .swiper-slide h2 {
+        font-size: 0.8rem; /* Ajusta el tamaño de la fuente para pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .swiper-container {
+        flex-direction: column; /* Cambia la dirección del flex a columna para pantallas muy pequeñas */
+    }
+    .swiper {
+        width: 100%; /* Ajusta el tamaño para pantallas muy pequeñas */
+        height: auto; /* Ajusta el tamaño para pantallas muy pequeñas */
+    }
+    .swiper h2 {
+        font-size: 0.7rem; /* Ajusta el tamaño de la fuente para pantallas muy pequeñas */
+    }
+    .swiper-slide h2 {
+        font-size: 0.7rem; /* Ajusta el tamaño de la fuente para pantallas muy pequeñas */
+    }
+}
+
+@media (max-width: 1300px) {
+    .swiper-container,
+    .swiper,
+    .swiper-slide,
+    .swiper h2,
+    .swiper-slide h2,
+    .swiper-slide h3 {
+        display: none; /* Ocultar todos los elementos relacionados con mazo tcg */
+    }
+}

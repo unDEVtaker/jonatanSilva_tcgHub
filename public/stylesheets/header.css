@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Anton+SC&family=Antonio:wght@100..700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --font-anton: 'Anton', sans-serif;
+  --font-anton-sc: 'Anton SC', sans-serif;
+  --font-antonio: 'Antonio', sans-serif;
+  --color1: #ffffff;
+  --color2: #ffffff;
+  --light-effect: rgba(255, 255, 255, 0.6); /* Color de la luz */
+  --negro: #000000;
+  --azulML: #3483fa;
+  --blanco: #FFFFFF;
+  --grisML: #EBEBEB;
+  --verdeML:#14AD5E;
+}
+
+/* Header Start */
+
+#header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 80px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+    z-index: 999;
+    position: sticky;
+    top:0;
+    left:0;
+  }
+  #navbar{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+  }
+  #navbar li{
+    position: relative;
+    list-style: none;
+    padding: 0 20px;
+  }
+  #navbar li a{
+    font-family: var(--font-antonio);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    transition: 0.3s ease;
+  }
+  #navbar li a:hover,
+  #navbar li a.active{
+    color: var(--azulML);
+  }
+  #navbar li a.active::after,
+  #navbar li a:hover::after{
+    position: absolute;
+    content: "";
+    width: 30%;
+    height: 2px;
+    background: var(--azulML);
+    position: absolute;
+    bottom: -4px;
+    left:20px; 
+  } 
+  .search {
+    display: flex;
+    align-items: center;
+    border: 1px solid #33333334;
+    padding: 0.4rem 1rem;
+    border-radius: 3px;
+  }
+  .search_input {
+    border: none;
+    outline: none;
+  }
+  .search_icon {
+    margin-right: 1rem;
+  }
+  #mobile{
+    display: none;
+    align-items: center;
+  }
+  #close{
+    display: none;
+  }
+  

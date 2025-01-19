@@ -1,43 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TCH.HUB</title>
-
-  <!-- Fonts and CSS Links -->
-  <link rel="stylesheet" href="/stylesheets/style.css">
-
-  <!-- fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Anton+SC&family=Antonio:wght@100..700&display=swap"
-    rel="stylesheet">
-
-
-  <!-- iconos -->
-
-  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-  <!-- Link Swiper's CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-</head>
-
-<body>
-  <%- include('partials/header') %>
-  <%- include('partials/banner') %>
-  <%- include('partials/carrusel') %>
-  <%- include('partials/newArrivals') %>
-  <%- include('partials/topSellings') %>
-  <%- include('partials/category') %>
-  <%- include('partials/newsLetter') %>
-  <%- include('partials/footer') %>
-
-
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <%- include('./partials/header') %>
+    <%- include('./partials/hero') %>
+    <%- include('./partials/brands') %>
+    <%- include('./partials/newArrivals') %>
+    <%- include('./partials/topCard') %>
+    <%- include('./partials/banners') %>
+    <%- include('./partials/newsLetter') %>
+    <%- include('./partials/footer') %>
+  </body>
 
   <script src="/javascripts/script.js"></script>
-</body>
-
 </html>

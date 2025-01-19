@@ -1,32 +1,33 @@
-<header>
-    <div class="top_nav">
-        <div class="container top_nav_contianer">
-            <p class="top_nav_text">Sign up and get 20% of your first order. <a href="#" class="top_nav_link">Sign
-                    Up</a></p>
-        </div>
+<link rel='stylesheet' href='/stylesheets/header.css' />
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<section id="header">
+    <a href="#"><img src="/images/institucional/logo.png" class="logo" alt=""></a>
+    <div>
+        <ul id="navbar">
+
+            <li><a class="active" href="index.html">Home</a></li>
+            <li><a href="..shop">Shop</a></li>
+            <li><a href="#">On Sale</a></li>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Sets</a></li>
+            <li><a href="#">TCG Price Trends</a></li>
+            <div id="search-bar">
+                <form id="search-form">
+                    <input autocomplete="off" class="search-field" id="search-text" name="search" placeholder="Search…"
+                        type="text" />
+                    <input style="display: none;" type="submit" value="" />
+                </form>
+            </div>
+            <li><a href="#"><i id="lg-bag" class="fa fa-user"></i></a></li>
+            <li><a href="cart.html"><i id="lg-bag" class="fa fa-shopping-cart"></i></a></li>
+            <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+        </ul>
     </div>
-    <nav class="nav">
-        <div class="container nav_container">
-            <a href="#" class="nav_logo">TCG.HUB</a>
-            <ul class="nav_list">
-                <li class="nav_item"><a href="#" class="nav_link">Shop</a></li>
-                <li class="nav_item"><a href="#" class="nav_link">OnSale</a></li>
-                <li class="nav_item"><a href="#" class="nav_link">New Arrivals</a></li>
-                <li class="nav_item"><a href="#" class="nav_link">Sets</a></li>
-            </ul>
-
-
-
-            <div class="search">
-                <a href="#"><i class="ri-search-line" class="search_icon"></i></a>
-                <input type="text" class="search_input" placeholder="Search.......">
-            </div>
-
-            <div class="nav-right">
-                <a href="#"><i class="ri-shopping-cart-line"></i></a>
-                <a href="#"><i class="ri-user-line"></i></a>
-                <div class="bx bx-menu" id="menu-icon"></div>
-            </div>
-        </div>
-    </nav>
-</header>
+    <div id="mobile">
+        <a href="cart.html"><i class="fa fa-user"></i></a>
+        <i id="bar" class="fa-solid fa-bars"></i>
+        <a href="cart.html"><i class="fa fa-shopping-cart"></i></a>
+        <i id="bar" class="fa-solid fa-bars"></i>
+    </div>
+</section>

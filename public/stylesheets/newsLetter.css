@@ -1,0 +1,52 @@
+/* newsletter */
+
+
+.news_container {
+    max-width: 110rem;
+    margin: 0 auto;
+    padding: 0rem 1.5rem;
+    background-color: #0f0f0f;
+    color: #f0f0f0;
+    width: 100%;
+    display: flex;
+    padding: 4rem 6rem;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 2rem;
+  }
+  .news_form {
+    width: 50%;
+  }
+  .news_input {
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 10rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .news_input_icon {
+    margin-right: 1rem;
+  }
+  .news_input > input {
+    width: 100%;
+    font-family: var(--font-antonio);
+    border: none;
+    outline: none;
+    padding: 0.4rem;
+    background-color: #f0f0f0;
+  }
+  .news_btn {
+    font-family: var(--font-antonio);
+    width: 105%;
+    padding: 1.5rem;
+    border-radius: 10rem;
+    cursor: pointer;
+  }
+  .news_title_h {
+    font-family: var(--font-anton-sc);
+    font-size: 3.8rem;
+    color: #f0f0f0;
+  }
+

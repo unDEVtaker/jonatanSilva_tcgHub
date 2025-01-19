@@ -1,5 +1,3 @@
-require('dotenv').config(); // Cargar variables de entorno desde .env
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -12,7 +10,7 @@ var usersRouter = require('./src/routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'src/views'));
+app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
@@ -23,6 +21,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.get('/', (req, res) => {
+  res.render('index', { title: 'Home' });
+});
+
+app.get('/shop', (req, res) => {
+  res.render('shop', { title: 'Shop' });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,9 +46,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var port = process.env.PORT || 3001;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor iniciado en el puerto ${PORT}`);
 });
 
 module.exports = app;
