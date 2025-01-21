@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+  </head>
+  <body>
+    <div class="container">
+        <h1>Editar Carta Pokémon</h1>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" value="Pikachu" required>
+            </div>
+            <div class="form-group">
+                <label for="rarity">Rareza</label>
+                <select id="rarity" name="rarity" required>
+                    <option value="common">Común</option>
+                    <option value="uncommon" selected>Poco común</option>
+                    <option value="rare">Rara</option>
+                    <option value="legendary">Legendaria</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="attack">Ataque</label>
+                <input type="number" id="attack" name="attack" value="50" required>
+            </div>
+            <div class="form-group">
+                <label for="defense">Defensa</label>
+                <input type="number" id="defense" name="defense" value="30" required>
+            </div>
+            <div class="form-group">
+                <label for="imageUrl">URL de la Imagen</label>
+                <input type="url" id="imageUrl" name="imageUrl" value="https://ejemplo.com/imagen.png" required>
+            </div>
+            <div class="form-group">
+                <label for="yearReleased">Año de Lanzamiento</label>
+                <input type="number" id="yearReleased" name="yearReleased" value="2023" required>
+            </div>
+            <div class="form-group">
+                <label for="set">Set</label>
+                <input type="text" id="set" name="set" value="Base Set" required>
+            </div>
+            <div class="form-group">
+                <label for="score">Puntaje</label>
+                <select id="score" name="score" required>
+                    <option value="low">Bajo</option>
+                    <option value="medium" selected>Medio</option>
+                    <option value="high">Alto</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price">Precio</label>
+                <input type="number" id="price" name="price" value="500" required>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-yellow">Editar</button>
+                <button type="button" class="btn btn-red">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+  </body>
+
+  <script src="/javascripts/script.js"></script>
+</html>

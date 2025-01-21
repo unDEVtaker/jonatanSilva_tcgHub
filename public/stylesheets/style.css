@@ -9,7 +9,7 @@
   --font-anton-sc: 'Anton SC', sans-serif;
   --font-antonio: 'Antonio', sans-serif;
   --color1: #ffffff;
-  --color2: #ffffff;
+  --color2:yellow ;
   --light-effect: rgba(255, 255, 255, 0.6); /* Color de la luz */
   --negro: #000000;
   --azulML: #3483fa;
@@ -196,15 +196,19 @@ body {
   text-shadow: 4px 4px 19px rgba(0,0,0,1);
 }
 #hero button{
+  font-family: var(--font-antonio);
   background-color: var(--negro);
   color: var(--blanco);
   border: 0;
-  padding: 14px 80px 14px 65px;
+  padding: 14px 50px 14px 50px;
   background-repeat:no-repeat;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   border-radius: 4px;
+}
+#hero button:hover{
+  background-color: var(--azulML);
 }
 
 /* Definición de la animación zoomIn */
@@ -601,10 +605,14 @@ font-weight: 600;
   outline: none;
 }
 #prodetails .single-pro-details button{
-  background-color: var(--verdeML);
+  background-color: var(--negro);
   color: var(--blanco);
 }
+#prodetails .single-pro-details button:hover{
+  background-color:var(--verdeML);
+}
 .single-pro-details span{
+  font-family: var(--font-antonio);
   line-height: 25px;
 }
 /* blog page */

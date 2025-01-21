@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Crear Carta Pokémon</h1>
+      <form action="/productAdd" method="post">
+          <div class="form-group">
+              <label for="name">Nombre</label>
+              <input type="text" id="name" name="name" placeholder="Ejemplo: Pikachu" required>
+          </div>
+          <div class="form-group">
+              <label for="rarity">Rareza</label>
+              <select id="rarity" name="rarity" required>
+                  <option value="common">Común</option>
+                  <option value="uncommon">Poco común</option>
+                  <option value="rare">Rara</option>
+                  <option value="legendary">Legendaria</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="attack">Ataque</label>
+              <input type="number" id="attack" name="attack" placeholder="Ejemplo: 50" required>
+          </div>
+          <div class="form-group">
+              <label for="defense">Defensa</label>
+              <input type="number" id="defense" name="defense" placeholder="Ejemplo: 30" required>
+          </div>
+          <div class="form-group">
+              <label for="imageUrl">URL de la Imagen</label>
+              <input type="url" id="imageUrl" name="imageUrl" placeholder="https://ejemplo.com/imagen.png" required>
+          </div>
+          <div class="form-group">
+              <label for="yearReleased">Año de Lanzamiento</label>
+              <input type="number" id="yearReleased" name="yearReleased" placeholder="Ejemplo: 2023" required>
+          </div>
+          <div class="form-group">
+              <label for="set">Set</label>
+              <input type="text" id="set" name="set" placeholder="Ejemplo: Base Set" required>
+          </div>
+          <div class="form-group">
+              <label for="score">Puntaje</label>
+              <select id="score" name="score" required>
+                  <option>Near Mint</option>
+                  <option>Lightly Played</option>
+                  <option>Moderately Played</option>
+                  <option>Graded</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="price">Precio</label>
+              <input type="number" id="price" name="price" placeholder="Ejemplo: 500" required>
+          </div>
+          <div class="form-buttons">
+              <button type="submit" class="btn btn-green">Crear</button>
+              <button type="button" class="btn btn-red">Cancelar</button>
+          </div>
+      </form>
+      <h2>Cartas Pokémon</h2>
+      <ul>
+        <% products.forEach(function(product) { %>
+          <li>
+            <strong>Nombre:</strong> <%= product.name %> <br>
+            <strong>Rareza:</strong> <%= product.rarity %> <br>
+            <strong>Ataque:</strong> <%= product.attack %> <br>
+            <strong>Defensa:</strong> <%= product.defense %> <br>
+            <strong>Año de Lanzamiento:</strong> <%= product.yearReleased %> <br>
+            <strong>Set:</strong> <%= product.set %> <br>
+            <strong>Puntaje:</strong> <%= product.score %> <br>
+            <strong>Precio:</strong> <%= product.price %> <br>
+            <img src="<%= product.imageUrl %>" alt="<%= product.name %>" width="100">
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+  </body>
+  <script src="/javascripts/script.js"></script>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel='stylesheet' href='/stylesheets/cart.css' />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+        <div class="cart-header">
+            <h1>YOUR CART</h1>
+        </div>
+        <div class="cart-container">
+            <div class="cart-items">
+                <div class="cart-item">
+                    <img src="images/cartas/cartaPikachi.png" alt="Surging Sparks - Pikachu ex - Card">
+                    <div class="item-details">
+                        <h3>Surging Sparks - Pikachu ex - Card</h3>
+                        <p>Card Condition: Near Mint</p>
+                        <p class="price">$450.00</p>
+                    </div>
+                    <div class="item-quantity">
+                        <button>-</button>
+                        <span>1</span>
+                        <button>+</button>
+                    </div>
+                    <button class="remove-item"><i class="ri-delete-bin-line"></i></button>
+                </div>
+
+                <div class="cart-item">
+                    <img src="images/cartas/SV3pt5_EN_196.png" alt="Classic Collection Promos - Lugia ex - CLV017">
+                    <div class="item-details">
+                        <h3>Erika (MEW 196)</h3>
+                        <p>Card Condition: Near Mint</p>
+                        <p class="price">$88.00</p>
+                    </div>
+                    <div class="item-quantity">
+                        <button>-</button>
+                        <span>1</span>
+                        <button>+</button>
+                    </div>
+                    <button class="remove-item"><i class="ri-delete-bin-line"></i></button>
+                </div>
+
+                <div class="cart-item">
+                    <img src="images/cartas/SV01_EN_45.png" alt="Machamp V - 172/189 (PSA 9 Graded Slab)">
+                    <div class="item-details">
+                        <h3>Gyarados ex (SVI 045)</h3>
+                        <p>Card Condition: Graded</p>
+                        <p class="price">$100</p>
+                    </div>
+                    <div class="item-quantity">
+                        <button>-</button>
+                        <span>1</span>
+                        <button>+</button>
+                    </div>
+                    <button class="remove-item"><i class="ri-delete-bin-line"></i></button>
+                </div>
+            </div>
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <p>Subtotal: <span>$638.00</span></p>
+                <p>Discount (-20%): <span class="discount">-$127.60</span></p>
+                <p>Delivery Fee: <span>$15</span></p>
+                <p>Total: <span class="total">$525.42</span></p>
+                <input type="text" placeholder="Add promo code">
+                <button class="apply-promo">Apply</button>
+                <button class="checkout-button">Go to Checkout →</button>
+            </div>
+        </div>
+</body>
+
+<script src="/javascripts/script.js"></script>
+
+</html>
