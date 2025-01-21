@@ -1,6 +1,10 @@
 
 ## Introducción
 
+📋 Tablero del Proyecto
+
+[Tablero del proyecto](https://github.com/users/unDEVtaker/projects/5)
+
 En general, este sprint fue productivo, ya que pude agregar varias características que tenía en mente y había planificado sin desviarme demasiado del producto original. 
 Sin embargo, soy consciente de que los productos y los requisitos pueden cambiar de un sprint a otro, lo que me permitirá seguir adaptando y mejorando el proyecto.
 
