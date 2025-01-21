@@ -6,8 +6,11 @@ Sin embargo, soy consciente de que los productos y los requisitos pueden cambiar
 
 ### **Cosas nuevas que se agregaron en este sprint**:
 🆕 **El banner**: Se implementó un nuevo banner que mejora la apariencia general del sitio.
+
 🆕 **La carta individual animada**: Añadí una carta interactiva que se mueve con el puntero para mejorar la experiencia del usuario.
+
 🆕 **El carrusel con las marcas**: Implementé un carrusel que muestra las marcas disponibles de forma dinámica.
+
 🆕 **Los mazos de cartas recomendados**: Se agregó una sección con mazos de cartas recomendadas, ofreciendo sugerencias a los usuarios y una experiencia que hace referencia a las cartas y los mazos.
 
 ---
