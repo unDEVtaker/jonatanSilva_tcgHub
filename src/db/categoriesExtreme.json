@@ -1,0 +1,108 @@
+[
+    
+    {
+        "id": "1",
+        "name": "Pokémon Cards",
+        "sub": [
+            "Basic Pokémon",
+            "Evolution Pokémon",
+            "Legendary Pokémon",
+            "Ultra Rare Cards",
+            "Holofoil Cards"
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Trainer Cards",
+        "sub": [
+            "Supporter Cards",
+            "Item Cards",
+            "Stadium Cards",
+            "Special Energy Cards"
+        ]
+    },
+    {
+        "id": "3",
+        "name": "Energy Cards",
+        "sub": [
+            "Basic Energy",
+            "Special Energy",
+            "Rainbow Energy",
+            "Double Energy"
+        ]
+    },
+    {
+        "id": "4",
+        "name": "Rare Cards",
+        "sub": [
+            "Full Art",
+            "Rainbow Rare",
+            "Gold Cards",
+            "Promo Cards"
+        ]
+    },
+    {
+        "id": "5",
+        "name": "Expansions & Sets",
+        "sub": [
+            "Base Set",
+            "Jungle",
+            "Fossil",
+            "Neo Genesis",
+            "Evolutions",
+            "Sword & Shield",
+            "Scarlet & Violet"
+        ]
+    },
+    {
+        "id": "6",
+        "name": "TCG Accessories",
+        "sub": [
+            "Card Sleeves",
+            "Binders & Folders",
+            "Playmats",
+            "Dice & Damage Counters",
+            "Deck Box"
+        ]
+    },
+    {
+        "id": "7",
+        "name": "Sealed Products",
+        "sub": [
+            "Booster Packs",
+            "Elite Trainer Boxes",
+            "Trainer Boxes",
+            "Collection Boxes",
+            "Prebuilt Decks"
+        ]
+    },
+    {
+        "id": "8",
+        "name": "Cards by Type",
+        "sub": [
+            "Fire Pokémon",
+            "Water Pokémon",
+            "Grass Pokémon",
+            "Electric Pokémon",
+            "Fighting Pokémon",
+            "Psychic Pokémon",
+            "Dragon Pokémon",
+            "Steel Pokémon",
+            "Dark Pokémon",
+            "Fairy Pokémon"
+        ]
+    },
+    {
+        "id": "9",
+        "name": "Special Cards",
+        "sub": [
+            "EX Cards",
+            "GX Cards",
+            "V Cards",
+            "VSTAR Cards",
+            "V-UNION Cards",
+            "TAG TEAM Cards",
+            "Mega Evolution Cards"
+        ]
+    }
+]

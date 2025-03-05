@@ -12,202 +12,25 @@
     
     <section id="products" class="section-p1">
         <div class="pro-container">
-            <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
+            <% products.forEach(product => { %>
+                <div class="pro-item" onclick="window.location.href='/products/sproduct/<%= product.id %>';">
+                    <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                    <div class="des">
+                        <span><%= product.rarity %></span>
+                        <h5><%= product.name %></h5>
+                        <div class="star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
                         </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
+                        <h4>$<%= toThousand(product.price) %></h4>
                     </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    <div class="pro-item" onclick="window.location.href='sproduct';">
-                        <img src="images/cartas/SV4PT5_EN_232.png" alt="">
-                        <div class="des">
-                            <span>Card</span>
-                            <h5>Mew ex (PAF 232)</h5>
-                            <div class="star">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4>$170.50</h4>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-                    </div>
-                    
-                    
-                    
+                    <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
                 </div>
+            <% }); %>
+        </div>
             </section>
             
             <section id="pagination" class="section-p1">

@@ -116,200 +116,30 @@
 
 
     <!-- cartas top -->
-    <div class="pro-container">
-        <div class="pro-item">
-            <img src="images/cartas/cartaPikachi.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Pikachu ex (SSP 238)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
+    <section id="products" class="section-p1">
+        <h2>Top Pokémon Cards</h2>
+        <p>The Hottest Cards This Week</p>
+    
+        <div class="pro-container">
+            <% topCards.forEach(product => { %>
+                <div class="pro-item">
+                    <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                    <div class="des">
+                        <span>Card</span>
+                        <h5><%= product.name %></h5>
+                        <div class="star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <h4>$<%= toThousand(product.price) %></h4>
+                    </div>
+                    <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
                 </div>
-                <h4>$250.00</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
+            <% }); %>
         </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV3pt5_ES_151.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Mew ex (MEW 151)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$5.49</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV01_EN_45.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Gyarados ex (SVI 045)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$0.25</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV08_EN_86.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Sylveon ex (SSP 086)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$1.00</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV3pt5_EN_196.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Erika (MEW 196)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$88</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV08_EN_203.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Latios (SSP 203)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$20</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV03_ES_125.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Charizard ex (OBF 125)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$81.99</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV03_ES_223.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Charizard ex (OBF 223)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$88</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV03_ES_223.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Charizard ex (OBF 223)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$88</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV03_ES_223.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Charizard ex (OBF 223)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$88</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV03_ES_223.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Charizard ex (OBF 223)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$88</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-        <div class="pro-item">
-            <img src="images/cartas/SV03_ES_223.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Charizard ex (OBF 223)</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$88</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-        </div>
-    </div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

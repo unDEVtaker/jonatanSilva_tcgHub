@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product Administration</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="text-center my-4">
+            <h1>Product Administration</h1>
+        </header>
+
+        <form class="mb-3" method="GET" action="/products/admin">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" placeholder="Search by Name, ID, Rarity, Price">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+
+        <table class="table table-striped table-hover table-responsive table-dark">
+            <thead>
+                <tr>
+                    <th class="text-center align-middle">Image</th>
+                    <th class="text-center align-middle">ID</th>
+                    <th class="text-center align-middle">Name</th>
+                    <th class="text-center align-middle">Rarity</th>
+                    <th class="text-center align-middle">Price</th>
+                    <th class="text-center align-middle">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% products.forEach(product=> { %>
+                <tr>
+                    <td class="text-center align-middle"><img src="<%= product.imageUrl %>"
+                            alt="<%= product.name %>" width="50"></td>
+                    <td class="text-center align-middle">
+                        <%= product.id %>
+                    </td>
+                    <td class="text-center align-middle">
+                        <%= product.name %>
+                    </td>
+                    <td class="text-center align-middle">
+                        <%= product.rarity %>
+                    </td>
+                    <td class="text-center align-middle">$<%= toThousand(product.price) %>
+                    </td>
+                    <td class="text-center align-middle">
+                        <a href="/products/detail/<%= product.id %>" class="btn btn-success btn-sm me-1">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a href="/products/edit/<%= product.id %>" class="btn btn-warning btn-sm me-1">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="/products/delete/<%= product.id %>" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Delete this product?')">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+
+        <a href="/products/add" class="btn btn-primary">Create New Product</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

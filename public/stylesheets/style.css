@@ -281,7 +281,10 @@ body {
   }
 }
 
-
+.product-link {
+  text-decoration: none; /* Elimina el subrayado */
+  color: inherit; /* Hereda el color del texto del padre */
+}
 
 /* Featured Products */
 #products{

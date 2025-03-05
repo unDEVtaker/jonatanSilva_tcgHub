@@ -1,20 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const net = require('net'); // modulo para buscar el puerto
+const methodOverride = require('method-override');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var singupRouter = require('./routes/singup');
-var shopRouter = require('./routes/shop');
-var sproductRouter = require('./routes/sproduct');
-var cartRouter = require('./routes/cart');
-var productAddRouter = require('./routes/productAdd');
-var productEditRouter = require('./routes/productEdit');
 
-var app = express();
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const productsRouter = require('./routes/products');
+
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,23 +20,54 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Asegúrate de que extended esté en true
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
+app.use(methodOverride('_method'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/login', loginRouter);
-app.use('/singup', singupRouter);
-app.use('/shop', shopRouter);
-app.use('/sproduct', sproductRouter);
-app.use('/cart', cartRouter);
-app.use('/productAdd', productAddRouter);
-app.use('/productEdit', productEditRouter);
+app.use('/products',productsRouter);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor iniciado en el puerto ${PORT}`);
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+//const PORT = process.env.PORT || 3005;
+// Función para encontrar un puerto libre a partir de 3000
+const findAvailablePort = (startPort, callback) => {
+  const server = net.createServer();
+
+  server.listen(startPort, () => {
+    server.once('close', () => callback(startPort));
+    server.close();
+  });
+
+  server.on('error', () => findAvailablePort(startPort + 1, callback));
+};
+
+// Buscar un puerto disponible desde 3000
+findAvailablePort(3000, (PORT) => {
+  app.listen(PORT, () => {
+    console.log(`
+    ***************************************
+    Servidor funcionando en el puerto ${PORT}
+    link --->>> http://localhost:${PORT}
+    ***************************************
+    `);
+  });
 });
 
 module.exports = app;
