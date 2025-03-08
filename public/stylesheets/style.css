@@ -11,9 +11,9 @@
   --color1: #ffffff;
   --color2:yellow ;
   --light-effect: rgba(255, 255, 255, 0.6); /* Color de la luz */
-  --negro: #000000;
+  --negro: #0f0f0f;
   --azulML: #3483fa;
-  --blanco: #FFFFFF;
+  --blanco: #fefefe;
   --grisML: #EBEBEB;
   --verdeML:#14AD5E;
 }
@@ -32,7 +32,7 @@ h1 {
 h2 {
   font-size: 46px;
   line-height: 54px;
-  text-shadow: 4px 4px 4px rgba(107, 102, 102, 0.6);
+  text-shadow: 0 0 7px var(--negro);
 
 }
 
@@ -86,7 +86,8 @@ button.white{
   color: var(--blanco);
   background-color: transparent;
   cursor: pointer;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
+  border-radius: 2px;
   outline: none;
   transition: 0.2s;
 }
@@ -393,11 +394,21 @@ body {
  background-color: var(--azulML);
  color: var(--blanco);
 }
+
 #sm-banner{
  display: flex;
  flex-wrap: wrap;
  justify-content: space-between;
+
+ p{
+  text-shadow: 0 0 7px var(--negro);
+  cursor: default;
+ }
+ h{
+  cursor: default;
+ }
 }
+
 #sm-banner .banner-box{
   display: flex;
   flex-direction: column;
@@ -406,15 +417,18 @@ body {
   background-image: url("../images/grids/1351901\ \(1\).png");
   min-width: 580px;
   height: 50vh;
-  background-size: cover;
+  background-size: 129%;
   background-position: center;
   padding: 30px;
   margin-bottom: 20px;
-  transition: transform 0.3s ease-in-out; /* Añadir transición para el efecto de hover */
+  overflow: hidden;
+  transition: 0.3s ease-in-out; /* Añadir transición para el efecto de hover */
 }
+
 #sm-banner .banner-box:hover {
-  transform: scale(1.05); /* Efecto de acercamiento */
+  background-size: 140%;
 }
+
 #sm-banner .banner-box h4{
   color: var(--blanco);
   font-size: 20px;
@@ -431,11 +445,14 @@ body {
   font-weight: 500;
   padding-bottom: 15px;
 }
-#sm-banner .banner-box:hover button{
-  background: #3483fa;
-  border: 1px solid #3483fa;
-
+#sm-banner .banner-box button:hover{
+  background: rgba(209, 72, 9, 0.7);
  }
+
+ #btn-2:hover{
+  background: rgba(63, 22, 158, 0.7)!important;
+ }
+
  #sm-banner .banner-box2{
   background-image: url("../images/grids/1351897\ \(1\).png");
 }
@@ -445,6 +462,11 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 0 80px;
+
+  p{
+    color: var(--blanco);
+    text-shadow: 0 0 3px var(--negro);
+  }
 }
 #banner3 h2{
   color: var(--blanco);
@@ -464,15 +486,15 @@ body {
   background-image: url("../images/grids/481193.jpg");
   min-width: 30%;
   height: 30vh;
-  background-size: cover;
+  background-size: 132%;
   background-position: center;
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 2rem;
-  transition: transform 0.3s ease-in-out; /* Añadir transición para el efecto de hover */
+  transition: .3s ease-in-out; /* Añadir transición para el efecto de hover */
 }
 #banner3 .banner-box:hover {
-  transform: scale(1.05); /* Efecto de acercamiento */
+  background-size: 150%;
 }
 #banner3 .banner-box3{
   background-image: url("../images/grids/1362722.png");
