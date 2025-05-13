@@ -1,3 +1,6 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "editor.fontSize": 20,
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false // Agrega esta línea
 }

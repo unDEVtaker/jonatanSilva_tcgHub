@@ -1,84 +1,68 @@
-<!DOCTYPE html>
-<html>
+<%- include('../partials/header') %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+    <div class="container py-5">
+        <h1>Crear nuevo producto</h1>
 
-<head>
-    <title>Crear Producto</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #000;
-            color: #fff;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <header class="text-center my-4">
-            <h1>Product Create</h1>
-        </header>
-
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card bg-dark text-white">
-                    <div class="card-body">
-                        <form method="POST" action="/products/create" enctype="multipart/form-data">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="rarity" class="form-label">rarity</label>
-                                <input type="text" class="form-control" id="rarity" name="rarity" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="attack" class="form-label">attack</label>
-                                <input type="number" class="form-control" id="attack" name="attack">
-                            </div>
-                            <div class="mb-3">
-                                <label for="defense" class="form-label">defense</label>
-                                <input type="number" class="form-control" id="defense" name="defense">
-                            </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">image</label> <input type="file"
-                                    class="form-control" id="image" name="image">
-                            </div>
-                            <div class="mb-3">
-                                <label for="yearReleased" class="form-label">yearReleased</label>
-                                <input type="number" class="form-control" id="yearReleased" name="yearReleased">
-                            </div>
-                            <div class="mb-3">
-                                <label for="price" class="form-label">price</label>
-                                <input type="number" class="form-control" id="price" name="price" required>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="isNew" name="isNew">
-                                    <label class="form-check-label" for="isNew">isNew</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="isTopCard" name="isTopCard">
-                                    <label class="form-check-label" for="isTopCard">isTopCard</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="form-label">description</label>
-                                <textarea class="form-control" id="description" name="description" required></textarea>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Add</button>
-                                <a href="/products/admin" class="btn btn-secondary">Cancel</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control text-lowercase"
+                placeholder="Search card by name...">
         </div>
+
+        <div id="results" class="mb-4"></div>
+
+        <form action="/products/create" method="POST" class="row g-3 needs-validation" novalidate>
+            <input type="hidden" name="cardId" id="cardId">
+            <input type="hidden" name="cardImage" id="cardImage">
+
+            <div class="col-md-6">
+                <label for="cardName" class="form-label">Name</label>
+                <input type="text" name="name" id="cardName" class="form-control-plaintext" readonly style="background-color: #f8f9fa;" required>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="cardSet" class="form-label">Set</label>
+                <input type="text" name="set" id="cardSet" class="form-control-plaintext" readonly style="background-color: #f8f9fa;" required>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="cardNumber" class="form-label">Card Number</label>
+                <input type="text" name="number" id="cardNumber" class="form-control-plaintext" readonly style="background-color: #f8f9fa;" required>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="cardFoil" class="form-label">Foil Type</label>
+                <input type="text" name="foilType" id="cardFoil" class="form-control-plaintext" readonly style="background-color: #f8f9fa;" required>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="col-12">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="description" class="form-control" id="description" required></textarea>
+                <div class="invalid-feedback">Please enter a description.</div>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="price" class="form-label">Price</label>
+                <div class="d-flex align-items-center">
+                    <input type="number" name="price" class="form-control me-2" id="price" required min="0.01" step="0.01">
+                    <span id="priceTrend" class="text-muted"></span>
+                </div>
+                <div class="invalid-feedback">Please enter a valid price greater than zero.</div>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Create product</button>
+            </div>
+        </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="/javascripts/pokemonSearch.js"></script>
 
-</html>
+    <%- include('../partials/footer') %>

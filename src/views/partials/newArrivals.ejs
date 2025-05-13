@@ -7,9 +7,9 @@
         <% NewProducts.forEach(product => { %>
             <a href="/products/sproduct/<%= product.id %>" class="product-link">
                 <div class="pro-item">
-                    <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                    <img src="<%= product.image%>" alt="<%= product.name %>">
                     <div class="des">
-                        <span><%= product.rarity %></span>
+                        <span><%= product.foilType %></span>
                         <h5><%= product.name %></h5>
                         <div class="star">
                             <i class="fa-solid fa-star"></i>
@@ -20,27 +20,17 @@
                         </div>
                         <h4>$<%= toThousand(product.price) %></h4>
                     </div>
-                    <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
+                    <button class="button" href="/products/sproduct/<%= product.id %>">
+                        <span>Add to cart</span>
+                        <div class="cart">
+                            <svg viewBox="0 0 36 26">
+                                <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
+                                <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
+                            </svg>
+                        </div>
+                    </button>
                 </div>
             </a>
         <% }); %>
     </div>
 </section>
-
-        <!-- <div class="pro-item">
-            <img src="images/products/producto2.png" alt="">
-            <div class="des">
-                <span>Card</span>
-                <h5>Togekiss EX (BKP 83) - Card</h5>
-                <div class="star">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <h4>$5.95</h4>
-            </div>
-            <a href="#"><i class="fa-solid fa-shopping-cart  cart"></i></a>
-        </div>
-    </div> -->

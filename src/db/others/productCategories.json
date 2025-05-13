@@ -1,0 +1,51 @@
+[
+    {
+      "name": "Cards",
+      "subcategories": []
+    },
+    {
+      "name": "Accesorios",
+      "subcategories": [
+        "Fundas",
+        "Álbumes",
+        "Cajas de Mazos",
+        "Tapetes de Juego"
+      ]
+    },
+    {
+      "name": "Productos Sellados",
+      "subcategories": [
+        "Mazos Preconstruidos",
+        "Cajas de Colección"
+      ]
+    },
+    {
+      "name": "Ropa",
+      "subcategories": [
+        "Camisetas",
+        "Sudaderas",
+        "Gorras"
+      ]
+    },
+    {
+      "name": "Coleccionables",
+      "subcategories": [
+        "Figuras",
+        "Peluches",
+        "Pines"
+      ]
+    },
+    {
+      "name": "Libros y Revistas",
+      "subcategories": [
+        "Guías de Estrategia",
+        "Libros de Arte"
+      ]
+    },
+    {
+      "name": "Juegos de Mesa",
+      "subcategories": [
+        "Juegos de Mesa Temáticos"
+      ]
+    }
+  ]

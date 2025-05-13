@@ -2,32 +2,34 @@
 <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 <section id="header">
-    <a href="/"><img src="/images/institucional/logo.png" class="logo" alt=""></a>
-    <div>
-        <ul id="navbar">
+  <a id="logo" href="/"><img src="/images/institucional/logo.png" class="logo" alt=""></a>
+  <div>
+    <ul id="navbar">
 
-            <li><a href="/">Home</a></li>
-            <li><a href="/shop">Shop</a></li>
-            <li><a href="#">On Sale</a></li>
-            <li><a href="#">New Arrivals</a></li>
-            <li><a href="#">Sets</a></li>
-            <li><a href="#">TCG Price Trends</a></li>
-            <div id="search-bar">
-                <form id="search-form">
-                    <input autocomplete="off" class="search-field" id="search-text" name="search" placeholder="Search…"
-                        type="text" />
-                    <input style="display: none;" type="submit" value="" />
-                </form>
-            </div>
-            <li><a href="login"><i id="lg-bag" class="fa fa-user"></i></a></li>
-            <li><a href="cart"><i id="lg-bag" class="fa fa-shopping-cart"></i></a></li>
-            <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
-        </ul>
-    </div>
-    <div id="mobile">
-        <a href="login"><i class="fa fa-user"></i></a>
-        <i id="bar" class="fa-solid fa-bars"></i>
-        <a href="cart.html"><i class="fa fa-shopping-cart"></i></a>
-        <i id="bar" class="fa-solid fa-bars"></i>
-    </div>
+      <li><a href="/">Home</a></li>
+      <li><a href="/shop">Shop</a></li>
+      <li><a href="#">On Sale</a></li>
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="#">TCG Price Trends</a></li>
+      <% if (locals.user) { %>
+        <li><a href="/products/add">Sell Card</a></li>
+        <% } %>
+          <div id="search-bar">
+            <form id="search-form">
+              <input autocomplete="off" class="search-field" id="search-text" name="search" placeholder="Search…"
+                type="text" />
+              <input style="display: none;" type="submit" value="" />
+            </form>
+          </div>
+          <li><a href="/users/login"><i id="lg-bag" class="fa fa-user"></i></a></li>
+          <li><a href="cart"><i id="lg-bag" class="fa fa-shopping-cart"></i></a></li>
+          <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+    </ul>
+  </div>
+  <div id="mobile">
+    <a href="/users/login"><i class="fa fa-user"></i></a>
+    <i id="bar" class="fa-solid fa-bars"></i>
+    <a href="cart.html"><i class="fa fa-shopping-cart"></i></a>
+    <i id="bar" class="fa-solid fa-bars"></i>
+  </div>
 </section>

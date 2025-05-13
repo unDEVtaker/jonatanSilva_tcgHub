@@ -1,6 +1,5 @@
-const { readJson } = require('../db/index.js')
-const { toThousand, paginator } = require('../utils')
-
+const { readJson } = require('../db/index.js');
+const { toThousand, paginator } = require('../utils');
 
 //proximamente
 function getRandomProducts(products, count) {
@@ -10,19 +9,20 @@ function getRandomProducts(products, count) {
 
 module.exports = {
   index: (req, res) => {
-    const products = readJson('productsDataBase.json')
-
+    const products = readJson('productsDataBase.json');
     const newProducts = products.filter(product => product.isNew);
-    const randomNewProducts = getRandomProducts(newProducts, 12); // Obtiene 12 productos aleatorios
-
+    const randomNewProducts = getRandomProducts(newProducts, 12);
     const topCards = products.filter(product => product.isTopCard);
-    const randomTopCards = getRandomProducts(topCards, 12); // Obtiene 12 productos aleatorios
-
+    const randomTopCards = getRandomProducts(topCards, 12);
 
     res.render('home', {
-      NewProducts: randomNewProducts, // Pasa los 12 productos aleatorios a la vista
+      NewProducts: randomNewProducts,
       topCards: randomTopCards,
-      toThousand
-    })
+      toThousand,
+      user: req.session.user  // Pasamos el usuario a la vista
+    });
   },
-}
+    sellCard: (req, res) => { //Aca iria el controlador de sellCard
+    res.render('sell-card', { title: 'Sell Your Card - TCG HUB', user: req.session.user });
+  }
+};

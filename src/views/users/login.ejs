@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+    <%# Add Bootstrap CSS for the alert style if you are using it %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+    <div class="container-login">
+        <div class="login-box">
+            <div class="login-header">
+                <header>Login</header>
+            </div>
+
+            <%# --- Add this block to display the login error message --- %>
+            <% if (typeof loginError !== 'undefined' && loginError) { %>
+                <div class="alert alert-danger" role="alert" style="margin-bottom: 15px;">
+                    <%= loginError %>
+                </div>
+            <% } %>
+            <%# --- End of login error message block --- %>
+
+            <form action="/users/login" method="POST">
+
+                <div class="input-box">
+                    <%# Use the 'correo' variable to pre-fill the email field on error %>
+                    <input type="text" class="input-field" placeholder="Email" name="correo" autocomplete="off" required value="<%= typeof correo !== 'undefined' ? correo : '' %>">
+                </div>
+                <div class="input-box">
+                    <input type="password" class="input-field" placeholder="Password" name="contrasena" autocomplete="off" required>
+                </div>
+                <div class="forgot">
+                    <section>
+                        <input type="checkbox" id="check" name="recuerdame">
+                        <label for="check">Remember me</label>
+                    </section>
+                    <section>
+                        <a href="#">Forgot password</a>
+                    </section>
+                </div>
+                <div class="input-submit">
+                    <button type="submit" class="submit-btn" id="submit"></button>
+                    <label for="submit">Sign In</label>
+                </div>
+                <div class="sign-up-link">
+                    <p>Don't have account? <a href="/users/signup">Sign Up</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<%# Add Bootstrap JS if needed for alert dismissals or other components %>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/javascripts/script.js"></script>
+
+</html>

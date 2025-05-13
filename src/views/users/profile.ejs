@@ -1,0 +1,166 @@
+<%- include('../partials/head',{title:"TCG.HUB - Profile"}) %>
+
+<body>
+  <%- include('../partials/header') %>
+  <main class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+
+        <a href="/products/admin" class="btn btn-secondary w-100 mb-3">Ver mis cartas publicadas</a>
+
+
+        <h2 class="mb-4 text-center">Editar Perfil</h2>
+
+        <div class="text-center mb-3">
+          <img src="<%= user.avatar %>" alt="Avatar de <%= user.nombre %>" class="rounded-circle img-thumbnail" width="120">
+          <p class="mt-2"><small>Imagen de perfil actual</small></p>
+        </div>
+
+        <form action="/users/profile/<%=user.id%>?_method=PUT" method="post" enctype="multipart/form-data">
+
+          <div class="mb-3">
+            <label for="avatar" class="form-label">Cambiar Imagen de Perfil</label>
+            <input type="file" name="avatar" id="avatar" class="form-control" accept=".jpg,.png ">
+            <% if(locals.errores && locals.errores.avatar) {%>
+              <div class="text-danger">
+                <%= errores.avatar.msg %>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" name="nombre" id="name" class="form-control" min="6" max="50"
+              value="<%= locals.user && locals.user.nombre ? user.nombre : "" %>">
+            <% if(locals.errores && locals.errores.nombre) {%>
+              <div class="text-danger">
+                <%= errores.nombre.msg %>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="correo" id="email" class="form-control" required
+              value="<%= locals.user && locals.user.correo ? user.correo : ""%>">
+            <% if(locals.errores && locals.errores.correo) {%>
+              <div class="text-danger">
+                <%= errores.correo.msg %>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña (dejar vacío si no cambias)</label>
+            <input type="password" name="contrasena" id="password" class="form-control" value="">
+            <% if(locals.errores && locals.errores.contrasena) {%>
+              <div class="text-danger">
+                <%= errores.contrasena.msg %>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirmar contraseña (dejar vacío si no cambias)</label>
+            <input type="password" name="contrasena2" id="confirmPassword" class="form-control" value="">
+            <% if(locals.errores && locals.errores.contrasena2) {%>
+              <div class="text-danger">
+                <%= errores.contrasena2.msg %>
+              </div>
+            <% } %>
+          </div>
+          <div class="mb-3">
+            <label for="dni" class="form-label">Ingrese número de documento DNI</label>
+            <input type="number" name="dni" id="dni" class="form-control"
+              value="<%= locals.user && locals.user.dni ? user.dni : ""%>">
+            <% if(locals.errores && locals.errores.dni) {%>
+              <div class="text-danger">
+                <%= errores.dni.msg %>
+              </div>
+            <% } %>
+          </div>
+          <h3 class="mt-4 mb-3">Dirección</h3>
+          <div class="mb-3">
+            <label for="provincia" class="form-label">Provincia</label>
+            <select name="provincia" id="provincia" class="form-select">
+              <% provincias.forEach(provincia=> { %>
+                <option value="<%= provincia.id %>" <%=locals.user && locals.user.provincia &&
+                  locals.user.provincia==provincia.id ? "selected" : "" %>><%= provincia.nombre%>
+                </option>
+              <% }); %>
+            </select>
+            <% if(locals.errores && locals.errores.provincia) {%>
+              <div class="text-danger">
+                <%= errores.provincia.msg %>
+              </div>
+            <% } %>
+          </div>
+          <div class="mb-3">
+            <label for="localidad" class="form-label">localidad</label>
+            <select name="localidad" id="localidad" class="form-select">
+              <% localidades.forEach(localidad=> { %>
+                <option value="<%= localidad.id %>" <%=locals.user && locals.user.localidad &&
+                  locals.user.localidad==localidad.id ? "selected" : "" %>><%= localidad.nombre%>
+                </option>
+              <% }); %>
+            </select>
+            <% if(locals.errores && locals.errores.localidad) {%>
+              <div class="text-danger">
+                <%= errores.localidad.msg %>
+              </div>
+            <% } %>
+          </div>
+          <div class="mb-3">
+            <label for="calle" class="form-label">Calle</label>
+            <input type="text" name="calle" id="calle" class="form-control"
+              value="<%= locals.user && locals.user.calle ? user.calle : ""%>">
+            <% if(locals.errores && locals.errores.calle) {%>
+              <div class="text-danger">
+                <%= errores.calle.msg %>
+              </div>
+            <% } %>
+          </div>
+          <div class="mb-3">
+            <label for="altura" class="form-label">Altura</label>
+            <input type="text" name="altura" id="altura" class="form-control"
+              value="<%= locals.user && locals.user.altura ? user.altura : ""%>">
+            <% if(locals.errores && locals.errores.altura) {%>
+              <div class="text-danger">
+                <%= errores.altura.msg %>
+              </div>
+            <% } %>
+          </div>
+          <div class="mb-3">
+            <label for="telefono" class="form-label">telefono</label>
+            <input type="number" name="telefono" id="telefono" class="form-control"
+              value="<%= locals.user && locals.user.telefono ? user.telefono : ""%>">
+            <% if(locals.errores && locals.errores.telefono) {%>
+              <div class="text-danger">
+                <%= errores.telefono.msg %>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+          </div>
+        </form>
+
+        <div class="d-flex gap-2">
+          <form action="/users/profile/<%=user.id%>?_method=DELETE" method="post" class="flex-grow-1">
+            <button type="submit" class="btn btn-danger w-100"
+              onclick="return confirm('¿Estás seguro de que quieres eliminar tu cuenta?');">Eliminar cuenta</button>
+          </form>
+          <form action="/users/logout" method="post" class="flex-grow-1">
+            <button type="submit" class="btn btn-warning w-100">Cerrar Sesión</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+  <footer>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/javascripts/profile.js"></script>
+</body>

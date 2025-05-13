@@ -1,0 +1,366 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Anton+SC&family=Antonio:wght@100..700&display=swap");
+
+:root {
+    --font-anton: 'Anton', sans-serif;
+    --font-anton-sc: 'Anton SC', sans-serif;
+    --font-antonio: 'Antonio', sans-serif;
+    --color1: #ffffff;
+    --color2: yellow;
+    --light-effect: rgba(255, 255, 255, 0.6);
+    --negro: #0f0f0f;
+    --azulML: #3483fa;
+    --blanco: #fefefe;
+    --grisML: #EBEBEB;
+    --verdeML: #14AD5E;
+}
+
+#wrapper {
+    background-color: #f8f9fa;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    max-width: 1500px; /* Aumenta el ancho máximo */
+    margin: 0 auto;
+}
+
+#wrapper h2,
+#wrapper h3 {
+    font-family: var(--font-antonio);
+    text-shadow: none;
+    margin-bottom: 15px;
+}
+
+
+
+.containerSP {
+    font-family: var(--font-antonio);
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-wrap: nowrap; /* Evita que las columnas se envuelvan */
+    gap: 20px; /* Espacio entre columnas */
+}
+
+.containerSP h2,
+.containerSP h3 {
+    font-family: var(--font-antonio);
+    text-shadow: none;
+    margin-bottom: 15px;
+}
+
+.card-image-column {
+    flex: 0 0 30%; /* Ancho fijo inicial */
+    max-width: 30%; /* Ancho máximo para evitar que crezca demasiado */
+    margin-right: 0; /* Ya no necesitamos margen derecho individual */
+    margin-bottom: 0; /* Ya no necesitamos margen inferior individual */
+}
+
+.card-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.card-details-column {
+    flex: 1 1 40%; /* Permite que crezca y se encoja, ocupa el espacio restante */
+    min-width: 0; /* Permite que el contenido se encoja si es necesario */
+}
+
+.card-details_head {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-details_head .title {
+    margin-bottom: 0;
+}
+
+.card-details_head .title .has-text-muted {
+    font-size: 1rem;
+}
+
+.card-details_head .is-flex {
+    font-size: 1.25rem;
+}
+
+.energy {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+hr {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Sección de precios */
+.prices-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.card-details_price {
+    text-align: center;
+    padding: 16px 10px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 80px;
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+    position: relative;
+    z-index: 0;
+}
+
+.card-details_price:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    background-color: var(--blanco);
+    z-index: 1;
+    cursor: pointer;
+
+}
+
+.card-details_price .heading {
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.card-details_price .title {
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Tabla de ataques */
+.card-details_attack td {
+    padding: 8px 0;
+    vertical-align: middle;
+}
+
+.card-details_attack .attack-name .title {
+    font-size: 1rem;
+}
+
+.card-details_attack .nowrap {
+    white-space: nowrap;
+}
+
+/* Detalles extra */
+.details-section {
+    margin-bottom: 15px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.card-details_ability,
+.card-details_weakness,
+.card-details_resistance,
+.card-details_retreat,
+.card-details_artist,
+.card-details_rarity,
+.card-details_set,
+.card-details_number {
+    padding: 10px 0;
+}
+
+.card-details_ability .heading,
+.card-details_weakness .heading,
+.card-details_resistance .heading,
+.card-details_retreat .heading,
+.card-details_artist .heading,
+.card-details_rarity .heading,
+.card-details_set .heading,
+.card-details_number .heading {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.card-details_weakness .title,
+.card-details_resistance .title,
+.card-details_retreat .title,
+.card-details_artist .title,
+.card-details_rarity .title,
+.card-details_set .title,
+.card-details_number .title {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.card-details_set .title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.field.is-grouped-multiline .control {
+    margin-bottom: 5px;
+}
+
+/* Colores para precios */
+.price-low {
+    color: #28a745 !important;
+}
+
+.price-mid {
+    color: #17a2b8 !important;
+}
+
+.price-high {
+    color: #dc3545 !important;
+}
+
+.has-text-warning-dark {
+    color: #85640a !important;
+}
+
+.card-purchase-column {
+    flex: 0 0 30%; /* Ajusta el ancho según necesites */
+    margin-left: 20px; /* Ajusta el margen izquierdo para igualar el gap */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinea el contenido al inicio */
+}
+
+.purchase-info {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.near-mint {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #28a745; /* Un color llamativo para el precio */
+    margin-bottom: 5px;
+}
+
+.shipping {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.sold-by {
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.sold-by a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.quantity-selector select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 60px;
+    margin-right: 5px;
+}
+
+.quantity-selector span {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.add-to-cart {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    margin-bottom: 10px;
+}
+
+.add-to-cart:hover {
+    background-color: var(--verdeML);
+}
+
+.paypal-info {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.paypal-info img {
+    width: auto;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.paypal-info a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.other-listings {
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+}
+
+.other-listings a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* Media query para diseño responsivo (opcional) */
+@media (max-width: 768px) {
+    .containerSP {
+        flex-direction: column; /* Apilar las columnas en pantallas más pequeñas */
+        flex-wrap: wrap; /* Permitir el envoltorio en pantallas pequeñas si es necesario */
+        gap: 10px; /* Reducir el espacio entre elementos apilados */
+    }
+
+    .card-image-column,
+    .card-details-column,
+    .card-purchase-column {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+        margin-bottom: 15px;
+    }
+}
