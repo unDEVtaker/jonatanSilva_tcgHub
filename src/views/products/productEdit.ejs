@@ -2,115 +2,115 @@
 <html>
 
 <head>
-  <title>Editar Producto</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-    }
-  </style>
+    <title>Editar Producto</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* No es necesario definir colores aquí, las clases de Bootstrap harán el trabajo */
+    </style>
 </head>
+<%- include('../partials/header') %>
+<body class="bg-light text-dark">
+    <div class="container">
+        <header class="text-center my-4">
+            <h1>Editar Producto</h1>
+        </header>
 
-<body>
-  <div class="container">
-    <header class="text-center my-4">
-      <h1>Product Edit</h1>
-    </header>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form method="POST" action="/products/edit/<%= product.id %>?_method=PUT"
+                            enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control bg-secondary text-light" id="nombre" name="name"
+                                    value="<%= product.nombre %>" required readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="set_name" class="form-label">Set</label>
+                                <input type="text" class="form-control bg-secondary text-light" id="set_name" name="set"
+                                    value="<%= product.set_name %>" required readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="foilType" class="form-label">Foil Type</label>
+                                <input type="text" class="form-control bg-secondary text-light" id="foilType" name="foilType"
+                                    value="<%= product.foilType %>" required readonly>
+                            </div>
 
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card bg-dark text-white">
-          <div class="card-body">
-            <form method="POST" action="/products/edit/<%= product.id %>?_method=PUT" enctype="multipart/form-data">
-              <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="name" value="<%= product.nombre %>" required>
-              </div>
-              <div class="mb-3">
-                <label for="set_name" class="form-label">Set</label>
-                <input type="text" class="form-control" id="set_name" name="set" value="<%= product.set_name %>"
-                  required>
-              </div>
-              <div class="mb-3">
-                <label for="foilType" class="form-label">Foil Type</label>
-                <input type="text" class="form-control" id="foilType" name="foilType" value="<%= product.foilType %>"
-                  required>
-              </div>
-
-              <div class="mb-3">
-                <label for="api_id" class="form-label">Card ID</label>
-                <input type="text" class="form-control" id="api_id" name="cardId" value="<%= product.api_id %>"
-                  required>
-              </div>
-              <div class="mb-3">
-                <label for="img" class="form-label">Imagen</label>
-                <input type="text" class="form-control" id="img" name="cardImage" value="<%= product.img %>">
-                <% if (product.img) { %>
-                  <img src="<%= product.img %>" alt="Imagen actual" class="img-thumbnail mt-2" style="max-width:120px;">
-                  <% } %>
-              </div>
-              <div class="mb-3">
-                <label for="state_id" class="form-label">Estado de la carta</label>
-                <select name="state_id" id="state_id" class="form-select" required>
-                  <option value="">Selecciona el estado</option>
-                  <% if (typeof states !=='undefined' ) { %>
-                    <% states.forEach(state=> { %>
-                      <option value="<%= state.id %>" <%=product.state_id==state.id ? 'selected' : '' %>><%= state.state
-                          %>
-                      </option>
-                      <% }) %>
-                        <% } %>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="stock" class="form-label">Stock</label>
-                <input type="number" class="form-control" id="stock" name="stock" value="<%= product.stock %>" min="1"
-                  required>
-              </div>
-              <div class="mb-3">
-                <label for="price" class="form-label">Precio</label>
-                <input type="number" class="form-control" id="price" name="price" value="<%= product.precio %>"
-                  min="0.01" step="0.01" required>
-              </div>
-              <div class="mb-3">
-                <label for="description" class="form-label">Descripción</label>
-                <textarea class="form-control" id="description" name="description"
-                  required><%= product.descripcion %></textarea>
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="/products/admin" class="btn btn-secondary">Cancelar</a>
-              </div>
-            </form>
-          </div>
+                            <div class="mb-3">
+                                <label for="api_id" class="form-label">Card ID</label>
+                                <input type="text" class="form-control bg-secondary text-light" id="api_id" name="cardId"
+                                    value="<%= product.api_id %>" required readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="img" class="form-label">Imagen</label>
+                                <input type="text" class="form-control bg-secondary text-light" id="img" name="cardImage"
+                                    value="<%= product.img %>" readonly>
+                                <% if (product.img) { %>
+                                    <img src="<%= product.img %>" alt="Imagen actual" class="img-thumbnail mt-2"
+                                        style="max-width:120px;">
+                                    <% } %>
+                            </div>
+                            <div class="mb-3">
+                                <label for="state_id" class="form-label">Estado de la carta</label>
+                                <select name="state_id" id="state_id" class="form-select" required>
+                                    <option value="">Selecciona el estado</option>
+                                    <% if (typeof states !=='undefined' ) { %>
+                                        <% states.forEach(state=> { %>
+                                            <option value="<%= state.id %>" <%=product.state_id==state.id ? 'selected'
+                                                : '' %>><%= state.state %>
+                                            </option>
+                                            <% }) %>
+                                                <% } %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="stock" class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="stock" name="stock"
+                                    value="<%= product.stock %>" min="1" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="price" name="price"
+                                    value="<%= product.precio %>" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="description" name="description"
+                                    required><%= product.descripcion %></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <a href="/products/admin" class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <%- include('../partials/footer') %>
     </div>
 
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    // Mostrar SweetAlert si el producto fue editado (al volver desde el admin)
-    if (window.location.search.includes('edited=1')) {
-      Swal.fire({
-        icon: 'success',
-        title: '¡Producto editado!',
-        text: 'El producto se ha editado correctamente.',
-        confirmButtonColor: '#3483fa',
-        timer: 2000,
-        timerProgressBar: true,
-        showConfirmButton: false
-      });
-      if (window.history.replaceState) {
-        const url = new URL(window.location);
-        url.searchParams.delete('edited');
-        window.history.replaceState({}, document.title, url.pathname + url.search);
-      }
-    }
-  </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        if (window.location.search.includes('edited=1')) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Producto editado!',
+                text: 'El producto se ha editado correctamente.',
+                confirmButtonColor: '#3483fa',
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+            if (window.history.replaceState) {
+                const url = new URL(window.location);
+                url.searchParams.delete('edited');
+                window.history.replaceState({}, document.title, url.pathname + url.search);
+            }
+        }
+    </script>
 </body>
 
 </html>

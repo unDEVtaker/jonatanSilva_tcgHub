@@ -2,22 +2,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Favorites extends Model {
-    static associate(models) {
-      Favorites.belongsTo(models.Customer, {
-        foreignKey: 'customer_id',
-        as: 'customer',
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-      });
-      Favorites.belongsTo(models.Product, {
-        foreignKey: 'product_id',
-        as: 'product',
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-      });
-    }
-  }
+  class Favorites extends Model {}
 
   Favorites.init({
     customer_id: {

@@ -242,7 +242,7 @@ const usersControllers = {
       console.error("Error eliminando usuario de la base de datos:", error);
       res.status(500).send("Error eliminando usuario de la base de datos");
     }
-  }
+  },
 };
 
 module.exports = usersControllers;

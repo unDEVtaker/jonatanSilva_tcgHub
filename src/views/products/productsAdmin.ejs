@@ -15,18 +15,20 @@
   </style>
 </head>
 
+<%- include('../partials/header') %>
+
 <body class="bg-light text-dark">
   <div class="container">
     <header class="text-center my-4">
-      <h1>Product Administration</h1>
+      <h1>Mis publicaciones</h1>
     </header>
 
     <form class="mb-3" method="GET" action="/products/admin">
       <div class="input-group">
         <input type="text" class="form-control" name="search"
-          placeholder="Search by Name, ID, Rarity, Price, Set, Card Number, Foil Type"
+          placeholder="Buscar por Nombre, ID, Rareza, Precio, Set, Número de Carta, Tipo de Foil"
           value="<%= typeof query !== 'undefined' && typeof query.search !== 'undefined' ? query.search : '' %>">
-        <button class="btn btn-outline-secondary" type="submit">Search</button>
+        <button class="btn btn-outline-secondary" type="submit">Buscar</button>
       </div>
     </form>
 
@@ -46,21 +48,21 @@
  <div class="container my-3">
     <div class="d-flex padding-3">
         <a href="/users/profile/<%= user.id %>" class="btn btn-secondary mr-2">Volver al Perfil</a>
-        <a href="/products/add" class="btn btn-primary">Create New Product</a>
+        <a href="/products/add" class="btn btn-primary">Crear Nueva Publicación</a>
     </div>
 </div>
 
     <table class="table table-striped table-hover table-responsive">
       <thead>
         <tr class="table-dark">
-          <th class="text-center align-middle">Image</th>
+          <th class="text-center align-middle">Imagen</th>
           <th class="text-center align-middle">Card ID</th>
-          <th class="text-center align-middle">Name</th>
+          <th class="text-center align-middle">Nombre</th>
           <th class="text-center align-middle">Set</th>
           <th class="text-center align-middle">Foil Type</th>
-          <th class="text-center align-middle">State</th>
-          <th class="text-center align-middle">Price</th>
-          <th class="text-center align-middle">Actions</th>
+          <th class="text-center align-middle">Estado</th>
+          <th class="text-center align-middle">Precio</th>
+          <th class="text-center align-middle">Acciones</th>
         </tr>
       </thead>
       <tbody>
