@@ -21,14 +21,29 @@
 
         <form action="/users/signup" method="POST">
           <div class="input-box">
-            <input type="text" class="input-field" placeholder="Name" name="nombre" autocomplete="off" required>
+            <input type="text" class="input-field" placeholder="Name" name="nombre" autocomplete="off" minlength="2" required>
+            <% if(locals.errores && locals.errores.nombre) { %>
+              <div class="text-danger">
+                <%= errores.nombre.msg %>
+              </div>
+            <% } %>
           </div>
           <div class="input-box">
             <input type="text" class="input-field" placeholder="Email" name="correo" autocomplete="off" required>
+            <% if(locals.errores && locals.errores.correo) { %>
+              <div class="text-danger">
+                <%= errores.correo.msg %>
+              </div>
+            <% } %>
           </div>
           <div class="input-box">
             <input type="password" class="input-field" placeholder="Password" name="contrasena" autocomplete="off"
               required>
+            <% if(locals.errores && locals.errores.contrasena) { %>
+              <div class="text-danger">
+                <%= errores.contrasena.msg %>
+              </div>
+            <% } %>
           </div>
           <div class="input-submit">
             <button type="submit" class="submit-btn" id="submit">Create Account</button>

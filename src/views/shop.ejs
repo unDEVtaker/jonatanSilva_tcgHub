@@ -13,60 +13,90 @@
   <%- include('./partials/header.ejs') %>
 
   <section id="products" class="section-p1">
-    <div class="pro-container">
-      <% if (products && products.length) { %>
-        <% products.forEach(product => { %>
-          <div
-            class="pro-item"
-            onclick="window.location.href='/products/sproduct/<%= product.api_id %>';"
-          >
-            <img
-              src="<%= product.image || '/images/default.png' %>"
-              alt="<%= product.name || 'Producto sin nombre' %>"
-              onerror="this.src='/images/default.png';"
-            >
-
-            <div class="des">
-              <span class="rarity">
-                <%= product.rarity || 'Sin especificar' %>
-              </span>
-              <h5><%= product.name %></h5>
-
-              <div class="star">
-                <% for (let i = 0; i < 5; i++) { %>
-                  <i class="fa-solid fa-star"></i>
-                <% } %>
-              </div>
-
-              <h4>$<%= toThousand(product.price) %></h4>
-            </div>
-
-            <button
-              class="btn-cart"
-              disabled
-              title="Próximamente"
-            >
-              <i class="fa-solid fa-shopping-cart"></i>
-            </button>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <p class="no-products">No hay productos disponibles.</p>
-      <% } %>
+    <div class="pro-container" id="product-list">
+      <!-- Los productos se cargarán dinámicamente aquí -->
     </div>
-  </section>
-
-  <section id="pagination" class="section-p1">
-    <a href="#" class="page">1</a>
-    <a href="#" class="page">2</a>
-    <a href="#" class="page-next">
-      <i class="fa-solid fa-arrow-right"></i>
-    </a>
+    <div id="loader" style="display:none;text-align:center;padding:2rem;">
+      <span>Cargando más cartas...</span>
+    </div>
+    <div id="end-message" style="display:none;text-align:center;padding:2rem;">
+      <span>No hay más productos para mostrar.</span>
+    </div>
   </section>
 
   <%- include('./partials/newsLetter.ejs') %>
   <%- include('./partials/footer.ejs') %>
 
   <script src="/javascripts/script.js"></script>
+  <script>
+    // --- Infinite Scroll para cargar productos ---
+    let page = 1;
+    let loading = false;
+    let endReached = false;
+    const setFilter = "<%= typeof set !== 'undefined' && set ? set : '' %>";
+
+    async function loadProducts() {
+      if (loading || endReached) return;
+      loading = true;
+      document.getElementById('loader').style.display = 'block';
+      try {
+        let url = `/products/api/list?page=${page}`;
+        if (setFilter) url += `&set=${encodeURIComponent(setFilter)}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Error al cargar productos');
+        const data = await res.json();
+        if (data.products && data.products.length) {
+          renderProducts(data.products);
+          page++;
+        } else {
+          endReached = true;
+          document.getElementById('end-message').style.display = 'block';
+        }
+      } catch (e) {
+        alert('Error al cargar productos');
+      } finally {
+        loading = false;
+        document.getElementById('loader').style.display = 'none';
+      }
+    }
+
+    function renderProducts(products) {
+      const container = document.getElementById('product-list');
+      products.forEach(product => {
+        const div = document.createElement('div');
+        div.className = 'pro-item';
+        div.onclick = () => window.location.href = `/products/sproduct/${product.api_id}`;
+        div.innerHTML = `
+          <img src="${product.img }" alt="${product.nombre || 'Producto sin nombre'}" onerror="if(this.src.indexOf('default.png')===-1){this.src='/images/default.png';}">
+          <div class="des">
+            <span class="rarity">${product.foilType || 'Sin especificar'}</span>
+            <h5>${product.nombre}</h5>
+            <div class="star">${'<i class=\'fa-solid fa-star\'></i>'.repeat(5)}</div>
+            <h4>$${product.precio ? (product.precio).toLocaleString('es-AR') : 'N/A'}</h4>
+          </div>
+          <button class="button">
+                        <span>Add to cart</span>
+                        <div class="cart">
+                            <svg viewBox="0 0 36 26">
+                                <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
+                                <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Cargar la primera página
+    loadProducts();
+
+    // Detectar scroll para cargar más
+    window.addEventListener('scroll', () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        loadProducts();
+      }
+    });
+  </script>
 </body>
 </html>

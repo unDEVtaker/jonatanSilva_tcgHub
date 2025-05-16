@@ -93,7 +93,7 @@
                     <h3>$0.80</h3>
                 </div>
                 <div class="swiper-slide">
-                    <h2>Tsareena ex (PAR 046)</h2>
+                    <h2>Tsareena ex (PAR 046)</h3>
                     <h3>$0.46</h3>
                 </div>
                 <div class="swiper-slide">
@@ -121,7 +121,7 @@
         <p>The Hottest Cards This Week</p>
     
         <div class="pro-container">
-            <% topCards.forEach(product => { %>
+            <% topCards.filter(product => product.foilType === 'Special Illustration Rare').forEach(product => { %>
                 <div class="pro-item">
                     <img src="<%= product.img %>" alt="<%= product.nombre %>">
                     <div class="des">
@@ -136,7 +136,7 @@
                         </div>
                         <h4>$<%= toThousand(product.precio) %></h4>
                     </div>
-                    <a href="/products/sproduct/<%= product.api_id %>" class="button">
+                    <button class="button" href="/products/sproduct/<%= product.api_id %>">
                         <span>Add to cart</span>
                         <div class="cart">
                             <svg viewBox="0 0 36 26">
@@ -144,7 +144,7 @@
                                 <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
                             </svg>
                         </div>
-                    </a>
+                    </button>
                 </div>
             <% }); %>
         </div>

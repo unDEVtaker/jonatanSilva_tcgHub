@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     correo: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     contrasena: {
       type: DataTypes.STRING,

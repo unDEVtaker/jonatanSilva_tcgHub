@@ -66,6 +66,9 @@ router.get('/detail/:id', productsControllers.detail);
 router.get('/sproduct/:api_id', productsControllers.sproduct);
 router.get('/shop', productsControllers.shop);
 
+// API para infinite scroll en shop
+router.get('/api/list', productsControllers.apiList);
+
 //crud
 router.get('/admin', authMiddleware, productsControllers.productsAdmin);
 router.get('/add', authMiddleware, productsControllers.add);

@@ -16,7 +16,7 @@
             <h2 class="mb-4 text-center">Editar Perfil</h2>
 
             <div class="text-center mb-3">
-                <img src="<%= user.avatar ? user.avatar : '/images/users/default-avatar.png' %>"
+                <img src="<%= user.profile ? user.profile : '/images/users/default-avatar.png' %>"
                 alt="Avatar de <%= user.nombre %>" class="rounded-circle img-thumbnail" width="120">
                 <p class="mt-2"><small>Imagen de perfil actual</small></p>
             </div>
@@ -43,6 +43,17 @@
                   </div>
                   <% } %>
               </div>
+
+              <div class="mb-3">
+                <label for="nickname" class="form-label">Nick/Apodo</label>
+                <input type="text" name="nick_name" id="nickname" class="form-control" maxlength="30" value="<%= user.nick_name ? user.nick_name : '' %>">
+                <% if(locals.errores && locals.errores.nick_name) { %>
+                  <div class="text-danger">
+                    <%= errores.nick_name.msg %>
+                  </div>
+                <% } %>
+              </div>
+
               <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input type="email" name="correo" id="email" class="form-control" value="<%= user.correo %>">

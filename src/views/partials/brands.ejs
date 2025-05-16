@@ -1,22 +1,36 @@
 <link rel='stylesheet' href='/stylesheets/style.css' />
 
 <div class="brands">
-     <div class="brands_container">
-        <img src="/images/expansiones/sv01-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv02-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv03-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv06pt5-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv05-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv06-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv07-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv03pt5-all-expansions.png" alt="" class="brand_logo" style="width: 130px; height: auto;">
-        <img src="/images/expansiones/sv01-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv02-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv03-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv06pt5-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv05-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv06-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv07-all-expansions.png" alt="" class="brand_logo">
-        <img src="/images/expansiones/sv03pt5-all-expansions.png" alt="" class="brand_logo" style="width: 130px; height: auto;">
-    </div>
+  <div class="brands_container">
+    <img src="/images/expansiones/sv01-all-expansions.png" alt="" class="brand_logo" id="Scarlet & Violet">
+    <img src="/images/expansiones/sv02-all-expansions.png" alt="" class="brand_logo" id="Paldea Evolved">
+    <img src="/images/expansiones/sv03-all-expansions.png" alt="" class="brand_logo" id="Obsidian Flames">
+    <img src="/images/expansiones/sv06pt5-all-expansions.png" alt="" class="brand_logo" id="Shrouded Fable">
+    <img src="/images/expansiones/sv05-all-expansions.png" alt="" class="brand_logo" id="Temporal Forces">
+    <img src="/images/expansiones/sv06-all-expansions.png" alt="" class="brand_logo" id="Twilight Masquerade">>
+    <img src="/images/expansiones/sv07-all-expansions.png" alt="" class="brand_logo" id="Stellar Crown">
+    <img src="/images/expansiones/sv03pt5-all-expansions.png" alt="" class="brand_logo"
+      style="width: 130px; height: auto;" id="151">
+    <img src="/images/expansiones/sv01-all-expansions.png" alt="" class="brand_logo" id="Scarlet & Violet">
+    <img src="/images/expansiones/sv02-all-expansions.png" alt="" class="brand_logo" id="Paldea Evolved">
+    <img src="/images/expansiones/sv03-all-expansions.png" alt="" class="brand_logo" id="Obsidian Flames">
+    <img src="/images/expansiones/sv06pt5-all-expansions.png" alt="" class="brand_logo" id="Shrouded Fable">
+    <img src="/images/expansiones/sv05-all-expansions.png" alt="" class="brand_logo" id="Temporal Forces">
+    <img src="/images/expansiones/sv06-all-expansions.png" alt="" class="brand_logo" id="Twilight Masquerade">
+    <img src="/images/expansiones/sv07-all-expansions.png" alt="" class="brand_logo" id="Stellar Crown">
+    <img src="/images/expansiones/sv03pt5-all-expansions.png" alt="" class="brand_logo"
+      style="width: 130px; height: auto;" id="151">
+  </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.brand_logo').forEach(img => {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', function () {
+        const set = encodeURIComponent(this.id);
+        window.location.href = `/shop?set=${set}`;
+      });
+    });
+  });
+</script>

@@ -12,7 +12,7 @@ const { v4: uuidv4 } = require("uuid");
 const { log } = require("console");
 const fetch = require('node-fetch');
 const { toThousand } = require('../utils');
-const { Product, State } = require('../database/models'); // Importar el modelo Product y State
+const { Product, State, Customer } = require('../database/models'); // Importar también Customer
 
 const productsControllers = {
     list: async (req, res) => {
@@ -64,11 +64,12 @@ const productsControllers = {
                     error: { status: 404 }
                 });
             }
-            // Obtener usuario vendedor si corresponde (opcional)
+            // Obtener usuario vendedor si corresponde
             let seller = null;
             if (product.customer_id) {
-                // Si tienes el modelo Customer, puedes hacer la búsqueda aquí
-                // seller = await Customer.findByPk(product.customer_id);
+                seller = await Customer.findByPk(product.customer_id, {
+                    attributes: ['id', 'nombre', 'nick_name']
+                });
             }
             // Si quieres seguir mostrando info de la API externa:
             const API_URL = `https://api.pokemontcg.io/v2/cards/${apiId}`;
@@ -341,6 +342,29 @@ const productsControllers = {
         } catch (error) {
             console.error("Error deleting product:", error);
             res.status(500).send("Error deleting product");
+        }
+    },
+
+    // API para infinite scroll en shop
+    apiList: async (req, res) => {
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = 24;
+        const offset = (page - 1) * pageSize;
+        const set = req.query.set;
+        const where = {};
+        if (set) {
+            where.set_name = set;
+        }
+        try {
+            const products = await Product.findAll({
+                where,
+                order: [['createdAt', 'DESC']],
+                limit: pageSize,
+                offset,
+            });
+            res.json({ products });
+        } catch (error) {
+            res.status(500).json({ error: 'Error al cargar productos' });
         }
     },
 };

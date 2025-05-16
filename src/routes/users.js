@@ -51,7 +51,7 @@ router.get("/login", guestMiddleware, usersController.login);
 router.post("/login", loginValidations, usersController.processLogin);
 
 router.get("/profile/:id", usersController.profile);
-router.put("/profile/:id", authMiddleware, upload.single("avatar"), usersController.updateProfile);
+router.put("/profile/:id", authMiddleware, upload.single("avatar"), usersController.update);
 
 //router.post("/delete/:id", authMiddleware, usersController.deleteUser);
 

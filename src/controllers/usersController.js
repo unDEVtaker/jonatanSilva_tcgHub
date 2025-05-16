@@ -129,6 +129,10 @@ const usersControllers = {
     }
   },
   profile: async (req, res) => {
+    // Si no está logueado, redirigir a login
+    if (!req.session.user) {
+      return res.redirect('/users/login');
+    }
     const id = req.params.id;
     try {
       const user = await Customer.findByPk(id);
@@ -194,6 +198,11 @@ const usersControllers = {
       userToUpdate.nombre = req.body.nombre;
       userToUpdate.correo = req.body.correo;
       userToUpdate.dni = req.body.dni;
+      userToUpdate.nick_name = req.body.nick_name; // <--- Asegura que se actualiza el nick_name
+      // Si se subió una imagen, guardar la ruta en la columna profile
+      if (req.file) {
+        userToUpdate.profile = '/images/users/' + req.file.filename;
+      }
       userToUpdate.updatedAt = new Date();
 
       // Guardar cambios
@@ -204,6 +213,7 @@ const usersControllers = {
         id: userToUpdate.id,
         nombre: userToUpdate.nombre,
         correo: userToUpdate.correo,
+        nick_name: userToUpdate.nick_name,
         avatar: userToUpdate.profile // Asumiendo que 'profile' es el avatar
       };
       console.log("update - Sesión actualizada:", req.session.user);
@@ -213,37 +223,6 @@ const usersControllers = {
     } catch (error) {
       console.error("Error al actualizar el usuario:", error);
       res.render("error", { message: "Error al actualizar el usuario", error });
-    }
-  },
-  updateProfile: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { nombre, correo } = req.body;
-  
-      // Validar que el usuario exista
-      const users = parseFile(readFile(directory));
-      const userToUpdate = users.find(user => user.id === id);
-  
-      if (!userToUpdate) {
-        return res.status(404).send("Usuario no encontrado");
-      }
-  
-      // Actualizar los datos del usuario
-      userToUpdate.nombre = nombre || userToUpdate.nombre;
-      userToUpdate.correo = correo || userToUpdate.correo;
-  
-      // Manejar la actualización del avatar si se proporciona un archivo
-      if (req.file) {
-        userToUpdate.avatar = `/images/users/${req.file.filename}`;
-      }
-  
-      // Guardar los cambios
-      writeFile(directory, stringifyFile(users));
-  
-      return res.redirect(`/users/profile/${id}`);
-    } catch (error) {
-      console.error("Error al actualizar el perfil:", error);
-      return res.status(500).send("Error interno del servidor");
     }
   },
   deleteUser: (req, res) => {

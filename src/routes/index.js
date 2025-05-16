@@ -6,8 +6,9 @@ const indexController = require('../controllers/indexController');
 
 router
   .get('/', indexController.home) // Asumimos que esta ruta debe mostrar la página principal
-  .get('/shop', (req, res) => { // Esta es una ruta correcta con req y res
-    res.render('shop', { title: 'Shop - TCG HUB', user: req.session.user, products: limitedProducts });
+  .get('/shop', (req, res) => {
+    const set = req.query.set || null;
+    res.render('shop', { title: 'Shop - TCG HUB', user: req.session.user, set });
   });
 
 // Aquí podrías tener más definiciones de rutas
