@@ -64,7 +64,7 @@ const findAvailablePort = (startPort, callback) => {
 (async () => {
   try {
     await db.sequelize.authenticate();
-    console.log('Conexión a la base de datos establecida con éxito.');
+    // console.log('Conexión a la base de datos establecida con éxito.');
   } catch (error) {
     console.error('No se pudo conectar a la base de datos:', error);
     process.exit(1); // Salir del proceso si no se puede conectar
@@ -74,7 +74,7 @@ const findAvailablePort = (startPort, callback) => {
 // Conectar a la Base de Datos ANTES de iniciar el servidor
 db.sequelize.authenticate()
   .then(() => {
-    console.log('Conexión a la base de datos establecida correctamente con Sequelize.');
+    // console.log('Conexión a la base de datos establecida correctamente con Sequelize.');
   })
   .then(() => {
     findAvailablePort(process.env.PORT || 3000, (PORT) => {
