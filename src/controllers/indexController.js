@@ -1,28 +1,35 @@
-const { readJson } = require('../db/index.js');
-const { toThousand, paginator } = require('../utils');
+const path = require("path");
+const { validationResult } = require("express-validator");
+const fetch = require('node-fetch'); // Para usar fetch en el backend
+const { toThousand } = require('../utils'); // Si aún necesitas esta función
+const { Product, State } = require('../database/models');
 
-//proximamente
-function getRandomProducts(products, count) {
-  const shuffled = products.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-}
-
-module.exports = {
-  index: (req, res) => {
-    const products = readJson('productsDataBase.json');
-    const newProducts = products.filter(product => product.isNew);
-    const randomNewProducts = getRandomProducts(newProducts, 12);
-    const topCards = products.filter(product => product.isTopCard);
-    const randomTopCards = getRandomProducts(topCards, 12);
-
-    res.render('home', {
-      NewProducts: randomNewProducts,
-      topCards: randomTopCards,
-      toThousand,
-      user: req.session.user  // Pasamos el usuario a la vista
-    });
-  },
-    sellCard: (req, res) => { //Aca iria el controlador de sellCard
-    res.render('sell-card', { title: 'Sell Your Card - TCG HUB', user: req.session.user });
-  }
+const indexController = {
+    // Solo funciones de home y landing, sin lógica de productos ni usuarios
+    home: async (req, res) => {
+        try {
+            const NewProducts = await Product.findAll({
+                order: [['createdAt', 'DESC']],
+                limit: 16
+            });
+            // Obtener cartas top (state_id = 1)
+            const topCards = await Product.findAll({
+                where: { state_id: 1 },
+                limit: 8,
+                order: [['precio', 'DESC']],
+            });
+            res.render('home', {
+                title: 'Home - TCG HUB',
+                user: req.session.user,
+                NewProducts,
+                topCards,
+                toThousand
+            });
+        } catch (error) {
+            console.error('Error fetching products for home:', error);
+            res.status(500).send('Error fetching products for home');
+        }
+    },
 };
+
+module.exports = indexController;

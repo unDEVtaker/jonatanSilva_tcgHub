@@ -1,6 +1,6 @@
 <link rel='stylesheet' href='/stylesheets/style.css'/>
 <link rel='stylesheet' href='/stylesheets/mazoTcg.css'/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 
 <section id="products" class="section-p1">
@@ -123,10 +123,10 @@
         <div class="pro-container">
             <% topCards.forEach(product => { %>
                 <div class="pro-item">
-                    <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                    <img src="<%= product.img %>" alt="<%= product.nombre %>">
                     <div class="des">
-                        <span>Card</span>
-                        <h5><%= product.name %></h5>
+                        <span><%= product.foilType %></span>
+                        <h5><%= product.nombre %></h5>
                         <div class="star">
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
@@ -134,9 +134,9 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
-                        <h4>$<%= toThousand(product.price) %></h4>
+                        <h4>$<%= toThousand(product.precio) %></h4>
                     </div>
-                    <button class="button" href="/products/sproduct/<%= product.id %>">
+                    <a href="/products/sproduct/<%= product.api_id %>" class="button">
                         <span>Add to cart</span>
                         <div class="cart">
                             <svg viewBox="0 0 36 26">
@@ -144,7 +144,7 @@
                                 <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
                             </svg>
                         </div>
-                    </button>
+                    </a>
                 </div>
             <% }); %>
         </div>

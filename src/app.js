@@ -1,20 +1,21 @@
+'use strict';
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const net = require('net'); // modulo para buscar el puerto
+const net = require('net');
 const methodOverride = require('method-override');
-const { body } = require("express-validator"); // Aunque body se usa en routes, es común verlo importado aquí a veces. Lo dejamos.
-const session = require('express-session'); // Añadido: Middleware de sesión
+const session = require('express-session');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const productsRouter = require('./routes/products');
+require('dotenv').config();
+
+const db = require('./database/models/index')
+
+const sessionSecret = process.env.SECRET || 'UN_SECRETO_DEFAULT_FUERTE_Y_LARGO';
 
 const app = express();
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -23,9 +24,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// middleware de sesión
 app.use(session({
-  secret: 'SECRETO',
+  secret: sessionSecret,
   resave: false,
   saveUninitialized: false
 }));
@@ -33,19 +33,20 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(methodOverride('_method'));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/products',productsRouter);
+// --- Configuración de Routers (MODIFICADO para exportación directa) ---
+// Ahora se requiere la instancia del router directamente.
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/products', require('./routes/products'));
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
   res.status(err.status || 500);
   res.render('error');
 });
@@ -59,15 +60,37 @@ const findAvailablePort = (startPort, callback) => {
   server.on('error', () => findAvailablePort(startPort + 1, callback));
 };
 
-findAvailablePort(3000, (PORT) => {
-  app.listen(PORT, () => {
-    console.log(`
-    ***************************************
-    Servidor funcionando en el puerto ${PORT}
-    link --->>> http://localhost:${PORT}
-    **************************************
-    `);
+// Autenticar la conexión de Sequelize
+(async () => {
+  try {
+    await db.sequelize.authenticate();
+    console.log('Conexión a la base de datos establecida con éxito.');
+  } catch (error) {
+    console.error('No se pudo conectar a la base de datos:', error);
+    process.exit(1); // Salir del proceso si no se puede conectar
+  }
+})();
+
+// Conectar a la Base de Datos ANTES de iniciar el servidor
+db.sequelize.authenticate()
+  .then(() => {
+    console.log('Conexión a la base de datos establecida correctamente con Sequelize.');
+  })
+  .then(() => {
+    findAvailablePort(process.env.PORT || 3000, (PORT) => {
+      app.listen(PORT, () => {
+        console.log(`
+        ***************************************
+        Servidor funcionando en el puerto ${PORT}
+        link --->>> http://localhost:${PORT}
+        *************************************
+        `);
+      });
+    });
+  })
+  .catch(err => {
+    console.error('Error al conectar a la base de datos o al iniciar la aplicación:', err);
+    process.exit(1);
   });
-});
 
 module.exports = app;

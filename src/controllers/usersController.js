@@ -10,63 +10,54 @@ const {
 } = require("../utils/filesystem");
 const { v4: uuidv4 } = require("uuid");
 const { log } = require("console");
+const { Customer } = require('../database/models');
 
 const usersControllers = {
   login: (req, res, next) => {
     res.render("users/login", { title: "Login - TCG HUB" });
   },
-  processLogin: (req, res, next) => {
-    const { correo, contrasena } = req.body; // Also get the password from the body
-    const users = parseFile(readFile(directory));
+  processLogin: async (req, res, next) => {
+    const { correo, contrasena } = req.body;
     const errores = validationResult(req);
 
-    // Find the user by email
-    const user = users.find((user) => user.correo === correo);
-
-    // --- NEW LOGIN ERROR HANDLING ---
-    // Check if there are validation errors first (e.g., empty fields)
+    // Check for validation errors
     if (!errores.isEmpty()) {
       console.log("Validation errors during login:", errores.array());
       return res.render("users/login", {
         title: "Login - TCG HUB",
         errores: errores.mapped(),
-        correo: correo // Pass the entered email back
+        correo, // Pass the entered email back
       });
     }
 
-    // Check if the user exists and if the password is correct
-    // Use bcrypt.compareSync to compare the provided password with the stored hash
-    if (!user || !bcrypt.compareSync(contrasena, user.contrasena)) {
-      console.log("Login failed: User not found or incorrect password for email:", correo);
-      // Render the login page again with an error message
-      return res.render("users/login", {
-        title: "Login - TCG HUB",
-        loginError: "Invalid credentials. Please try again.", // English error message
-        correo: correo // Pass the entered email back so the user doesn't have to re-type it
-      });
+    try {
+      // Find the user in the database
+      const user = await Customer.findOne({ where: { correo } });
+
+      // Check if the user exists and if the password is correct
+      if (!user || !bcrypt.compareSync(contrasena, user.contrasena)) {
+        console.log("Login failed: User not found or incorrect password for email:", correo);
+        return res.render("users/login", {
+          title: "Login - TCG HUB",
+          loginError: "Credenciales inválidas. Por favor, inténtalo de nuevo.",
+          correo, // Pass the entered email back
+        });
+      }
+
+      // If user exists and password is correct, proceed with login
+      const { nombre, id, avatar } = user;
+      console.log("User logged in with ID:", id);
+
+      // Set session data
+      req.session.user = { correo, nombre, id, avatar };
+      console.log("Session user set:", req.session.user);
+
+      // Redirect after successful login
+      res.redirect(`/`);
+    } catch (error) {
+      console.error("Error during login:", error);
+      res.render("error", { message: "Error al iniciar sesión", error });
     }
-    // --- END NEW LOGIN ERROR HANDLING ---
-
-
-    // If user exists and password is correct, proceed with login
-    // Destructure properties from the found user object
-    const { nombre, id, avatar } = user;
-    console.log("User logged in with ID:", id);
-
-    // Set session data
-    req.session.user = { correo, nombre, id, avatar };
-    console.log("Session user set:", req.session.user);
-
-    // Handle "Remember Me" cookie
-    if (req.body.recuerdame) {
-      console.log("Setting 'Remember Me' cookie for user:", correo);
-      // Note: Storing sensitive info like ID/avatar directly in a cookie might not be ideal.
-      // Consider storing a token or a less sensitive identifier and looking up user data on subsequent requests.
-      res.cookie("user", { correo, nombre, id, avatar }, { maxAge: 1000 * 60 * 30 }); // Cookie lasts 30 minutes
-    }
-
-    // Redirect after successful login
-    res.redirect(`/`);
   },
   logout: (req, res) => {
     console.log("Logging out user:", req.session.user ? req.session.user.correo : 'N/A');
@@ -85,34 +76,32 @@ const usersControllers = {
   signup: function (req, res, next) {
     res.render("users/signup", { title: "Create an Account - TCG HUB" });
   },
-  store: function (req, res, next) {
+  store: async function (req, res, next) {
     try {
       console.log("Entrando a usersControllers.store");
-      const users = parseFile(readFile(directory));
       const { nombre, correo, contrasena } = req.body;
       const errores = validationResult(req);
       console.log("Errores de validación (store):", errores.array());
 
-      if (!errores.isEmpty()) { // Check if validationResult is NOT empty
+      if (!errores.isEmpty()) {
         console.log("Validation errors during signup, rendering signup.");
-        return res.render("users/signup", { // Use return here to stop execution
+        return res.render("users/signup", {
           title: "Create an Account - TCG HUB",
           errores: errores.mapped(),
           nombre,
           correo,
-          // Do NOT pass the password back for security reasons
         });
       }
 
-      // Check if user with this email already exists before hashing and saving
-      const existingUser = users.find(user => user.correo === correo);
+      // Verificar si el correo ya existe en la base de datos
+      const existingUser = await Customer.findOne({ where: { correo } });
       if (existingUser) {
         console.log("Signup failed: Email already exists:", correo);
         return res.render("users/signup", {
           title: "Create an Account - TCG HUB",
           errores: {
             correo: {
-              msg: "This email is already registered." // Error message for existing email
+              msg: "Este correo ya está registrado."
             }
           },
           nombre,
@@ -120,89 +109,39 @@ const usersControllers = {
         });
       }
 
-
-      bcrypt.hash(contrasena, 10, function (err, hash) {
-        if (err) {
-          console.error("Error hashing password:", err);
-          // Handle error, maybe render signup again with a generic error message
-          return res.render("users/signup", {
-            title: "Create an Account - TCG HUB",
-            genericError: "An error occurred during registration. Please try again.",
-            nombre,
-            correo
-          });
-        }
-
-        console.log("Hash generated successfully.");
-        const newUser = {
-          id: uuidv4(),
-          nombre,
-          correo,
-          contrasena: hash, // Store the hashed password
-          category: "user", // Default category
-          avatar: "/images/users/default-avatar.png", // Default avatar
-          dni: "", // Default empty fields
-          provincia: "",
-          localidad: "",
-          calle: "",
-          altura: "",
-          telefono: "",
-          createdAt: new Date().toISOString(), // Use ISO string for consistent date format
-          updatedAt: new Date().toISOString(),
-        };
-        users.push(newUser);
-        console.log("New user created:", newUser.id, newUser.correo);
-        writeFile(directory, stringifyFile(users));
-        console.log("User saved to file, redirecting to login.");
-        res.redirect("/users/login");
+      // Crear un nuevo usuario
+      const hashedPassword = await bcrypt.hash(contrasena, 10);
+      const newUser = await Customer.create({
+        nombre,
+        correo,
+        contrasena: hashedPassword,
+        avatar: "/images/users/default-avatar.png",
+        category: "user",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
 
+      console.log("Nuevo usuario creado:", newUser.id, newUser.correo);
+      res.redirect("/users/login");
     } catch (error) {
-      console.error("Error caught in store:", error);
-      // Handle general errors during signup process
-      res.render("error", { title: "Server Error", error }); // Render a generic error page
+      console.error("Error en store:", error);
+      res.render("error", { message: "Error al registrar el usuario", error });
     }
   },
   profile: async (req, res) => {
-    const users = parseFile(readFile(directory));
     const id = req.params.id;
     try {
-      const user = users.find((user) => user.id === id);
+      const user = await Customer.findByPk(id);
 
       if (!user) {
-        return res.status(404).send("User not found"); // Handle user not found
+        return res.status(404).send("Usuario no encontrado");
       }
 
-      // Fetch provinces
-      const responseProvincias = await fetch("https://apis.datos.gob.ar/georef/api/provincias");
-      if (!responseProvincias.ok) {
-        console.error("Error fetching provinces:", responseProvincias.status, responseProvincias.statusText);
-        // Decide how to handle this error - maybe render profile without provinces/localities or show an error message
-        // For now, we'll proceed but provinces/localities will be empty or cause errors in the view if not handled there.
-        // A more robust approach would be to render an error page or pass an error flag to the profile view.
-        // throw new Error("Hubo un problema con la peticion de provincias"); // Or handle gracefully
-      }
-      const dataProvincias = await responseProvincias.json();
-      const provincias = dataProvincias.provincias ? dataProvincias.provincias.sort((a, b) => a.nombre.localeCompare(b.nombre)) : []; // Handle case where provincias array is missing
-
-      // Determine which province ID to use for fetching localities
-      const idProvincia = user.provincia && provincias.find(p => p.id === user.provincia) ? user.provincia : (provincias.length > 0 ? provincias[0].id : null); // Use user's province if valid, otherwise first province, otherwise null
-
-      let localidades = [];
-      if (idProvincia) { // Only fetch localities if a valid province ID is determined
-        const responseLocalidades = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${idProvincia}&max=500`);
-        if (!responseLocalidades.ok) {
-          console.error("Error fetching localities:", responseLocalidades.status, responseLocalidades.statusText);
-          // Handle error fetching localities
-        } else {
-          const dataLocalidades = await responseLocalidades.json();
-          localidades = dataLocalidades.localidades ? dataLocalidades.localidades.sort((a, b) => a.nombre.localeCompare(b.nombre)) : []; // Handle case where localidades array is missing
-        }
-      }
-
-
-      // Pass user, provinces, and localities to the view
-      res.render("users/profile", { title: "Profile", user, provincias, localidades });
+      // Renderizar la vista del perfil con los datos del usuario
+      res.render("users/profile", {
+        title: "Perfil de Usuario",
+        user,
+      });
 
     } catch (error) {
       console.error("Error loading profile:", error);
@@ -210,107 +149,102 @@ const usersControllers = {
       res.status(500).send("Error loading profile: " + error.message);
     }
   },
-  update: (req, res) => {
-    console.log("update - Session (start):", req.session);
-    console.log("update - req.body:", req.body);
-    console.log("update - req.file:", req.file); // Log file info if using multer
+  update: async (req, res) => {
+    console.log("update - Método HTTP recibido:", req.method);
+    console.log("update - Datos del formulario recibidos:", req.body);
+    console.log("update - Archivo recibido:", req.file); // Si se usa multer para subir archivos
 
-    const users = parseFile(readFile(directory));
     const id = req.params.id;
-    const userToUpdate = users.find((user) => user.id === id);
+    console.log("update - ID recibido:", id); // Registro del ID recibido
 
-    if (!userToUpdate) {
-      return res.status(404).send("User not found");
+    try {
+      // Buscar al usuario en la base de datos
+      const userToUpdate = await Customer.findByPk(id);
+      console.log("update - Usuario encontrado:", userToUpdate); // Registro del usuario encontrado
+
+      if (!userToUpdate) {
+        return res.status(404).send("Usuario no encontrado");
+      }
+
+      // Validar errores
+      const errores = validationResult(req);
+      if (!errores.isEmpty()) {
+        console.log("Validation errors during update:", errores.array());
+        return res.render("users/profile", {
+          title: "Profile",
+          user: userToUpdate,
+          errores: errores.mapped(),
+        });
+      }
+
+      // Verificar si el correo ya existe
+      if (req.body.correo !== userToUpdate.correo) {
+        const existingUser = await Customer.findOne({ where: { correo: req.body.correo } });
+        console.log("update - Usuario con correo existente:", existingUser); // Registro del correo existente
+        if (existingUser) {
+          return res.render("users/profile", {
+            title: "Profile",
+            user: userToUpdate,
+            errores: { correo: { msg: "Este correo ya está registrado." } },
+          });
+        }
+      }
+
+      // Actualizar propiedades del usuario
+      userToUpdate.nombre = req.body.nombre;
+      userToUpdate.correo = req.body.correo;
+      userToUpdate.dni = req.body.dni;
+      userToUpdate.updatedAt = new Date();
+
+      // Guardar cambios
+      await userToUpdate.save();
+
+      // Actualizar la sesión del usuario
+      req.session.user = {
+        id: userToUpdate.id,
+        nombre: userToUpdate.nombre,
+        correo: userToUpdate.correo,
+        avatar: userToUpdate.profile // Asumiendo que 'profile' es el avatar
+      };
+      console.log("update - Sesión actualizada:", req.session.user);
+
+      console.log("Usuario actualizado:", userToUpdate);
+      res.redirect(`/users/profile/${id}`);
+    } catch (error) {
+      console.error("Error al actualizar el usuario:", error);
+      res.render("error", { message: "Error al actualizar el usuario", error });
     }
-
-    // Basic validation check (you might have more detailed validation middleware before this)
-    const errores = validationResult(req);
-    if (!errores.isEmpty()) {
-      console.log("Validation errors during update:", errores.array());
-      // Re-render the profile page with validation errors and old data
-      // You'll need to fetch provinces/localities again for the select inputs
-      // This requires calling the profile logic or duplicating it here.
-      // A better approach is often to handle validation *before* the controller function.
-      return res.render("users/profile", {
-        title: "Profile",
-        user: userToUpdate, // Pass the original user data
-        errores: errores.mapped(),
-        // You need to fetch provinces and localities here or pass them from a middleware
-        provincias: [], // Placeholder - fetch real data or pass it
-        localidades: [] // Placeholder - fetch real data or pass it
-      });
+  },
+  updateProfile: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { nombre, correo } = req.body;
+  
+      // Validar que el usuario exista
+      const users = parseFile(readFile(directory));
+      const userToUpdate = users.find(user => user.id === id);
+  
+      if (!userToUpdate) {
+        return res.status(404).send("Usuario no encontrado");
+      }
+  
+      // Actualizar los datos del usuario
+      userToUpdate.nombre = nombre || userToUpdate.nombre;
+      userToUpdate.correo = correo || userToUpdate.correo;
+  
+      // Manejar la actualización del avatar si se proporciona un archivo
+      if (req.file) {
+        userToUpdate.avatar = `/images/users/${req.file.filename}`;
+      }
+  
+      // Guardar los cambios
+      writeFile(directory, stringifyFile(users));
+  
+      return res.redirect(`/users/profile/${id}`);
+    } catch (error) {
+      console.error("Error al actualizar el perfil:", error);
+      return res.status(500).send("Error interno del servidor");
     }
-
-
-    // Update user properties
-    userToUpdate.nombre = req.body.nombre;
-    userToUpdate.correo = req.body.correo; // Be careful with email updates - might need re-verification
-    userToUpdate.dni = req.body.dni;
-    userToUpdate.provincia = req.body.provincia;
-    userToUpdate.localidad = req.body.localidad;
-    userToUpdate.calle = req.body.calle;
-    userToUpdate.altura = req.body.altura;
-    userToUpdate.telefono = req.body.telefono;
-    userToUpdate.updatedAt = new Date().toISOString();
-
-    // Handle password update if new passwords are provided
-    if (req.body.contrasena && req.body.contrasena2) {
-      // You should also validate that contrasena and contrasena2 match,
-      // perhaps using express-validator middleware before this controller function.
-      // If they match and are valid, hash the new password.
-      userToUpdate.contrasena = bcrypt.hashSync(req.body.contrasena, 10);
-      console.log("Password updated for user:", userToUpdate.id);
-    }
-    // If contrasena is provided but contrasena2 is not, or vice versa,
-    // or if validation fails, you should handle that error and re-render the form.
-
-
-    // Handle avatar file upload if a new file is provided
-    if (req.file) {
-      // Optional: Delete the old avatar file if it's not the default one
-      // const oldAvatarPath = path.join(__dirname, '../public/images/users', userToUpdate.avatar);
-      // if (userToUpdate.avatar && userToUpdate.avatar !== '/images/users/default-avatar.png' && fs.existsSync(oldAvatarPath)) {
-      //     try {
-      //         fs.unlinkSync(oldAvatarPath);
-      //         console.log("Deleted old avatar:", oldAvatarPath);
-      //     } catch (unlinkError) {
-      //         console.error("Error deleting old avatar:", unlinkError);
-      //         // Decide how to handle this error (e.g., log it, but don't stop the update)
-      //     }
-      // }
-      userToUpdate.avatar = '/images/users/' + req.file.filename; // Update avatar path
-      console.log("Avatar updated for user:", userToUpdate.id, userToUpdate.avatar);
-    }
-
-
-    // Find the index and replace the user object
-    const index = users.findIndex((user) => user.id === id);
-    if (index !== -1) {
-      users[index] = userToUpdate; // Replace the old user object with the updated one
-    } else {
-      // This case should ideally not happen if userToUpdate was found, but as a safeguard:
-      console.error("Error updating user: User index not found after finding user object.");
-      return res.status(500).send("Internal Server Error: Could not find user index for update.");
-    }
-
-
-    // Save the updated users array back to the file
-    writeFile(directory, stringifyFile(users));
-    console.log("User data saved to file.");
-
-    // Update session user data if the logged-in user is the one being updated
-    if (req.session.user && req.session.user.id === id) {
-      // Only update session properties that might have changed and are stored in session
-      req.session.user.nombre = userToUpdate.nombre;
-      req.session.user.correo = userToUpdate.correo;
-      req.session.user.avatar = userToUpdate.avatar;
-      // Do NOT update password in session
-      console.log("Session user data updated.");
-    }
-
-
-    console.log("update - Session (before redirect):", req.session);
-    res.redirect(`/users/profile/${id}`); // Redirect to the profile page
   },
   deleteUser: (req, res) => {
     console.log("Attempting to delete user:", req.params.id);

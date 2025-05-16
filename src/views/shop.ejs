@@ -1,48 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-    <title>
-        <%= title %>
-    </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title><%= title %></title>
+  <!-- Aquí puedes añadir tu CSS -->
+  <link rel="stylesheet" href="/styles/main.css">
 </head>
 
 <body>
-    <%- include('./partials/header.ejs') %>
-    
-    <section id="products" class="section-p1">
-        <div class="pro-container">
-            <% products.forEach(product => { %>
-                <div class="pro-item" onclick="window.location.href='/products/sproduct/<%= product.id %>';">
-                    <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
-                    <div class="des">
-                        <span><%= product.rarity %></span>
-                        <h5><%= product.name %></h5>
-                        <div class="star">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <h4>$<%= toThousand(product.price) %></h4>
-                    </div>
-                    <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
-                </div>
-            <% }); %>
-        </div>
-            </section>
-            
-            <section id="pagination" class="section-p1">
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#"><i class="fa-solid fa-arrow-right"></i></a>
-            </section>
-            
-            <%- include('./partials/newsLetter.ejs') %>
-            <%- include('./partials/footer.ejs') %>
-        </body>
+  <%- include('./partials/header.ejs') %>
 
-<script src="/javascripts/script.js"></script>
+  <section id="products" class="section-p1">
+    <div class="pro-container">
+      <% if (products && products.length) { %>
+        <% products.forEach(product => { %>
+          <div
+            class="pro-item"
+            onclick="window.location.href='/products/sproduct/<%= product.api_id %>';"
+          >
+            <img
+              src="<%= product.image || '/images/default.png' %>"
+              alt="<%= product.name || 'Producto sin nombre' %>"
+              onerror="this.src='/images/default.png';"
+            >
 
+            <div class="des">
+              <span class="rarity">
+                <%= product.rarity || 'Sin especificar' %>
+              </span>
+              <h5><%= product.name %></h5>
+
+              <div class="star">
+                <% for (let i = 0; i < 5; i++) { %>
+                  <i class="fa-solid fa-star"></i>
+                <% } %>
+              </div>
+
+              <h4>$<%= toThousand(product.price) %></h4>
+            </div>
+
+            <button
+              class="btn-cart"
+              disabled
+              title="Próximamente"
+            >
+              <i class="fa-solid fa-shopping-cart"></i>
+            </button>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="no-products">No hay productos disponibles.</p>
+      <% } %>
+    </div>
+  </section>
+
+  <section id="pagination" class="section-p1">
+    <a href="#" class="page">1</a>
+    <a href="#" class="page">2</a>
+    <a href="#" class="page-next">
+      <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </section>
+
+  <%- include('./partials/newsLetter.ejs') %>
+  <%- include('./partials/footer.ejs') %>
+
+  <script src="/javascripts/script.js"></script>
+</body>
 </html>

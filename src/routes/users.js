@@ -1,25 +1,33 @@
-// routes/users.js
-
-const express = require("express");
+'use strict';
+const express = require('express');
 const router = express.Router();
-const usersControllers = require("../controllers/usersController"); // Asegúrate de que esta ruta sea correcta
-const { body } = require("express-validator");
-const multer = require("multer");
-const path = require("path");
+
+const usersController = require('../controllers/usersController');
+const { body } = require('express-validator');
+const multer = require('multer');
+const path = require('path');
 const guestMiddleware = require('../middleware/guestMiddleware');
 const authMiddleware = require('../middleware/authMiddleware');
+const registerValidations = require('../middleware/registerValidations');
 
-// ... Configuración de Multer ...
+const db = require('../database/models/index');
+const models = db.models;
+
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null,path.join(__dirname,'../public/images/users'));
-    },
-    filename: function (req, file, cb) {
-        const { v4: uuidv4 } = require("uuid");
-        const uniqueSuffix = path.basename(file.originalname, path.extname(file.originalname)) + "-" + Date.now() + "-" + uuidv4() + path.extname(file.originalname);
-        cb(null, uniqueSuffix);
-    },
+    destination: function (req, file, cb) {
+        // --- RUTA DE DESTINO CORREGIDA ---
+        // Desde src/routes, sube dos niveles (../../) para llegar a la raíz del proyecto,
+        // luego entra en public/images/users
+        cb(null, path.join(__dirname, '..', '..', 'public', 'images', 'users')); // <<-- Usa esta línea
+    },
+    filename: function (req, file, cb) {
+        // ... (este código se mantiene igual) ...
+        const { v4: uuidv4 } = require("uuid");
+        const uniqueSuffix = path.basename(file.originalname, path.extname(file.originalname)) + "-" + Date.now() + "-" + uuidv4() + path.extname(file.originalname);
+        cb(null, uniqueSuffix);
+    },
 });
+
 const fileFilter = (req, file, cb) => {
     const filtro = /\.(jpg|jpeg|png|gif)$/;
     if (filtro.test(file.originalname)) {
@@ -31,37 +39,22 @@ const fileFilter = (req, file, cb) => {
 };
 const upload = multer({ storage, fileFilter });
 
-
-// ... Validaciones ...
-const registerValidations = [
-    body("nombre").notEmpty().withMessage("El nombre es obligatorio"),
-    body("correo").isEmail().withMessage("El correo debe ser válido"),
-    body("contrasena").isLength({ min: 6 }).withMessage("La contraseña debe tener al menos 6 caracteres"),
-];
 const loginValidations = [
-    body("correo").isEmail().withMessage("El correo debe ser válido"),
-    body("contrasena").notEmpty().withMessage("La contraseña es obligatoria"),
+    body('correo').isEmail().withMessage('El correo debe ser válido'),
+    body('contrasena').notEmpty().withMessage('La contraseña es obligatoria'),
 ];
 
+router.get("/signup", guestMiddleware, usersController.signup);
+router.post("/signup", registerValidations, usersController.store);
 
-// --- Rutas ---
-// Rutas de Registro
-router.get("/signup", guestMiddleware, usersControllers.signup);
-router.post("/signup", registerValidations, usersControllers.store);
+router.get("/login", guestMiddleware, usersController.login);
+router.post("/login", loginValidations, usersController.processLogin);
 
-// Rutas de Login
-router.get("/login", guestMiddleware, usersControllers.login);
-router.post("/login", loginValidations, usersControllers.processLogin);
+router.get("/profile/:id", usersController.profile);
+router.put("/profile/:id", authMiddleware, upload.single("avatar"), usersController.updateProfile);
 
-// Rutas de Perfil (Ahora la GET está activa)
-router.get("/profile/:id", usersControllers.profile); // <-- DESCOMENTADA
-router.put("/profile/:id", authMiddleware, upload.single("avatar"), usersControllers.update);
+//router.post("/delete/:id", authMiddleware, usersController.deleteUser);
 
-// Ruta para eliminar usuario
-// router.post("/delete/:id", authMiddleware, usersControllers.deleteUser);
-
-// Ruta de Logout
-router.post("/logout", usersControllers.logout);
-// --- Fin Rutas ---
+router.post("/logout", usersController.logout);
 
 module.exports = router;

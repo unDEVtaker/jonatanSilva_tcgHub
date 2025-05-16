@@ -316,7 +316,7 @@ hr {
     background-color: var(--verdeML);
 }
 
-.paypal-info {
+.mp-info {
     display: flex;
     align-items: center;
     font-size: 0.8rem;
@@ -324,13 +324,13 @@ hr {
     margin-bottom: 10px;
 }
 
-.paypal-info img {
+.mp-info img {
     width: auto;
-    height: 20px;
+    height: 70px;
     margin-right: 5px;
 }
 
-.paypal-info a {
+.mp-info a {
     color: #007bff;
     text-decoration: none;
 }

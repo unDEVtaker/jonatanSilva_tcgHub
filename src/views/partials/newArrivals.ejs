@@ -5,12 +5,12 @@
     <p>Fresh Picks Just for You</p>
     <div class="pro-container">
         <% NewProducts.forEach(product => { %>
-            <a href="/products/sproduct/<%= product.id %>" class="product-link">
+            <a href="/products/sproduct/<%= product.api_id %>" class="product-link">
                 <div class="pro-item">
-                    <img src="<%= product.image%>" alt="<%= product.name %>">
+                    <img src="<%= product.img %>" alt="<%= product.nombre %>">
                     <div class="des">
                         <span><%= product.foilType %></span>
-                        <h5><%= product.name %></h5>
+                        <h5><%= product.nombre %></h5>
                         <div class="star">
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
@@ -18,9 +18,9 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                         </div>
-                        <h4>$<%= toThousand(product.price) %></h4>
+                        <h4>$<%= toThousand(product.precio) %></h4>
                     </div>
-                    <button class="button" href="/products/sproduct/<%= product.id %>">
+                    <button class="button" href="/products/sproduct/<%= product.api_id %>">
                         <span>Add to cart</span>
                         <div class="cart">
                             <svg viewBox="0 0 36 26">

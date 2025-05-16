@@ -23,41 +23,39 @@
         <div class="card bg-dark text-white">
           <div class="row g-0">
             <div class="col-md-4 d-flex align-items-center justify-content-center">
-              <a href="<%= product.image %>" target="_blank">
-                <img src="<%= product.image %>" class="img-fluid rounded-start m-2" alt="<%= product.name %>"
+              <a href="<%= product.img %>" target="_blank">
+                <img src="<%= product.img %>" class="img-fluid rounded-start m-2" alt="<%= product.nombre %>"
                   style="max-width: 150px;">
               </a>
             </div>
             <div class="col-md-8">
               <div class="card-body">
                 <h5 class="card-title text-center">
-                  <%= product.name %>
+                  <%= product.nombre %>
                 </h5>
-                <p class="card-text text-center"><strong>ID:</strong>
-                  <%= product.id %>
-                </p>
                 <p class="card-text text-center"><strong>Card ID:</strong>
-                  <%= product.cardId %>
+                  <%= product.api_id %>
                 </p>
                 <p class="card-text text-center"><strong>Set:</strong>
-                  <%= product.set %>
-                </p>
-                <p class="card-text text-center"><strong>Card Number:</strong>
-                  <%= product.cardNumber %>
+                  <%= product.set_name %>
                 </p>
                 <p class="card-text text-center"><strong>Foil Type:</strong>
                   <%= product.foilType %>
                 </p>
-                <p class="card-text text-center"><strong>Price:</strong> $<%= toThousand(product.price) %>
+                <p class="card-text text-center"><strong>State:</strong>
+                  <%= product.state ? product.state.state : '' %>
+                </p>
+                <p class="card-text text-center"><strong>Price:</strong> $<%= toThousand(product.precio) %>
                 </p>
                 <p class="card-text text-center"><strong>Description:</strong>
-                  <%= product.description %>
+                  <%= product.descripcion %>
                 </p>
                 <div class="text-center">
                   <a href="/products/admin" class="btn btn-secondary me-2">Back</a>
                   <a href="/products/edit/<%= product.id %>" class="btn btn-warning me-2">Edit</a>
-                  <a href="/products/delete/<%= product.id %>" class="btn btn-danger"
-                    onclick="return confirm('Delete this product?')">Delete</a>
+                  <form method="POST" action="/products/delete/<%= product.id %>?_method=DELETE" style="display:inline">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this product?')">Delete</button>
+                  </form>
                 </div>
               </div>
             </div>

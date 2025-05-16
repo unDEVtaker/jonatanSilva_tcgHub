@@ -1,21 +1,82 @@
+// src/routes/products.js
+
+'use strict';
 const express = require('express');
-const router = express.Router();
-const productsController = require('../controllers/productsController.js');
-console.log('Contenido de productsController:', productsController); // Agrega esta línea
-const authMiddleware = require('../middleware/authMiddleware');
+const router = express.Router(); // Crea la instancia del router aquí
+
+// Middleware y otros requires
+const authMiddleware = require('../middleware/authMiddleware'); // Middleware de autenticación
+const { body } = require('express-validator'); // Para validaciones
+const multer = require('multer'); // Para subida de archivos
+const path = require('path'); // Para rutas
+const { v4: uuidv4 } = require("uuid"); // Para nombres únicos
 
 
-router
-    .get('/', productsController.list)
-    .get('/detail/:id', productsController.ecommerceDetail)
-    .get('/sproduct/:id', productsController.sproduct)
-    .get('/shop', productsController.shop)
-    //crud
-    .get('/admin', authMiddleware, productsController.productsAdmin) // Protegida y modificada
-    .get('/delete/:id', authMiddleware, productsController.remove)
-    .get('/edit/:id', authMiddleware, productsController.edit)
-    .post('/edit/:id', authMiddleware, productsController.update)
-    .get('/add', authMiddleware, productsController.add) // Muestra el formulario, protegida
-    .post('/create', authMiddleware, productsController.create); // Procesa el formulario, protegida
+// Requerir el controlador de productos (debe exportar el objeto directamente)
+const productsControllers = require('../controllers/productsController'); // Cambiar el nombre para que coincida con la exportación
 
-module.exports = router;
+
+// --- Configuración de Multer para imágenes de producto ---
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', '..', 'public', 'images', 'products'));
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = path.basename(file.originalname, path.extname(file.originalname)) + "-" + Date.now() + "-" + uuidv4() + path.extname(file.originalname);
+    cb(null, uniqueSuffix);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  const allowedExtensions = /\.(jpg|jpeg|png|gif)$/i;
+  if (allowedExtensions.test(file.originalname)) {
+    cb(null, true);
+  } else {
+    req.fileValidationError = 'Solo se permiten archivos de imagen (jpg, jpeg, png, gif).';
+    cb(null, false);
+  }
+};
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+
+// --- Reglas de Validación (Ejemplos) ---
+const productValidations = [
+  body('name')
+    .notEmpty().withMessage('El nombre del producto es obligatorio').bail()
+    .isLength({ min: 1 }).withMessage('El nombre debe tener al menos 1 caracter'), // <--- Cambiado a min: 1
+  body('description')
+    .notEmpty().withMessage('La descripción es obligatoria').bail()
+    .isLength({ min: 20 }).withMessage('La descripción debe tener al menos 20 caracteres'),
+  body('price')
+    .notEmpty().withMessage('El precio es obligatorio').bail()
+    .isDecimal({ decimal_mark: '.', force_decimal: true }).withMessage('El precio debe ser un número decimal válido (usando .)').bail()
+    .isFloat({ min: 0.01 }).withMessage('El precio debe ser mayor a cero.'),
+  body('stock')
+    .notEmpty().withMessage('El stock es obligatorio').bail()
+    .isInt({ min: 0 }).withMessage('El stock debe ser un número entero no negativo.'),
+];
+
+
+// --- Definición de Rutas ---
+
+router.get('/', productsControllers.index);
+router.get('/detail/:id', productsControllers.detail);
+// Cambiar la ruta para buscar por api_id en vez de id
+router.get('/sproduct/:api_id', productsControllers.sproduct);
+router.get('/shop', productsControllers.shop);
+
+//crud
+router.get('/admin', authMiddleware, productsControllers.productsAdmin);
+router.get('/add', authMiddleware, productsControllers.add);
+
+router.post('/create', authMiddleware, productValidations, productsControllers.create); // Sin el middleware de Multer
+
+router.get('/edit/:id', authMiddleware, productsControllers.edit);
+router.put('/edit/:id', authMiddleware, upload.array('productImages', 5), productValidations, productsControllers.update);
+
+router.delete('/delete/:id', authMiddleware, productsControllers.delete); // Usar DELETE
+
+
+// --- Exportar el router ---
+module.exports = router; // Exporta la instancia del router

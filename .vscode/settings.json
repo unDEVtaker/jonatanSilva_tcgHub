@@ -2,5 +2,6 @@
     "liveServer.settings.port": 5501,
     "editor.fontSize": 20,
     "editor.tabSize": 2,
-    "editor.detectIndentation": false // Agrega esta línea
+    "editor.detectIndentation": false,
+    "postman.settings.dotenv-detection-notification-visibility": false // Agrega esta línea
 }

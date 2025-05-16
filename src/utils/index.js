@@ -1,6 +1,12 @@
 //manjear la moneda
-const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
+// Mejorada: separa parte entera y decimal para evitar errores con decimales y muestra siempre dos decimales
+const toThousand = n => {
+    const num = Number(n);
+    if (isNaN(num)) return n;
+    const fixed = num.toFixed(2);
+    const [entero, decimal] = fixed.split(".");
+    return entero.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "," + decimal;
+};
 
 const paginator = (items = [], page = 1, perPage = 10,) => {
 
