@@ -70,55 +70,7 @@
                         </div>
 
                         <% if (card && card.tcgplayer && card.tcgplayer.prices) { %>
-                          <div id="tcgplayer-section" class="mb-4">
-                            <div class="title is-6 has-text-muted mb-0 mr-2">
-                              <% if (card.tcgplayer.url) { %>
-                                <a target="_blank" rel="nofollow" href="<%= card.tcgplayer.url %>">Comprar ahora en TCGplayer</a>
-                              <% } else { %>
-                                Comprar ahora en TCGplayer (Link not available)
-                              <% } %>
-                            </div>
-                            <% if (card.tcgplayer.updatedAt) { %>
-                              <div class="is-size-7 has-text-muted">Última actualización <%= new Date(card.tcgplayer.updatedAt).toLocaleDateString() %></div>
-                            <% } %>
-                            <section class="pt-2 prices-section">
-  <% Object.entries(card.tcgplayer.prices).forEach(function([foilType, priceData]) { %>
-    <% if (typeof priceData === 'number' && priceData > 0) { %>
-      <div class="card-details_price">
-        <p class="heading"><%= foilType.replace(/([A-Z])/g, ' $1').toLowerCase() %></p>
-        <p class="title is-5">$<%= priceData.toFixed(2) %></p>
-      </div>
-    <% } else if (priceData && typeof priceData === 'object') { %>
-      <% Object.entries(priceData).forEach(function([pricePoint, price]) { %>
-        <% if (typeof price === 'number' && price > 0) { %>
-          <div class="card-details_price">
-            <p class="heading">
-              <%= `${foilType} ${pricePoint}`.replace(/([A-Z])/g, ' $1').toLowerCase() %>
-            </p>
-            <p class="title is-5">$<%= price.toFixed(2) %></p>
-          </div>
-        <% } else if (price && typeof price === 'object') { %>
-          <% Object.entries(price).forEach(function([subPoint, subPrice]) { %>
-            <% if (typeof subPrice === 'number' && subPrice > 0) { %>
-              <div class="card-details_price">
-                <p class="heading">
-                  <%= `${foilType} ${pricePoint} ${subPoint}`.replace(/([A-Z])/g, ' $1').toLowerCase() %>
-                </p>
-                <p class="title is-5">$<%= subPrice.toFixed(2) %></p>
-              </div>
-            <% } %>
-          <% }); %>
-        <% } %>
-      <% }); %>
-    <% } %>
-  <% }); %>
-</section>
-                    </div>
-                    <% } else { %>
-                      <div id="tcgplayer-section" class="mb-4">
-                        <div class="title is-6 has-text-muted mb-0 mr-2">No hay datos de TCGPlayer disponibles.</div>
-                      </div>
-                      <% } %>
+                          
 
                         <% if (card && card.cardmarket && card.cardmarket.prices) { %>
                           <div id="cardmarket-section">
@@ -177,6 +129,61 @@
                                                       <% } %>
                                 </section>
                           </div>
+                          <div id="tcgplayer-section" class="mb-4">
+                            <div class="title is-6 has-text-muted mb-0 mr-2">
+                              <% if (card.tcgplayer.url) { %>
+                                <a target="_blank" rel="nofollow" href="<%= card.tcgplayer.url %>">Comprar ahora en TCGplayer</a>
+                              <% } else { %>
+                                Comprar ahora en TCGplayer (Link not available)
+                              <% } %>
+                            </div>
+                            <% if (card.tcgplayer.updatedAt) { %>
+                              <div class="is-size-7 has-text-muted">Última actualización <%= new Date(card.tcgplayer.updatedAt).toLocaleDateString() %></div>
+                            <% } %>
+                            <section class="pt-2 prices-section">
+  <% Object.entries(card.tcgplayer.prices).forEach(function([foilType, priceData]) { %>
+    <% if (typeof priceData === ' number' && priceData> 0) { %>
+                                  <div class="card-details_price">
+                                    <p class="heading">
+                                      <%= foilType.replace(/([A-Z])/g, ' $1' ).toLowerCase() %>
+                                    </p>
+                                    <p class="title is-5">$<%= priceData.toFixed(2) %>
+                                    </p>
+                                  </div>
+                                  <% } else if (priceData && typeof priceData==='object' ) { %>
+                                    <% Object.entries(priceData).forEach(function([pricePoint, price]) { %>
+                                      <% if (typeof price==='number' && price> 0) { %>
+                                        <div class="card-details_price">
+                                          <p class="heading">
+                                            <%= `${foilType} ${pricePoint}`.replace(/([A-Z])/g, ' $1' ).toLowerCase() %>
+                                          </p>
+                                          <p class="title is-5">$<%= price.toFixed(2) %>
+                                          </p>
+                                        </div>
+                                        <% } else if (price && typeof price==='object' ) { %>
+                                          <% Object.entries(price).forEach(function([subPoint, subPrice]) { %>
+                                            <% if (typeof subPrice==='number' && subPrice> 0) { %>
+                                              <div class="card-details_price">
+                                                <p class="heading">
+                                                  <%= `${foilType} ${pricePoint} ${subPoint}`.replace(/([A-Z])/g, ' $1'
+                                                    ).toLowerCase() %>
+                                                </p>
+                                                <p class="title is-5">$<%= subPrice.toFixed(2) %>
+                                                </p>
+                                              </div>
+                                              <% } %>
+                                                <% }); %>
+                                                  <% } %>
+                                                    <% }); %>
+                                                      <% } %>
+                                                        <% }); %>
+                                                          </section>
+                    </div>
+                    <% } else { %>
+                      <div id="tcgplayer-section" class="mb-4">
+                        <div class="title is-6 has-text-muted mb-0 mr-2">No hay datos de TCGPlayer disponibles.</div>
+                      </div>
+                      <% } %>
                           <% } %>
 
                             </section>
