@@ -20,56 +20,51 @@ const usersControllers = {
     const { correo, contrasena } = req.body;
     const errores = validationResult(req);
 
-    // Check for validation errors
+
     if (!errores.isEmpty()) {
-      console.log("Validation errors during login:", errores.array());
+      console.log("Errores de validación durante login:", errores.array());
       return res.render("users/login", {
         title: "Login - TCG HUB",
         errores: errores.mapped(),
-        correo, // Pass the entered email back
+        correo,
       });
     }
 
     try {
-      // Find the user in the database
+
       const user = await Customer.findOne({ where: { correo } });
 
-      // Check if the user exists and if the password is correct
       if (!user || !bcrypt.compareSync(contrasena, user.contrasena)) {
-        console.log("Login failed: User not found or incorrect password for email:", correo);
+        console.log("Login fallido: Usuario no encontrado o contraseña incorrecta para el correo:", correo);
         return res.render("users/login", {
           title: "Login - TCG HUB",
-          loginError: "Credenciales inválidas. Por favor, inténtalo de nuevo.",
-          correo, // Pass the entered email back
+          loginError: "Credenciales invalidas. Por favor, inténtalo de nuevo.",
+          correo,
         });
       }
 
-      // If user exists and password is correct, proceed with login
       const { nombre, id, avatar } = user;
-      console.log("User logged in with ID:", id);
+      console.log("Usuario ha iniciado sesión con ID:", id);
 
-      // Set session data
       req.session.user = { correo, nombre, id, avatar };
-      console.log("Session user set:", req.session.user);
+      console.log("Usuario de sesión establecido:", req.session.user);
 
-      // Redirect after successful login
       res.redirect(`/`);
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Error durante el login:", error);
       res.render("error", { message: "Error al iniciar sesión", error });
     }
   },
   logout: (req, res) => {
-    console.log("Logging out user:", req.session.user ? req.session.user.correo : 'N/A');
+    console.log("Cerrando sesión del usuario:", req.session.user ? req.session.user.correo : 'N/A');
     req.session.destroy(err => {
       if (err) {
-        console.error("Error destroying session:", err);
-        // Handle error, maybe redirect to a generic error page
+        console.error("Error al destruir la sesión:", err);
       } else {
-        console.log("Session destroyed.");
-        res.clearCookie("user"); // Clear the "Remember Me" cookie
-        console.log("Cookie 'user' cleared.");
-        res.redirect("/"); // Redirect to homepage or login page
+        console.log("Sesión destruida.");
+        res.clearCookie("user");
+        console.log("Cookie 'user' eliminada.");
+        res.redirect("/");
       }
     });
   },
@@ -84,7 +79,7 @@ const usersControllers = {
       console.log("Errores de validación (store):", errores.array());
 
       if (!errores.isEmpty()) {
-        console.log("Validation errors during signup, rendering signup.");
+        console.log("Errores de validación durante registro, renderizando signup.");
         return res.render("users/signup", {
           title: "Create an Account - TCG HUB",
           errores: errores.mapped(),
@@ -93,10 +88,9 @@ const usersControllers = {
         });
       }
 
-      // Verificar si el correo ya existe en la base de datos
       const existingUser = await Customer.findOne({ where: { correo } });
       if (existingUser) {
-        console.log("Signup failed: Email already exists:", correo);
+        console.log("Registro fallido: El correo ya existe:", correo);
         return res.render("users/signup", {
           title: "Create an Account - TCG HUB",
           errores: {
@@ -109,7 +103,6 @@ const usersControllers = {
         });
       }
 
-      // Crear un nuevo usuario
       const hashedPassword = await bcrypt.hash(contrasena, 10);
       const newUser = await Customer.create({
         nombre,
@@ -129,7 +122,6 @@ const usersControllers = {
     }
   },
   profile: async (req, res) => {
-    // Si no está logueado, redirigir a login
     if (!req.session.user) {
       return res.redirect('/users/login');
     }
@@ -148,9 +140,9 @@ const usersControllers = {
       });
 
     } catch (error) {
-      console.error("Error loading profile:", error);
+      console.error("Error cargando el perfil:", error);
 
-      res.status(500).send("Error loading profile: " + error.message);
+      res.status(500).send("Error cargando el perfil: " + error.message);
     }
   },
   update: async (req, res) => {
@@ -173,7 +165,7 @@ const usersControllers = {
 
       const errores = validationResult(req);
       if (!errores.isEmpty()) {
-        console.log("Validation errors during update:", errores.array());
+        console.log("Errores de validación durante actualización:", errores.array());
         return res.render("users/profile", {
           title: "Profile",
           user: userToUpdate,
@@ -197,7 +189,6 @@ const usersControllers = {
 
       userToUpdate.nombre = req.body.nombre;
       userToUpdate.correo = req.body.correo;
-      userToUpdate.dni = req.body.dni;
       userToUpdate.nick_name = req.body.nick_name;
 
       if (req.file) {
@@ -225,33 +216,31 @@ const usersControllers = {
       res.render("error", { message: "Error al actualizar el usuario", error });
     }
   },
-  deleteUser: (req, res) => {
-    console.log("Attempting to delete user:", req.params.id);
-    const users = parseFile(readFile(directory));
-    const idToDelete = req.params.id;
-
-
-    const initialUserCount = users.length;
-    const newUsers = users.filter((user) => user.id !== idToDelete);
-    const userDeleted = newUsers.length < initialUserCount;
-
-    if (userDeleted) {
-      writeFile(directory, stringifyFile(newUsers));
-      console.log("User deleted:", idToDelete);
-
-      if (req.session.user && req.session.user.id === idToDelete) {
+  deleteUser: async (req, res) => {
+    try {
+      console.log("Intentando eliminar usuario (DB):", req.params.id);
+      const idToDelete = req.params.id;
+      const user = await Customer.findByPk(idToDelete);
+      if (!user) {
+        console.warn("Usuario no encontrado para eliminar:", idToDelete);
+        return res.status(404).send("Usuario no encontrado para eliminar.");
+      }
+      await user.destroy();
+      console.log("Usuario eliminado de la base de datos:", idToDelete);
+      if (req.session.user && req.session.user.id == idToDelete) {
         req.session.destroy(err => {
-          if (err) console.error("Error destroying session after user delete:", err);
+          if (err) console.error("Error al destruir la sesión después de eliminar usuario:", err);
           res.clearCookie("user");
-          console.log("Session and cookie cleared for deleted user.");
-          res.redirect("/users/signup"); 
+          console.log("Sesión y cookie eliminadas para el usuario borrado.");
+
+          res.redirect("/?userDeleted=1");
         });
       } else {
         res.redirect("/admin/users");
       }
-    } else {
-      console.warn("User not found for deletion:", idToDelete);
-      res.status(404).send("User not found for deletion."); // User not found to delete
+    } catch (error) {
+      console.error("Error eliminando usuario de la base de datos:", error);
+      res.status(500).send("Error eliminando usuario de la base de datos");
     }
   }
 };

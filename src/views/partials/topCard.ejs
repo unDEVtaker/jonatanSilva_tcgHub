@@ -122,30 +122,32 @@
     
         <div class="pro-container">
             <% topCards.filter(product => product.foilType === 'Special Illustration Rare').forEach(product => { %>
-                <div class="pro-item">
-                    <img src="<%= product.img %>" alt="<%= product.nombre %>">
-                    <div class="des">
-                        <span><%= product.foilType %></span>
-                        <h5><%= product.nombre %></h5>
-                        <div class="star">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
+                <a href="/products/sproduct/<%= product.api_id %>" class="pro-item-link">
+                    <div class="pro-item">
+                        <img src="<%= product.img %>" alt="<%= product.nombre %>">
+                        <div class="des">
+                            <span><%= product.foilType %></span>
+                            <h5><%= product.nombre %></h5>
+                            <div class="star">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <h4>$<%= toThousand(product.precio) %></h4>
                         </div>
-                        <h4>$<%= toThousand(product.precio) %></h4>
+                        <span class="button">
+                            Add to cart
+                            <div class="cart">
+                                <svg viewBox="0 0 36 26">
+                                    <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
+                                    <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
+                                </svg>
+                            </div>
+                        </span>
                     </div>
-                    <button class="button" href="/products/sproduct/<%= product.api_id %>">
-                        <span>Add to cart</span>
-                        <div class="cart">
-                            <svg viewBox="0 0 36 26">
-                                <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
-                                <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                </div>
+                </a>
             <% }); %>
         </div>
 </section>

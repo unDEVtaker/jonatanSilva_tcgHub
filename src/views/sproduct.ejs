@@ -60,7 +60,7 @@
 
                     <section class="pt-0 mb-4">
                         <div class="is-flex is-align-items-center mb-4">
-                            <div class="title is-4 has-text-muted mb-0 mr-2">Prices</div>
+                            <div class="title is-4 has-text-muted mb-0 mr-2">Precios</div>
                             <label class="checkbox mr-2">
                                 <input id="tcgplayer" type="checkbox" checked> TCGPlayer
                             </label>
@@ -73,31 +73,46 @@
                           <div id="tcgplayer-section" class="mb-4">
                             <div class="title is-6 has-text-muted mb-0 mr-2">
                               <% if (card.tcgplayer.url) { %>
-                                <a target="_blank" rel="nofollow" href="<%= card.tcgplayer.url %>">Buy Now From TCGplayer</a>
+                                <a target="_blank" rel="nofollow" href="<%= card.tcgplayer.url %>">Comprar ahora en TCGplayer</a>
                               <% } else { %>
-                                Buy Now From TCGplayer (Link not available)
+                                Comprar ahora en TCGplayer (Link not available)
                               <% } %>
                             </div>
                             <% if (card.tcgplayer.updatedAt) { %>
-                              <div class="is-size-7 has-text-muted">Last Updated <%= new Date(card.tcgplayer.updatedAt).toLocaleDateString() %></div>
+                              <div class="is-size-7 has-text-muted">Última actualización <%= new Date(card.tcgplayer.updatedAt).toLocaleDateString() %></div>
                             <% } %>
                             <section class="pt-2 prices-section">
-                              <% Object.entries(card.tcgplayer.prices).forEach(([foilType, priceData]) => { %>
-                                <% if (priceData && typeof priceData === ' object') { %>
-                                  <% Object.entries(priceData).forEach(([pricePoint, price])=> { %>
-                                    <% if (price !==null && typeof price==='number' && price> 0) { %>
-                                      <div class="card-details_price">
-                                        <p class="heading">
-                                          <%= `${foilType} ${pricePoint}`.replace(/([A-Z])/g, ' $1' ).toLowerCase() %>
-                                        </p>
-                                        <p class="title is-5">$<%= price.toFixed(2) %>
-                                        </p>
-                                      </div>
-                                      <% } %>
-                                        <% }); %>
-                                          <% } %>
-                                            <% }); %>
-                                              </section>
+  <% Object.entries(card.tcgplayer.prices).forEach(function([foilType, priceData]) { %>
+    <% if (typeof priceData === 'number' && priceData > 0) { %>
+      <div class="card-details_price">
+        <p class="heading"><%= foilType.replace(/([A-Z])/g, ' $1').toLowerCase() %></p>
+        <p class="title is-5">$<%= priceData.toFixed(2) %></p>
+      </div>
+    <% } else if (priceData && typeof priceData === 'object') { %>
+      <% Object.entries(priceData).forEach(function([pricePoint, price]) { %>
+        <% if (typeof price === 'number' && price > 0) { %>
+          <div class="card-details_price">
+            <p class="heading">
+              <%= `${foilType} ${pricePoint}`.replace(/([A-Z])/g, ' $1').toLowerCase() %>
+            </p>
+            <p class="title is-5">$<%= price.toFixed(2) %></p>
+          </div>
+        <% } else if (price && typeof price === 'object') { %>
+          <% Object.entries(price).forEach(function([subPoint, subPrice]) { %>
+            <% if (typeof subPrice === 'number' && subPrice > 0) { %>
+              <div class="card-details_price">
+                <p class="heading">
+                  <%= `${foilType} ${pricePoint} ${subPoint}`.replace(/([A-Z])/g, ' $1').toLowerCase() %>
+                </p>
+                <p class="title is-5">$<%= subPrice.toFixed(2) %></p>
+              </div>
+            <% } %>
+          <% }); %>
+        <% } %>
+      <% }); %>
+    <% } %>
+  <% }); %>
+</section>
                     </div>
                     <% } else { %>
                       <div id="tcgplayer-section" class="mb-4">
@@ -109,14 +124,14 @@
                           <div id="cardmarket-section">
                             <div class="title is-6 has-text-muted mb-0 mr-2">
                               <% if (card.cardmarket.url) { %>
-                                <a target="_blank" rel="nofollow" href="<%= card.cardmarket.url %>">Buy Now From
+                                <a target="_blank" rel="nofollow" href="<%= card.cardmarket.url %>">Comprar ahora en
                                   Cardmarket</a>
                                 <% } else { %>
                                   Buy Now From Cardmarket (Link not available)
                                   <% } %>
                             </div>
                             <% if (card.cardmarket.updatedAt) { %>
-                              <div class="is-size-7 has-text-muted">Last Updated <%= new
+                              <div class="is-size-7 has-text-muted">Ultima actuali <%= new
                                   Date(card.cardmarket.updatedAt).toLocaleDateString() %>
                               </div>
                               <% } %>
@@ -380,12 +395,12 @@
                                 <option value="1">1</option>
 
                               </select>
-                              <span>Quantity</span>
+                              <span>Cantidad</span>
                             </div>
-                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="add-to-cart">Agregar al carrito</button>
                             <div class="mp-info">
                               <img src="/images/institucional/mercado-pago-logo-0.png" alt="Mercado Pago">
-                              <a href="#">Buy with Mercado Pago</a>
+                              <a href="#">Comprar con Mercado Pago</a>
                             </div>
                             <% if (seller && seller.nombre) { %>
                               <p class="seller-name">Vendido por: <%= seller.nombre %>
@@ -393,7 +408,7 @@
                               <% } %>
               </div>
               <div class="other-listings">
-                <a href="#">View other listings for this card</a>
+                <a href="#">Ver otras publicaciones de esta carta</a>
               </div>
             </div>
           </div>

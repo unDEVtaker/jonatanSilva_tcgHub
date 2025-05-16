@@ -17,7 +17,7 @@
         <input type="hidden" name="cardImage" id="cardImage">
 
         <div class="col-md-6">
-          <label for="cardName" class="form-label">Name</label>
+          <label for="cardName" class="form-label">Nombre</label>
           <input type="text" name="name" id="cardName" class="form-control-plaintext" readonly
             style="background-color: #f8f9fa;" required>
           <div class="valid-feedback">Looks good!</div>
@@ -67,26 +67,26 @@
         </div>
 
         <div class="col-12">
-          <label for="description" class="form-label">Description</label>
+          <label for="description" class="form-label">Descripción</label>
           <textarea name="description" class="form-control" id="description" required></textarea>
           <div class="invalid-feedback">Please enter a description.</div>
           <div class="valid-feedback">Looks good!</div>
         </div>
 
         <div class="col-md-6">
-          <label for="price" class="form-label">Price</label>
+          <label for="price" class="form-label">Precio</label>
           <div class="d-flex align-items-center">
             <input type="number" name="price" class="form-control me-2" id="price" required min="0.01" step="0.01">
             <span id="priceTrend" class="text-muted fw-bold fs-5"></span>
           </div>
-          <div class="invalid-feedback">Please enter a valid price greater than zero.</div>
+          <div class="invalid-feedback">Ingresa un valor mayor a 0.</div>
           <div class="valid-feedback">Looks good!</div>
         </div>
 
 
 
         <div class="col-12 d-flex justify-content-between mt-3">
-          <button type="submit" class="btn btn-success">Create product</button>
+          <button type="submit" class="btn btn-success">Publicar</button>
         </div>
       </form>
     </div>

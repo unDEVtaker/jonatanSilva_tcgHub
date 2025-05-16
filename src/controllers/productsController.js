@@ -29,26 +29,8 @@ const productsControllers = {
                 toThousand: toThousand
             });
         } catch (error) {
-            console.error("Error fetching products:", error);
-            res.status(500).send("Error fetching products");
-        }
-    },
-
-    ecommerceDetail: async (req, res) => {
-        try {
-            const product = await Product.findByPk(req.params.id);
-
-            if (!product) {
-                return res.status(404).send('Producto no encontrado');
-            }
-
-            return res.render('products/productDetail', {
-                ...product.toJSON(),
-                toThousand
-            });
-        } catch (error) {
-            console.error("Error fetching product details:", error);
-            res.status(500).send("Error fetching product details");
+            console.error("Error al obtener el producto:", error);
+            res.status(500).send("Error al obtener producto");
         }
     },
 
@@ -62,8 +44,8 @@ const productsControllers = {
             });
             if (!product) {
                 return res.status(404).render('error', {
-                    title: 'Product Not Found',
-                    message: `Product with API ID "${apiId}" not found in our database.`,
+                    title: 'Producto no encontrado',
+                    message: `No se encontró "${apiId}" en nuestra base de datos.`,
                     error: { status: 404 }
                 });
             }
@@ -74,7 +56,6 @@ const productsControllers = {
                     attributes: ['id', 'nombre', 'nick_name']
                 });
             }
-            // Si quieres seguir mostrando info de la API externa:
             const API_URL = `https://api.pokemontcg.io/v2/cards/${apiId}`;
             let card = null;
             try {
@@ -82,7 +63,7 @@ const productsControllers = {
                 if (response.ok) {
                     const data = await response.json();
                     card = data.data;
-                    console.log('CARD DATA API:', card); // <-- LOG PARA DEPURAR
+                    console.log('CARD DATA API:', card);
                 }
             } catch (err) {
                 card = null;
@@ -95,10 +76,10 @@ const productsControllers = {
                 toThousand
             });
         } catch (error) {
-            console.error('Error fetching product by api_id:', error);
+            console.error('Error al obtener el producto por api_id:', error);
             res.status(500).render('error', {
                 title: 'Error',
-                message: 'Error fetching product by api_id',
+                message: 'Error al obtener el producto por api_id',
                 error: { status: 500 }
             });
         }
@@ -154,8 +135,8 @@ const productsControllers = {
                 user: req.session.user
             });
         } catch (error) {
-            console.error("Error fetching admin products:", error);
-            res.status(500).send(`Error fetching admin products: ${error.message}`);
+            console.error("Error al obtener los productos de administrador.", error);
+            res.status(500).send(`Error al obtener productos de administración: ${error.message}`);
         }
     },
 
@@ -178,18 +159,18 @@ const productsControllers = {
             const product = await Product.findByPk(req.params.id);
 
             if (!product) {
-                return res.status(404).send('Product not found');
+                return res.status(404).send('Producto no encontrado');
             }
 
             if (req.session.user && product.user_id !== req.session.user.id) {
-                return res.status(403).send('Unauthorized to delete this product');
+                return res.status(403).send('No autorizado para eliminar este producto');
             }
 
             await product.destroy();
-            res.redirect('/products/admin');
+            res.redirect('/products/admin?deleted=1');
         } catch (error) {
-            console.error("Error deleting product:", error);
-            res.status(500).send("Error deleting product");
+            console.error("Error al eliminar el producto:", error);
+            res.status(500).send("Error al eliminar el producto");
         }
     },
 
@@ -203,7 +184,7 @@ const productsControllers = {
                 return res.status(404).send('Product not found');
             }
             if (req.session.user && product.customer_id !== req.session.user.id) {
-                return res.status(403).send('Unauthorized to edit this product');
+                return res.status(403).send('No autorizado para editar este producto');
             }
 
             const states = await State.findAll();
@@ -213,8 +194,8 @@ const productsControllers = {
                 states
             });
         } catch (error) {
-            console.error("Error fetching product for edit:", error);
-            res.status(500).send("Error fetching product for edit");
+            console.error("Error al obtener el producto para editar:", error);
+            res.status(500).send("Error al obtener el producto para editar");
         }
     },
 
@@ -232,7 +213,7 @@ const productsControllers = {
 
             const errores = validationResult(req);
             if (!errores.isEmpty()) {
-
+                console.log('ERRORES VALIDACION EDIT:', errores.array());
                 const states = await State.findAll();
                 return res.render('products/productEdit', {
                     title: 'Edit Product',
@@ -242,6 +223,7 @@ const productsControllers = {
                 });
             }
 
+
             await product.update({
                 nombre: req.body.name,
                 descripcion: req.body.description,
@@ -250,28 +232,28 @@ const productsControllers = {
                 foilType: req.body.foilType,
                 stock: req.body.stock || 0,
                 api_id: req.body.cardId,
-                cardNumber: req.body.cardNumber,
+                // cardNumber: req.body.cardNumber, 
                 img: req.body.cardImage,
                 state_id: req.body.state_id,
                 updatedAt: new Date(),
             });
 
-            res.redirect('/products/admin');
+            res.redirect('/products/admin?edited=1');
         } catch (error) {
-            console.error("Error updating product:", error);
-            res.status(500).send("Error updating product");
+            console.error("Error al actualizar producto:", error);
+            res.status(500).send("Error al actualizar producto");
         }
     },
 
     create: async (req, res) => {
-        console.log("Attempting to create product.");
+        console.log("Intentando crear producto.");
         console.log("Create body:", req.body);
         console.log("Create file:", req.file);
 
         const errores = validationResult(req);
 
         if (!errores.isEmpty()) {
-            console.log("Validation errors during product creation:", errores.array());
+            console.log("Errores de validación durante la creación del producto.:", errores.array());
             return res.render('products/productCreate', {
                 title: 'Create New Product',
                 errores: errores.mapped(),
@@ -295,11 +277,12 @@ const productsControllers = {
                 updatedAt: new Date(),
             });
 
-            console.log("New product created and saved:", newProduct.id, newProduct.nombre);
-            res.redirect('/products/admin');
+            console.log("Producto nuevo creado y guardado.:", newProduct.id, newProduct.nombre);
+
+            res.redirect('/products/admin?created=1');
         } catch (error) {
-            console.error("Error creating product:", error);
-            res.render('error', { message: "Error creating product", error });
+            console.error("Error creando el producto:", error);
+            res.render('error', { message: "Error creando el producto", error });
         }
     },
 
@@ -307,8 +290,8 @@ const productsControllers = {
 
         const states = await State.findAll();
         res.render('products/productCreate', {
-            title: 'Create New Product',
-            states 
+            title: 'Crear Nuevo Producto',
+            states
         });
     },
 
@@ -334,16 +317,16 @@ const productsControllers = {
         try {
             const product = await Product.findByPk(req.params.id);
             if (!product) {
-                return res.status(404).send('Product not found');
+                return res.status(404).send('Producto no encontrado');
             }
             if (req.session.user && product.customer_id !== req.session.user.id) {
-                return res.status(403).send('Unauthorized to delete this product');
+                return res.status(403).send('No autorizado para eliminar este producto');
             }
             await product.destroy();
-            res.redirect('/products/admin');
+            res.redirect('/products/admin?deleted=1');
         } catch (error) {
-            console.error("Error deleting product:", error);
-            res.status(500).send("Error deleting product");
+            console.error("Error al eliminar el producto:", error);
+            res.status(500).send("Error al eliminar el producto");
         }
     },
 

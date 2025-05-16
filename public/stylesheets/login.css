@@ -126,7 +126,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  color: transparent;
+  color: var(--blanco);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -137,6 +137,7 @@
   background: #2962ff;
   transform: scale(1.02);
   box-shadow: 0px 4px 8px rgba(52, 131, 250, 0.5);
+  
 }
 
 .sign-up-link {

@@ -27,8 +27,8 @@ const indexController = {
                 toThousand
             });
         } catch (error) {
-            console.error('Error fetching products for home:', error);
-            res.status(500).send('Error fetching products for home');
+            console.error('Error al obtener productos para la página de inicio:', error);
+            res.status(500).send('Error al obtener productos para la página de inicio');
         }
     },
 };

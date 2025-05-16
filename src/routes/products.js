@@ -46,7 +46,6 @@ const productValidations = [
     .isLength({ min: 20 }).withMessage('La descripción debe tener al menos 20 caracteres'),
   body('price')
     .notEmpty().withMessage('El precio es obligatorio').bail()
-    .isDecimal({ decimal_mark: '.', force_decimal: true }).withMessage('El precio debe ser un número decimal válido (usando .)').bail()
     .isFloat({ min: 0.01 }).withMessage('El precio debe ser mayor a cero.'),
   body('stock')
     .notEmpty().withMessage('El stock es obligatorio').bail()

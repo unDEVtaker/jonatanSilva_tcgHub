@@ -42,17 +42,21 @@ const loginValidations = [
     body('contrasena').notEmpty().withMessage('La contraseña es obligatoria'),
 ];
 
-router.get("/signup", guestMiddleware, usersController.signup);
-router.post("/signup", registerValidations, usersController.store);
+router
+  .route('/signup')
+  .get(guestMiddleware, usersController.signup)
+  .post(registerValidations, usersController.store);
 
-router.get("/login", guestMiddleware, usersController.login);
-router.post("/login", loginValidations, usersController.processLogin);
+router
+  .route('/login')
+  .get(guestMiddleware, usersController.login)
+  .post(loginValidations, usersController.processLogin);
 
-router.get("/profile/:id", usersController.profile);
-router.put("/profile/:id", authMiddleware, upload.single("avatar"), usersController.update);
+router.get('/profile/:id', usersController.profile);
+router.put('/profile/:id', authMiddleware, upload.single('avatar'), usersController.update);
 
+router.delete('/delete/:id', authMiddleware, usersController.deleteUser);
 
-
-router.post("/logout", usersController.logout);
+router.post('/logout', usersController.logout);
 
 module.exports = router;

@@ -29,7 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     nombre: DataTypes.STRING,
-    descripcion: DataTypes.TEXT,
+    descripcion: {
+      type: DataTypes.TEXT,
+      field: 'descripcion',
+    },
     set_name: {
       type: DataTypes.STRING,
       field: 'set',
