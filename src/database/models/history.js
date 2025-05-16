@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     customer_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'customers', // Nombre de la tabla 'customers'
+        model: 'customers',
         key: 'id',
       },
       onUpdate: 'CASCADE',

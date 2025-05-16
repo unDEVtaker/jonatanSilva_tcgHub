@@ -4,7 +4,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class State extends Model {
     static associate(models) {
-      // Aquí puedes definir asociaciones si otra tabla referencia a State
+
     }
   }
   State.init({

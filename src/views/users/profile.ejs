@@ -18,13 +18,13 @@
             <div class="text-center mb-3">
                 <img src="<%= user.profile ? user.profile : '/images/users/default-avatar.png' %>"
                 alt="Avatar de <%= user.nombre %>" class="rounded-circle img-thumbnail" width="120">
-                <p class="mt-2"><small>Imagen de perfil actual</small></p>
+                <p class="mt-2"><small>Imagen de perfil</small></p>
             </div>
 
             <form action="/users/profile/<%=user.id%>?_method=PUT" method="post" enctype="multipart/form-data">
 
               <div class="mb-3">
-                <label for="avatar" class="form-label">Cambiar Imagen de Perfil</label>
+                <label for="avatar" class="form-label">Cambiar Avatar</label>
                 <input type="file" name="avatar" id="avatar" class="form-control" accept=".jpg,.png ">
                 <% if(locals.errores && locals.errores.avatar) {%>
                   <div class="text-danger">
@@ -45,7 +45,7 @@
               </div>
 
               <div class="mb-3">
-                <label for="nickname" class="form-label">Nick/Apodo</label>
+                <label for="nickname" class="form-label">Alias</label>
                 <input type="text" name="nick_name" id="nickname" class="form-control" maxlength="30" value="<%= user.nick_name ? user.nick_name : '' %>">
                 <% if(locals.errores && locals.errores.nick_name) { %>
                   <div class="text-danger">

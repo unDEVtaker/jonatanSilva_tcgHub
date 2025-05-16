@@ -13,16 +13,12 @@ function random(array) {
 }
 
 const indexController = {
-    // Solo funciones de home y landing, sin lógica de productos ni usuarios
+
     home: async (req, res) => {
         try {
-            // Obtener todos los productos una sola vez
             let allProducts = await Product.findAll();
-            // NewProducts: random 18 de todos
             let NewProducts = random([...allProducts]).slice(0, 18);
-            // topCards: random 12 solo con state_id=1
             let topCards = random(allProducts.filter(p => p.state_id === 1)).slice(0, 12);
-
             res.render('home', {
                 title: 'Home - TCG HUB',
                 user: req.session.user,

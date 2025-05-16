@@ -85,3 +85,42 @@ Para el diseño y planificación de la interfaz de usuario de **TCG Hub**, he cr
 ## 👾 Dev => [unDEVtaker](https://github.com/unDEVtaker)
 
 ![img](public/images/undev.png )
+
+---
+
+## 🚀 Instalación y uso
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/unDEVtaker/tcgHub.git
+cd tcgHub
+```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3. Configurar la base de datos
+
+- Crea una base de datos MySQL llamada `tcghub` (o el nombre que prefieras).
+- Copia el archivo `.env.example` a `.env` y completa tus credenciales de base de datos.
+
+### 4. Ejecutar migraciones y seeders
+
+```bash
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+```
+
+### 5. Iniciar el servidor
+
+```bash
+npm start
+```
+
+El proyecto estará disponible en [http://localhost:3000](http://localhost:3000).
+
+---

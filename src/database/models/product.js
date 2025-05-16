@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'customer_id',
         as: 'customersWhoFavorited',
       });
-      Product.belongsTo(models.Customer, { // Nueva asociación: Product belongsTo Customer
+      Product.belongsTo(models.Customer, {
         foreignKey: 'customer_id',
-        as: 'creator', // Alias para la relación
+        as: 'creator',
       });
       Product.belongsTo(models.State, {
         foreignKey: 'state_id',
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     descripcion: DataTypes.TEXT,
     set_name: {
       type: DataTypes.STRING,
-      field: 'set', // Mapea a la columna 'set' en la base de datos
+      field: 'set',
     },
     foilType: {
       type: DataTypes.STRING,
@@ -62,15 +62,15 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'RESTRICT',
     },
-    customer_id: { // Nueva columna para la clave foránea
+    customer_id: {
       type: DataTypes.INTEGER,
-      allowNull: true, // Permite nulos, o false si cada producto DEBE tener un creador
+      allowNull: true,
       references: {
-        model: 'customers', // Nombre de la tabla
-        key: 'id',         // Clave primaria de la tabla Customers
+        model: 'customers',
+        key: 'id',
       },
-      onUpdate: 'CASCADE', // Define el comportamiento al actualizar el Customer
-      onDelete: 'SET NULL',  // Define el comportamiento al eliminar el Customer (o 'RESTRICT', 'CASCADE', etc.)
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
     },
     createdAt: {
       allowNull: false,

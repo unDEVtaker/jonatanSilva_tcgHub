@@ -31,7 +31,7 @@ card.addEventListener("mousemove", e => {
 
     card.style.transform = `perspective(700px)      /* Perspectiva un poco más fuerte */
         rotateY(${dxNorm * 120}deg)   /* Rotación Y más sensible */
-        rotateX(${yPosition * 90}deg)`;  /* Rotación X ligeramente más sensible */
+        rotateX(${yPosition * 90}deg)`; 
 });
 
 card.addEventListener("mouseleave", () => {
@@ -72,7 +72,7 @@ document.querySelectorAll('.button').forEach(button => button.addEventListener('
 }));
 
 
-// sproducts
+
 
 
 

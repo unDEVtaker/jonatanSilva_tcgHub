@@ -12,12 +12,12 @@ const { v4: uuidv4 } = require("uuid");
 const { log } = require("console");
 const fetch = require('node-fetch');
 const { toThousand } = require('../utils');
-const { Product, State, Customer } = require('../database/models'); // Importar también Customer
+const { Product, State, Customer } = require('../database/models');
 
 const productsControllers = {
     list: async (req, res) => {
         try {
-            // Traer los 16 productos más recientes de la base de datos
+
             const products = await Product.findAll({
                 order: [['createdAt', 'DESC']],
                 limit: 16
@@ -53,10 +53,13 @@ const productsControllers = {
     },
 
     sproduct: async (req, res) => {
-        // Buscar producto por api_id en la base de datos
+
         const apiId = req.params.api_id;
         try {
-            const product = await Product.findOne({ where: { api_id: apiId } });
+            const product = await Product.findOne({
+                where: { api_id: apiId },
+                include: [{ model: State, as: 'state' }]
+            });
             if (!product) {
                 return res.status(404).render('error', {
                     title: 'Product Not Found',
@@ -64,7 +67,7 @@ const productsControllers = {
                     error: { status: 404 }
                 });
             }
-            // Obtener usuario vendedor si corresponde
+    
             let seller = null;
             if (product.customer_id) {
                 seller = await Customer.findByPk(product.customer_id, {
@@ -127,7 +130,6 @@ const productsControllers = {
                 }
             });
 
-            // Luego aplicar el filtro de búsqueda si corresponde
             if (searchTerm) {
                 const searchLower = searchTerm.toLowerCase();
                 userProducts = userProducts.filter(product =>
@@ -193,7 +195,7 @@ const productsControllers = {
 
     edit: async (req, res) => {
         try {
-            // Traer el producto con su estado asociado
+
             const product = await Product.findByPk(req.params.id, {
                 include: [{ model: State, as: 'state' }]
             });
@@ -203,7 +205,7 @@ const productsControllers = {
             if (req.session.user && product.customer_id !== req.session.user.id) {
                 return res.status(403).send('Unauthorized to edit this product');
             }
-            // Traer todos los estados para el select
+
             const states = await State.findAll();
             res.render('products/productEdit', {
                 title: 'Edit Product',
@@ -230,7 +232,7 @@ const productsControllers = {
 
             const errores = validationResult(req);
             if (!errores.isEmpty()) {
-                // Volver a traer los estados para el select
+
                 const states = await State.findAll();
                 return res.render('products/productEdit', {
                     title: 'Edit Product',
@@ -264,7 +266,7 @@ const productsControllers = {
     create: async (req, res) => {
         console.log("Attempting to create product.");
         console.log("Create body:", req.body);
-        console.log("Create file:", req.file); // If using Multer
+        console.log("Create file:", req.file);
 
         const errores = validationResult(req);
 
@@ -282,13 +284,13 @@ const productsControllers = {
                 nombre: req.body.name,
                 descripcion: req.body.description,
                 precio: Number(req.body.price),
-                set_name: req.body.set, // <--- CORREGIDO: usar set_name
+                set_name: req.body.set,
                 foilType: req.body.foilType,
                 stock: req.body.stock || 0,
                 api_id: req.body.cardId,
-                customer_id: req.session.user.id, // Cambiado de user_id a customer_id
-                img: req.body.cardImage || 'default-product-image.jpg', // <--- Guardar la URL de la API
-                state_id: req.body.state_id, // Guardar el estado seleccionado
+                customer_id: req.session.user.id,
+                img: req.body.cardImage || 'default-product-image.jpg', 
+                state_id: req.body.state_id,
                 createdAt: new Date(),
                 updatedAt: new Date(),
             });
@@ -302,11 +304,11 @@ const productsControllers = {
     },
 
     add: async (req, res) => {
-        // Obtener los estados desde la base de datos
+
         const states = await State.findAll();
         res.render('products/productCreate', {
             title: 'Create New Product',
-            states // Pasar los estados a la vista
+            states 
         });
     },
 
@@ -345,7 +347,7 @@ const productsControllers = {
         }
     },
 
-    // API para infinite scroll en shop
+
     apiList: async (req, res) => {
         const page = parseInt(req.query.page) || 1;
         const pageSize = 24;

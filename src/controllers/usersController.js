@@ -141,7 +141,7 @@ const usersControllers = {
         return res.status(404).send("Usuario no encontrado");
       }
 
-      // Renderizar la vista del perfil con los datos del usuario
+
       res.render("users/profile", {
         title: "Perfil de Usuario",
         user,
@@ -149,28 +149,28 @@ const usersControllers = {
 
     } catch (error) {
       console.error("Error loading profile:", error);
-      // If you don't have a specific error view, send an error response directly
+
       res.status(500).send("Error loading profile: " + error.message);
     }
   },
   update: async (req, res) => {
     console.log("update - Método HTTP recibido:", req.method);
     console.log("update - Datos del formulario recibidos:", req.body);
-    console.log("update - Archivo recibido:", req.file); // Si se usa multer para subir archivos
+    console.log("update - Archivo recibido:", req.file);
 
     const id = req.params.id;
-    console.log("update - ID recibido:", id); // Registro del ID recibido
+    console.log("update - ID recibido:", id); 
 
     try {
-      // Buscar al usuario en la base de datos
+
       const userToUpdate = await Customer.findByPk(id);
-      console.log("update - Usuario encontrado:", userToUpdate); // Registro del usuario encontrado
+      console.log("update - Usuario encontrado:", userToUpdate);
 
       if (!userToUpdate) {
         return res.status(404).send("Usuario no encontrado");
       }
 
-      // Validar errores
+
       const errores = validationResult(req);
       if (!errores.isEmpty()) {
         console.log("Validation errors during update:", errores.array());
@@ -181,7 +181,7 @@ const usersControllers = {
         });
       }
 
-      // Verificar si el correo ya existe
+
       if (req.body.correo !== userToUpdate.correo) {
         const existingUser = await Customer.findOne({ where: { correo: req.body.correo } });
         console.log("update - Usuario con correo existente:", existingUser); // Registro del correo existente
@@ -194,27 +194,27 @@ const usersControllers = {
         }
       }
 
-      // Actualizar propiedades del usuario
+
       userToUpdate.nombre = req.body.nombre;
       userToUpdate.correo = req.body.correo;
       userToUpdate.dni = req.body.dni;
-      userToUpdate.nick_name = req.body.nick_name; // <--- Asegura que se actualiza el nick_name
-      // Si se subió una imagen, guardar la ruta en la columna profile
+      userToUpdate.nick_name = req.body.nick_name;
+
       if (req.file) {
         userToUpdate.profile = '/images/users/' + req.file.filename;
       }
       userToUpdate.updatedAt = new Date();
 
-      // Guardar cambios
+
       await userToUpdate.save();
 
-      // Actualizar la sesión del usuario
+
       req.session.user = {
         id: userToUpdate.id,
         nombre: userToUpdate.nombre,
         correo: userToUpdate.correo,
         nick_name: userToUpdate.nick_name,
-        avatar: userToUpdate.profile // Asumiendo que 'profile' es el avatar
+        avatar: userToUpdate.profile
       };
       console.log("update - Sesión actualizada:", req.session.user);
 
@@ -230,8 +230,6 @@ const usersControllers = {
     const users = parseFile(readFile(directory));
     const idToDelete = req.params.id;
 
-    // Optional: Add a check to ensure the logged-in user is authorized to delete this account
-    // e.g., if (req.session.user && req.session.user.id !== idToDelete && req.session.user.category !== 'admin') { ... return res.status(403).send('Forbidden'); }
 
     const initialUserCount = users.length;
     const newUsers = users.filter((user) => user.id !== idToDelete);
@@ -241,18 +239,15 @@ const usersControllers = {
       writeFile(directory, stringifyFile(newUsers));
       console.log("User deleted:", idToDelete);
 
-      // Destroy session and clear cookie ONLY if the deleted user was the logged-in user
       if (req.session.user && req.session.user.id === idToDelete) {
         req.session.destroy(err => {
           if (err) console.error("Error destroying session after user delete:", err);
           res.clearCookie("user");
           console.log("Session and cookie cleared for deleted user.");
-          res.redirect("/users/signup"); // Redirect to signup or homepage after deleting own account
+          res.redirect("/users/signup"); 
         });
       } else {
-        // If an admin deleted another user, redirect admin to user list or dashboard
-        // Assuming you have an admin dashboard for users
-        res.redirect("/admin/users"); // Example: Redirect to admin user list
+        res.redirect("/admin/users");
       }
     } else {
       console.warn("User not found for deletion:", idToDelete);

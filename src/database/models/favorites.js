@@ -24,19 +24,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'customers', // Nombre de la tabla 'customers'
+        model: 'customers',
         key: 'id',
       },
-      primaryKey: true, // Clave primaria compuesta
+      primaryKey: true,
     },
     product_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'products', // Nombre de la tabla 'products'
+        model: 'products',
         key: 'id',
       },
-      primaryKey: true, // Clave primaria compuesta
+      primaryKey: true,
     },
     createdAt: {
       allowNull: false,

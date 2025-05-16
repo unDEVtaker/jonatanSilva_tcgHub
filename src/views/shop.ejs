@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title><%= title %></title>
-  <!-- Aquí puedes añadir tu CSS -->
-  <link rel="stylesheet" href="/styles/main.css">
-</head>
-
-<body>
+<%- include('./partials/head') %>
   <%- include('./partials/header.ejs') %>
+      <%- include('./partials/brands') %>
 
   <section id="products" class="section-p1">
     <div class="pro-container" id="product-list">
-      <!-- Los productos se cargarán dinámicamente aquí -->
     </div>
     <div id="loader" style="display:none;text-align:center;padding:2rem;">
       <span>Cargando más cartas...</span>
@@ -29,7 +18,6 @@
 
   <script src="/javascripts/script.js"></script>
   <script>
-    // --- Infinite Scroll para cargar productos ---
     let page = 1;
     let loading = false;
     let endReached = false;
@@ -88,10 +76,8 @@
       });
     }
 
-    // Cargar la primera página
     loadProducts();
 
-    // Detectar scroll para cargar más
     window.addEventListener('scroll', () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
         loadProducts();

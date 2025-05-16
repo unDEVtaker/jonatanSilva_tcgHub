@@ -47,11 +47,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 2,
       references: {
-        model: 'roles', // Nombre de la tabla 'roles' (pluralizado por Sequelize por defecto)
+        model: 'roles',
         key: 'id',
       },
-      onUpdate: 'CASCADE', // Opciones para actualizar la clave foránea
-      onDelete: 'RESTRICT', // Opciones para eliminar la clave foránea
+      onUpdate: 'CASCADE',
+      onDelete: 'RESTRICT',
     },
     nick_name: {
       type: DataTypes.STRING,

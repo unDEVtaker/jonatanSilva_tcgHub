@@ -1,22 +1,19 @@
-// src/routes/products.js
-
 'use strict';
 const express = require('express');
-const router = express.Router(); // Crea la instancia del router aquí
+const router = express.Router();
 
 // Middleware y otros requires
-const authMiddleware = require('../middleware/authMiddleware'); // Middleware de autenticación
-const { body } = require('express-validator'); // Para validaciones
-const multer = require('multer'); // Para subida de archivos
-const path = require('path'); // Para rutas
-const { v4: uuidv4 } = require("uuid"); // Para nombres únicos
+const authMiddleware = require('../middleware/authMiddleware');
+const { body } = require('express-validator');
+const multer = require('multer');
+const path = require('path');
+const { v4: uuidv4 } = require("uuid");
 
 
-// Requerir el controlador de productos (debe exportar el objeto directamente)
 const productsControllers = require('../controllers/productsController'); // Cambiar el nombre para que coincida con la exportación
 
 
-// --- Configuración de Multer para imágenes de producto ---
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(__dirname, '..', '..', 'public', 'images', 'products'));
@@ -40,7 +37,6 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 
-// --- Reglas de Validación (Ejemplos) ---
 const productValidations = [
   body('name')
     .notEmpty().withMessage('El nombre del producto es obligatorio').bail()
@@ -58,18 +54,14 @@ const productValidations = [
 ];
 
 
-// --- Definición de Rutas ---
 
 router.get('/', productsControllers.index);
 router.get('/detail/:id', productsControllers.detail);
-// Cambiar la ruta para buscar por api_id en vez de id
 router.get('/sproduct/:api_id', productsControllers.sproduct);
 router.get('/shop', productsControllers.shop);
 
-// API para infinite scroll en shop
 router.get('/api/list', productsControllers.apiList);
 
-//crud
 router.get('/admin', authMiddleware, productsControllers.productsAdmin);
 router.get('/add', authMiddleware, productsControllers.add);
 
@@ -81,5 +73,4 @@ router.put('/edit/:id', authMiddleware, upload.array('productImages', 5), produc
 router.delete('/delete/:id', authMiddleware, productsControllers.delete); // Usar DELETE
 
 
-// --- Exportar el router ---
-module.exports = router; // Exporta la instancia del router
+module.exports = router;

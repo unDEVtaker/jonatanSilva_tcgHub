@@ -21,10 +21,10 @@ const fileFilter = (req, file, cb) => {
   
   const filtro = /\.(jpg|jpeg|png|gif)$/;
   if (filtro.test(file.originalname)) {
-    // To accept this file pass `false`, like so:
+
     cb(null, true);
   } else {
-    // To reject the file pass `true`, like so:
+
     req.errorValidationImage = "No es un tipo de archivo valido";
     cb(null, false);
   }

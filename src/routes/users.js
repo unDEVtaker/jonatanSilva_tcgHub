@@ -15,13 +15,11 @@ const models = db.models;
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // --- RUTA DE DESTINO CORREGIDA ---
-        // Desde src/routes, sube dos niveles (../../) para llegar a la raíz del proyecto,
-        // luego entra en public/images/users
+
         cb(null, path.join(__dirname, '..', '..', 'public', 'images', 'users')); // <<-- Usa esta línea
     },
     filename: function (req, file, cb) {
-        // ... (este código se mantiene igual) ...
+
         const { v4: uuidv4 } = require("uuid");
         const uniqueSuffix = path.basename(file.originalname, path.extname(file.originalname)) + "-" + Date.now() + "-" + uuidv4() + path.extname(file.originalname);
         cb(null, uniqueSuffix);
@@ -53,7 +51,7 @@ router.post("/login", loginValidations, usersController.processLogin);
 router.get("/profile/:id", usersController.profile);
 router.put("/profile/:id", authMiddleware, upload.single("avatar"), usersController.update);
 
-//router.post("/delete/:id", authMiddleware, usersController.deleteUser);
+
 
 router.post("/logout", usersController.logout);
 

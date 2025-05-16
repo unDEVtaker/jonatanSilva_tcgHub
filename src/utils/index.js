@@ -1,5 +1,3 @@
-//manjear la moneda
-// Mejorada: separa parte entera y decimal para evitar errores con decimales y muestra siempre dos decimales
 const toThousand = n => {
     const num = Number(n);
     if (isNaN(num)) return n;
@@ -19,7 +17,7 @@ const paginator = (items = [], page = 1, perPage = 10,) => {
     }
 }
 
-//exportar los modulos
+
 module.exports =  {
     toThousand,
     paginator
