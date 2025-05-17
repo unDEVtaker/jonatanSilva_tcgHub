@@ -43,10 +43,10 @@ const usersControllers = {
         });
       }
 
-      const { nombre, id, avatar } = user;
+      const { nombre, id, avatar, rol_id, nick_name } = user;
       console.log("Usuario ha iniciado sesión con ID:", id);
 
-      req.session.user = { correo, nombre, id, avatar };
+      req.session.user = { correo, nombre, id, avatar, rol_id, nick_name };
       console.log("Usuario de sesión establecido:", req.session.user);
 
       res.redirect(`/`);

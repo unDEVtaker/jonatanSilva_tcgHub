@@ -104,16 +104,20 @@ const productsControllers = {
     productsAdmin: async (req, res) => {
         try {
             const searchTerm = req.query.search;
-            // Primero obtener solo los productos del usuario
-            let userProducts = await Product.findAll({
-                where: {
-                    customer_id: req.session.user.id
-                }
-            });
+            let products;
+            // Si el usuario es admin (rol_id === 1), mostrar todos los productos
+            if (req.session.user && req.session.user.rol_id === 1) {
+                products = await Product.findAll();
+            } else {
+                // Si es user normal, solo sus productos
+                products = await Product.findAll({
+                    where: { customer_id: req.session.user.id }
+                });
+            }
 
             if (searchTerm) {
                 const searchLower = searchTerm.toLowerCase();
-                userProducts = userProducts.filter(product =>
+                products = products.filter(product =>
                     (product.nombre && product.nombre.toLowerCase().includes(searchLower)) ||
                     (product.id && product.id.toString().includes(searchTerm)) ||
                     (product.set_name && product.set_name.toLowerCase().includes(searchLower)) ||
@@ -122,13 +126,13 @@ const productsControllers = {
                 );
             }
 
-            const totalValue = userProducts.reduce((sum, product) => {
+            const totalValue = products.reduce((sum, product) => {
                 const precio = Number(product.precio);
                 return isNaN(precio) ? sum : sum + precio;
             }, 0);
 
             res.render('products/productsAdmin', {
-                products: userProducts,
+                products,
                 toThousand,
                 totalValue,
                 query: req.query,
@@ -176,17 +180,20 @@ const productsControllers = {
 
     edit: async (req, res) => {
         try {
-
             const product = await Product.findByPk(req.params.id, {
                 include: [{ model: State, as: 'state' }]
             });
             if (!product) {
-                return res.status(404).send('Product not found');
-            }
-            if (req.session.user && product.customer_id !== req.session.user.id) {
-                return res.status(403).send('No autorizado para editar este producto');
+                return res.status(404).send('Producto no encontrado');
             }
 
+            if (
+                req.session.user &&
+                req.session.user.rol_id !== 1 &&
+                product.customer_id !== req.session.user.id 
+            ) {
+                return res.status(403).send('No autorizado para editar este producto');
+            }
             const states = await State.findAll();
             res.render('products/productEdit', {
                 title: 'Edit Product',
@@ -202,15 +209,17 @@ const productsControllers = {
     update: async (req, res) => {
         try {
             const product = await Product.findByPk(req.params.id);
-
             if (!product) {
                 return res.status(404).send('Product not found');
             }
 
-            if (req.session.user && product.customer_id !== req.session.user.id) {
+            if (
+                req.session.user &&
+                req.session.user.rol_id !== 1 &&
+                product.customer_id !== req.session.user.id
+            ) {
                 return res.status(403).send('Unauthorized to update this product');
             }
-
             const errores = validationResult(req);
             if (!errores.isEmpty()) {
                 console.log('ERRORES VALIDACION EDIT:', errores.array());
@@ -222,8 +231,6 @@ const productsControllers = {
                     errores: errores.mapped(),
                 });
             }
-
-
             await product.update({
                 nombre: req.body.name,
                 descripcion: req.body.description,
@@ -237,7 +244,6 @@ const productsControllers = {
                 state_id: req.body.state_id,
                 updatedAt: new Date(),
             });
-
             res.redirect('/products/admin?edited=1');
         } catch (error) {
             console.error("Error al actualizar producto:", error);
@@ -319,7 +325,12 @@ const productsControllers = {
             if (!product) {
                 return res.status(404).send('Producto no encontrado');
             }
-            if (req.session.user && product.customer_id !== req.session.user.id) {
+
+            if (
+                req.session.user &&
+                req.session.user.rol_id !== 1 &&
+                product.customer_id !== req.session.user.id
+            ) {
                 return res.status(403).send('No autorizado para eliminar este producto');
             }
             await product.destroy();
