@@ -89,13 +89,27 @@ const productsControllers = {
         res.send('Página principal de productos');
     },
 
-    shop: (req, res) => {
-        const products = parseFile(readFile(productsDirectory));
-        const limitedProducts = products.slice(0, 24);
+    shop: async (req, res) => {
+        const searchTerm = req.query.search;
+        let where = {};
+        if (searchTerm) {
+            const { Op } = require('sequelize');
+            where = {
+                [Op.or]: [
+                    { nombre: { [Op.like]: `%${searchTerm}%` } },
+                    { set_name: { [Op.like]: `%${searchTerm}%` } },
+                    { foilType: { [Op.like]: `%${searchTerm}%` } },
+                    { id: { [Op.like]: `%${searchTerm}%` } },
+                    { api_id: { [Op.like]: `%${searchTerm}%` } },
+                ]
+            };
+        }
+        const products = await Product.findAll({ where, order: [['createdAt', 'DESC']] });
         res.render('shop', {
             title: 'Shop - TCG.HUB',
-            products: limitedProducts,
-            toThousand: toThousand
+            products,
+            toThousand: toThousand,
+            query: req.query
         });
     },
 

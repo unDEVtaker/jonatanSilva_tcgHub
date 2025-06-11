@@ -26,6 +26,42 @@
                   <span class="title is-3">
                     <h2>
                       <%= card.name %>
+                        <% if (card && card.cardmarket && card.cardmarket.prices && card.cardmarket.prices.trendPrice &&
+                          card.cardmarket.prices.avg30) { %>
+                          <span
+                            style="display:inline-flex;align-items:center;gap:18px;font-size:2.5em;color:#4a4a4a;margin-left:22px;vertical-align:middle;">
+                            <% if (card.cardmarket.prices.trendPrice> card.cardmarket.prices.avg30) { %>
+                              <span title="Tendencia al alza (vs 30 días)"
+                                style="color:green;font-size:2.5em;vertical-align:middle;">
+                                <svg width="56" height="56" viewBox="0 0 48 48" fill="none"
+                                  style="display:inline;vertical-align:middle;">
+                                  <polyline points="6,34 18,22 28,32 42,14" stroke="green" stroke-width="4.5"
+                                    fill="none" />
+                                  <circle cx="42" cy="14" r="4.4" fill="green" />
+                                </svg>
+                              </span>
+                              <% } else if (card.cardmarket.prices.trendPrice < card.cardmarket.prices.avg30) { %>
+                                <span title="Tendencia a la baja (vs 30 días)"
+                                  style="color:red;font-size:2.5em;vertical-align:middle;">
+                                  <svg width="56" height="56" viewBox="0 0 48 48" fill="none"
+                                    style="display:inline;vertical-align:middle;">
+                                    <polyline points="6,14 18,26 28,16 42,34" stroke="red" stroke-width="4.5"
+                                      fill="none" />
+                                    <circle cx="42" cy="34" r="4.4" fill="red" />
+                                  </svg>
+                                </span>
+                                <% } else { %>
+                                  <span title="Tendencia estable (vs 30 días)"
+                                    style="color:gray;font-size:2.5em;vertical-align:middle;">
+                                    <svg width="56" height="56" viewBox="0 0 48 48" fill="none"
+                                      style="display:inline;vertical-align:middle;">
+                                      <line x1="6" y1="24" x2="42" y2="24" stroke="gray" stroke-width="4.5" />
+                                      <circle cx="42" cy="24" r="4.4" fill="gray" />
+                                    </svg>
+                                  </span>
+                                  <% } %>
+                          </span>
+                          <% } %>
                     </h2>
                     <div class="title is-5 has-text-muted">
                       <h3>
@@ -90,294 +126,297 @@
                                 <section class="pt-2 prices-section">
                                   <% const cmPrices=card.cardmarket.prices; %>
                                     <% if (cmPrices) { %>
-                                      <% if (cmPrices.trendPrice !==null && typeof cmPrices.trendPrice==='number' &&
-                                        cmPrices.trendPrice> 0) { %>
-                                        <div class="card-details_price">
-                                          <p class="heading">price trend</p>
-                                          <p class="title is-5">
-                                            <%= cmPrices.trendPrice.toFixed(2) %> €
-                                          </p>
-                                        </div>
-                                        <% } %>
-                                          <% if (cmPrices.avg1 !==null && typeof cmPrices.avg1==='number' &&
-                                            cmPrices.avg1> 0) { %>
-                                            <div class="card-details_price">
-                                              <p class="heading">1 day average</p>
-                                              <p class="title is-5">
-                                                <%= cmPrices.avg1.toFixed(2) %> €
-                                              </p>
-                                            </div>
-                                            <% } %>
-                                              <% if (cmPrices.avg7 !==null && typeof cmPrices.avg7==='number' &&
-                                                cmPrices.avg7> 0) { %>
-                                                <div class="card-details_price">
-                                                  <p class="heading">7 day average</p>
-                                                  <p class="title is-5">
-                                                    <%= cmPrices.avg7.toFixed(2) %> €
-                                                  </p>
-                                                </div>
-                                                <% } %>
-                                                  <% if (cmPrices.avg30 !==null && typeof cmPrices.avg30==='number' &&
-                                                    cmPrices.avg30> 0) { %>
-                                                    <div class="card-details_price">
-                                                      <p class="heading">30 day average</p>
-                                                      <p class="title is-5">
-                                                        <%= cmPrices.avg30.toFixed(2) %> €
-                                                      </p>
-                                                    </div>
-                                                    <% } %>
-                                                      <% } %>
-                                </section>
-                          </div>
-                          <div id="tcgplayer-section" class="mb-4">
-                            <div class="title is-6 has-text-muted mb-0 mr-2">
-                              <% if (card.tcgplayer.url) { %>
-                                <a target="_blank" rel="nofollow" href="<%= card.tcgplayer.url %>">Comprar ahora en TCGplayer</a>
-                              <% } else { %>
-                                Comprar ahora en TCGplayer (Link not available)
-                              <% } %>
-                            </div>
-                            <% if (card.tcgplayer.updatedAt) { %>
-                              <div class="is-size-7 has-text-muted">Última actualización <%= new Date(card.tcgplayer.updatedAt).toLocaleDateString() %></div>
-                            <% } %>
-                            <section class="pt-2 prices-section">
-  <% Object.entries(card.tcgplayer.prices).forEach(function([foilType, priceData]) { %>
-    <% if (typeof priceData === ' number' && priceData> 0) { %>
+                                      <% if (cmPrices.trendPrice !==null && typeof cmPrices.trendPrice===' number' &&
+                                  cmPrices.trendPrice> 0) { %>
                                   <div class="card-details_price">
-                                    <p class="heading">
-                                      <%= foilType.replace(/([A-Z])/g, ' $1' ).toLowerCase() %>
-                                    </p>
-                                    <p class="title is-5">$<%= priceData.toFixed(2) %>
+                                    <p class="heading">price trend</p>
+                                    <p class="title is-5">
+                                      $<%= cmPrices.trendPrice.toFixed(2) %>
                                     </p>
                                   </div>
-                                  <% } else if (priceData && typeof priceData==='object' ) { %>
-                                    <% Object.entries(priceData).forEach(function([pricePoint, price]) { %>
-                                      <% if (typeof price==='number' && price> 0) { %>
-                                        <div class="card-details_price">
-                                          <p class="heading">
-                                            <%= `${foilType} ${pricePoint}`.replace(/([A-Z])/g, ' $1' ).toLowerCase() %>
-                                          </p>
-                                          <p class="title is-5">$<%= price.toFixed(2) %>
-                                          </p>
-                                        </div>
-                                        <% } else if (price && typeof price==='object' ) { %>
-                                          <% Object.entries(price).forEach(function([subPoint, subPrice]) { %>
-                                            <% if (typeof subPrice==='number' && subPrice> 0) { %>
+                                  <% } %>
+                                    <% if (cmPrices.avg1 !==null && typeof cmPrices.avg1==='number' && cmPrices.avg1> 0)
+                                      { %>
+                                      <div class="card-details_price">
+                                        <p class="heading">1 day average</p>
+                                        <p class="title is-5">
+                                          $<%= cmPrices.avg1.toFixed(2) %>
+                                        </p>
+                                      </div>
+                                      <% } %>
+                                        <% if (cmPrices.avg7 !==null && typeof cmPrices.avg7==='number' &&
+                                          cmPrices.avg7> 0) { %>
+                                          <div class="card-details_price">
+                                            <p class="heading">7 day average</p>
+                                            <p class="title is-5">
+                                              $<%= cmPrices.avg7.toFixed(2) %>
+                                            </p>
+                                          </div>
+                                          <% } %>
+                                            <% if (cmPrices.avg30 !==null && typeof cmPrices.avg30==='number' &&
+                                              cmPrices.avg30> 0) { %>
                                               <div class="card-details_price">
-                                                <p class="heading">
-                                                  <%= `${foilType} ${pricePoint} ${subPoint}`.replace(/([A-Z])/g, ' $1'
-                                                    ).toLowerCase() %>
-                                                </p>
-                                                <p class="title is-5">$<%= subPrice.toFixed(2) %>
+                                                <p class="heading">30 day average</p>
+                                                <p class="title is-5">
+                                                  $<%= cmPrices.avg30.toFixed(2) %>
                                                 </p>
                                               </div>
                                               <% } %>
-                                                <% }); %>
-                                                  <% } %>
-                                                    <% }); %>
-                                                      <% } %>
-                                                        <% }); %>
-                                                          </section>
+                                                <% } %>
+                                                  </section>
+                    </div>
+                    <div id="tcgplayer-section" class="mb-4">
+                      <div class="title is-6 has-text-muted mb-0 mr-2">
+                        <% if (card.tcgplayer.url) { %>
+                          <a target="_blank" rel="nofollow" href="<%= card.tcgplayer.url %>">Comprar ahora en
+                            TCGplayer</a>
+                          <% } else { %>
+                            Comprar ahora en TCGplayer (Link not available)
+                            <% } %>
+                      </div>
+                      <% if (card.tcgplayer.updatedAt) { %>
+                        <div class="is-size-7 has-text-muted">Última actualización <%= new
+                            Date(card.tcgplayer.updatedAt).toLocaleDateString() %>
+                        </div>
+                        <% } %>
+                          <section class="pt-2 prices-section">
+                            <% Object.entries(card.tcgplayer.prices).forEach(function([foilType, priceData]) { %>
+                              <% if (typeof priceData===' number' && priceData> 0) { %>
+                                <div class="card-details_price">
+                                  <p class="heading">
+                                    <%= foilType.replace(/([A-Z])/g, ' $1' ).toLowerCase() %>
+                                  </p>
+                                  <p class="title is-5">$<%= priceData.toFixed(2) %>
+                                  </p>
+                                </div>
+                                <% } else if (priceData && typeof priceData==='object' ) { %>
+                                  <% Object.entries(priceData).forEach(function([pricePoint, price]) { %>
+                                    <% if (typeof price==='number' && price> 0) { %>
+                                      <div class="card-details_price">
+                                        <p class="heading">
+                                          <%= `${foilType} ${pricePoint}`.replace(/([A-Z])/g, ' $1' ).toLowerCase() %>
+                                        </p>
+                                        <p class="title is-5">$<%= price.toFixed(2) %>
+                                        </p>
+                                      </div>
+                                      <% } else if (price && typeof price==='object' ) { %>
+                                        <% Object.entries(price).forEach(function([subPoint, subPrice]) { %>
+                                          <% if (typeof subPrice==='number' && subPrice> 0) { %>
+                                            <div class="card-details_price">
+                                              <p class="heading">
+                                                <%= `${foilType} ${pricePoint} ${subPoint}`.replace(/([A-Z])/g, ' $1'
+                                                  ).toLowerCase() %>
+                                              </p>
+                                              <p class="title is-5">$<%= subPrice.toFixed(2) %>
+                                              </p>
+                                            </div>
+                                            <% } %>
+                                              <% }); %>
+                                                <% } %>
+                                                  <% }); %>
+                                                    <% } %>
+                                                      <% }); %>
+                          </section>
                     </div>
                     <% } else { %>
                       <div id="tcgplayer-section" class="mb-4">
                         <div class="title is-6 has-text-muted mb-0 mr-2">No hay datos de TCGPlayer disponibles.</div>
                       </div>
                       <% } %>
-                          <% } %>
+                        <% } %>
 
-                            </section>
+                          </section>
 
-                            <hr class="mb-0">
+                          <hr class="mb-0">
 
-                            <div id="attacks-section" style="display: none;">
-                              <p class="heading">Attacks</p>
-                              <table>
-                                <tbody class="card-details_attack">
-                                  <% if (card && card.attacks && card.attacks.length> 0) { %>
-                                    <% card.attacks.forEach(attack=> { %>
+                          <div id="attacks-section" style="display: none;">
+                            <p class="heading">Attacks</p>
+                            <table>
+                              <tbody class="card-details_attack">
+                                <% if (card && card.attacks && card.attacks.length> 0) { %>
+                                  <% card.attacks.forEach(attack=> { %>
+                                    <tr>
+                                      <td class="nowrap">
+                                        <% if (attack.cost && attack.cost.length> 0) { %>
+                                          <% attack.cost.forEach(costType=> { %>
+                                            <img class="energy"
+                                              src="/images/energy/<%= costType.toLowerCase() %>-energy.png"
+                                              alt="<%= costType %> Energy">
+                                            <% }); %>
+                                              <% } %>
+                                      </td>
+                                      <td class="attack-name"><span class="title is-4">
+                                          <%= attack.name %>
+                                        </span></td>
+                                      <td><span class="title is-4 is-muted nowrap">
+                                          <%= attack.damage || '' %>
+                                        </span></td>
+                                    </tr>
+                                    <% if (attack.text) { %>
                                       <tr>
-                                        <td class="nowrap">
-                                          <% if (attack.cost && attack.cost.length> 0) { %>
-                                            <% attack.cost.forEach(costType=> { %>
-                                              <img class="energy"
-                                                src="/images/energy/<%= costType.toLowerCase() %>-energy.png"
-                                                alt="<%= costType %> Energy">
-                                              <% }); %>
-                                                <% } %>
+                                        <td colspan="3">
+                                          <p>
+                                            <%= attack.text %>
+                                          </p>
                                         </td>
-                                        <td class="attack-name"><span class="title is-4">
-                                            <%= attack.name %>
-                                          </span></td>
-                                        <td><span class="title is-4 is-muted nowrap">
-                                            <%= attack.damage || '' %>
-                                          </span></td>
                                       </tr>
-                                      <% if (attack.text) { %>
-                                        <tr>
-                                          <td colspan="3">
-                                            <p>
-                                              <%= attack.text %>
-                                            </p>
-                                          </td>
-                                        </tr>
-                                        <% } %>
-                                          <% }); %>
-                                            <% } else { %>
-                                              <tr>
-                                                <td colspan="3">
-                                                  <p>No attacks listed for this card.</p>
-                                                </td>
-                                              </tr>
-                                              <% } %>
-                                </tbody>
-                              </table>
-                            </div>
-
-                            <div id="extra-details" style="display: none;">
-                              <% if (card && card.rules && card.rules.length> 0) { %>
-                                <section class="details-section">
-                                  <p class="heading">Rules</p>
-                                  <p class="is-flex is-flex-direction-column">
-                                    <% card.rules.forEach(rule=> { %>
-                                      <%= rule %> <br>
+                                      <% } %>
                                         <% }); %>
-                                  </p>
-                                </section>
-                                <% } %>
+                                          <% } else { %>
+                                            <tr>
+                                              <td colspan="3">
+                                                <p>No attacks listed for this card.</p>
+                                              </td>
+                                            </tr>
+                                            <% } %>
+                              </tbody>
+                            </table>
+                          </div>
 
-                                  <section class="details-section">
-                                    <div class="details-grid">
-                                      <div class="card-details_weakness">
-                                        <p class="heading">weakness</p>
-                                        <% if (card && card.weaknesses && card.weaknesses.length> 0) { %>
-                                          <p class="title is-5 is-flex is-align-items-center">
-                                            <% if (card.weaknesses[0].type) { %>
-                                              <img class="energy"
-                                                src="/images/energy/<%= card.weaknesses[0].type.toLowerCase() %>-energy.png"
-                                                alt="<%= card.weaknesses[0].type %> Weakness">
-                                              <% } %>
-                                                <% if (card.weaknesses[0].value) { %>
-                                                  <span class="ml-1">
-                                                    <%= card.weaknesses[0].value %>
-                                                  </span>
-                                                  <% } %>
-                                          </p>
-                                          <% } else { %>
-                                            <p class="title is-5">N/A</p>
+                          <div id="extra-details" style="display: none;">
+                            <% if (card && card.rules && card.rules.length> 0) { %>
+                              <section class="details-section">
+                                <p class="heading">Rules</p>
+                                <p class="is-flex is-flex-direction-column">
+                                  <% card.rules.forEach(rule=> { %>
+                                    <%= rule %> <br>
+                                      <% }); %>
+                                </p>
+                              </section>
+                              <% } %>
+
+                                <section class="details-section">
+                                  <div class="details-grid">
+                                    <div class="card-details_weakness">
+                                      <p class="heading">weakness</p>
+                                      <% if (card && card.weaknesses && card.weaknesses.length> 0) { %>
+                                        <p class="title is-5 is-flex is-align-items-center">
+                                          <% if (card.weaknesses[0].type) { %>
+                                            <img class="energy"
+                                              src="/images/energy/<%= card.weaknesses[0].type.toLowerCase() %>-energy.png"
+                                              alt="<%= card.weaknesses[0].type %> Weakness">
                                             <% } %>
-                                      </div>
-                                      <div class="card-details_resistance">
-                                        <p class="heading">resistance</p>
-                                        <% if (card && card.resistances && card.resistances.length> 0) { %>
-                                          <p class="title is-5 is-flex is-align-items-center">
-                                            <% if (card.resistances[0].type) { %>
-                                              <img class="energy"
-                                                src="/images/energy/<%= card.resistances[0].type.toLowerCase() %>-energy.png"
-                                                alt="<%= card.resistances[0].type %> Resistance">
-                                              <% } %>
-                                                <% if (card.resistances[0].value) { %>
-                                                  <span class="ml-1">
-                                                    <%= card.resistances[0].value %>
-                                                  </span>
-                                                  <% } %>
-                                          </p>
-                                          <% } else { %>
-                                            <p class="title is-5">N/A</p>
-                                            <% } %>
-                                      </div>
-                                      <div class="card-details_retreat">
-                                        <p class="heading">retreat cost</p>
-                                        <% if (card && card.retreatCost && card.retreatCost.length> 0) { %>
-                                          <p class="title is-5">
-                                            <% card.retreatCost.forEach(costType=> { %>
-                                              <img class="energy"
-                                                src="/images/energy/<%= costType.toLowerCase() %>-energy.png"
-                                                alt="<%= costType %> Retreat Cost">
-                                              <% }); %>
-                                          </p>
-                                          <% } else { %>
-                                            <p class="title is-5">0</p>
-                                            <% } %>
-                                      </div>
-                                      <% if (card && card.artist) { %>
-                                        <div class="card-details_artist">
-                                          <p class="heading">artist</p>
-                                          <p class="title is-5">
-                                            <%= card.artist %>
-                                          </p>
-                                        </div>
-                                        <% } %>
-                                          <% if (card && card.rarity) { %>
-                                            <div class="card-details_rarity">
-                                              <p class="heading">rarity</p>
-                                              <p class="title is-5">
-                                                <%= card.rarity %>
-                                              </p>
-                                            </div>
-                                            <% } %>
-                                              <% if (card && card.set) { %>
-                                                <div class="card-details_set">
-                                                  <p class="heading">set</p>
-                                                  <p class="title is-5">
-                                                    <% if (card.set.id) { %>
-                                                      <a class="is-flex is-align-items-center"
-                                                        href="/set/<%= card.set.id %>">
-                                                        <%= card.set.name %>
-                                                          <% if (card.set.images && card.set.images.symbol) { %>
-                                                            <img width="24" class="ml-2"
-                                                              src="<%= card.set.images.symbol %>"
-                                                              alt="<%= card.set.name %> Symbol">
-                                                            <% } %>
-                                                      </a>
-                                                      <% } else { %>
-                                                        <%= card.set.name %>
-                                                          <% } %>
-                                                  </p>
-                                                </div>
+                                              <% if (card.weaknesses[0].value) { %>
+                                                <span class="ml-1">
+                                                  <%= card.weaknesses[0].value %>
+                                                </span>
                                                 <% } %>
-                                                  <% if (card && card.number && card.set && card.set.total) { %>
+                                        </p>
+                                        <% } else { %>
+                                          <p class="title is-5">N/A</p>
+                                          <% } %>
+                                    </div>
+                                    <div class="card-details_resistance">
+                                      <p class="heading">resistance</p>
+                                      <% if (card && card.resistances && card.resistances.length> 0) { %>
+                                        <p class="title is-5 is-flex is-align-items-center">
+                                          <% if (card.resistances[0].type) { %>
+                                            <img class="energy"
+                                              src="/images/energy/<%= card.resistances[0].type.toLowerCase() %>-energy.png"
+                                              alt="<%= card.resistances[0].type %> Resistance">
+                                            <% } %>
+                                              <% if (card.resistances[0].value) { %>
+                                                <span class="ml-1">
+                                                  <%= card.resistances[0].value %>
+                                                </span>
+                                                <% } %>
+                                        </p>
+                                        <% } else { %>
+                                          <p class="title is-5">N/A</p>
+                                          <% } %>
+                                    </div>
+                                    <div class="card-details_retreat">
+                                      <p class="heading">retreat cost</p>
+                                      <% if (card && card.retreatCost && card.retreatCost.length> 0) { %>
+                                        <p class="title is-5">
+                                          <% card.retreatCost.forEach(costType=> { %>
+                                            <img class="energy"
+                                              src="/images/energy/<%= costType.toLowerCase() %>-energy.png"
+                                              alt="<%= costType %> Retreat Cost">
+                                            <% }); %>
+                                        </p>
+                                        <% } else { %>
+                                          <p class="title is-5">0</p>
+                                          <% } %>
+                                    </div>
+                                    <% if (card && card.artist) { %>
+                                      <div class="card-details_artist">
+                                        <p class="heading">artist</p>
+                                        <p class="title is-5">
+                                          <%= card.artist %>
+                                        </p>
+                                      </div>
+                                      <% } %>
+                                        <% if (card && card.rarity) { %>
+                                          <div class="card-details_rarity">
+                                            <p class="heading">rarity</p>
+                                            <p class="title is-5">
+                                              <%= card.rarity %>
+                                            </p>
+                                          </div>
+                                          <% } %>
+                                            <% if (card && card.set) { %>
+                                              <div class="card-details_set">
+                                                <p class="heading">set</p>
+                                                <p class="title is-5">
+                                                  <% if (card.set.id) { %>
+                                                    <a class="is-flex is-align-items-center"
+                                                      href="/set/<%= card.set.id %>">
+                                                      <%= card.set.name %>
+                                                        <% if (card.set.images && card.set.images.symbol) { %>
+                                                          <img width="24" class="ml-2"
+                                                            src="<%= card.set.images.symbol %>"
+                                                            alt="<%= card.set.name %> Symbol">
+                                                          <% } %>
+                                                    </a>
+                                                    <% } else { %>
+                                                      <%= card.set.name %>
+                                                        <% } %>
+                                                </p>
+                                              </div>
+                                              <% } %>
+                                                <% if (card && card.number && card.set && card.set.total) { %>
+                                                  <div class="card-details_number">
+                                                    <p class="heading">number</p>
+                                                    <p class="title is-5">
+                                                      <%= card.number %> / <%= card.set.total %>
+                                                    </p>
+                                                  </div>
+                                                  <% } else if (card && card.number) { %>
                                                     <div class="card-details_number">
                                                       <p class="heading">number</p>
                                                       <p class="title is-5">
-                                                        <%= card.number %> / <%= card.set.total %>
+                                                        <%= card.number %>
                                                       </p>
                                                     </div>
-                                                    <% } else if (card && card.number) { %>
-                                                      <div class="card-details_number">
-                                                        <p class="heading">number</p>
-                                                        <p class="title is-5">
-                                                          <%= card.number %>
-                                                        </p>
-                                                      </div>
-                                                      <% } %>
-                                    </div>
-                                  </section>
+                                                    <% } %>
+                                  </div>
+                                </section>
 
-                                  <% if (card && card.legalities) { %>
-                                    <section class="field is-grouped is-grouped-multiline">
-                                      <% Object.entries(card.legalities).forEach(([format, status])=> { %>
-                                        <% if (status==='Legal' || status==='Not Legal' ) { %>
-                                          <div class="control">
-                                            <div class="tags has-addons">
-                                              <span class="tag is-dark">
-                                                <%= format.charAt(0).toUpperCase() + format.slice(1) %>
-                                              </span>
-                                              <% if (status==='Legal' ) { %>
-                                                <span class="tag is-success">Legal</span>
-                                                <% } else if (status==='Not Legal' ) { %>
-                                                  <span class="tag is-light">Not Legal</span>
-                                                  <% } %>
-                                            </div>
+                                <% if (card && card.legalities) { %>
+                                  <section class="field is-grouped is-grouped-multiline">
+                                    <% Object.entries(card.legalities).forEach(([format, status])=> { %>
+                                      <% if (status==='Legal' || status==='Not Legal' ) { %>
+                                        <div class="control">
+                                          <div class="tags has-addons">
+                                            <span class="tag is-dark">
+                                              <%= format.charAt(0).toUpperCase() + format.slice(1) %>
+                                            </span>
+                                            <% if (status==='Legal' ) { %>
+                                              <span class="tag is-success">Legal</span>
+                                              <% } else if (status==='Not Legal' ) { %>
+                                                <span class="tag is-light">Not Legal</span>
+                                                <% } %>
                                           </div>
-                                          <% } %>
-                                            <% }); %>
-                                    </section>
-                                    <% } %>
+                                        </div>
+                                        <% } %>
+                                          <% }); %>
+                                  </section>
+                                  <% } %>
 
-                            </div>
+                          </div>
 
-                            <button id="toggle-attacks-btn" class="button is-small">View Details</button>
+                          <button id="toggle-attacks-btn" class="button is-small">View Details</button>
                 </div>
             </div>
             <div class="card-purchase-column">
@@ -385,34 +424,56 @@
                 <% if (product && (product.precio !==undefined && product.precio !==null && product.precio> 0)) { %>
                   <p class="price">$<%= toThousand(product.precio) %>
                   </p>
-                  <% if (product.state && product.state.state) { %>
-                    <p class="state"><strong>Estado:</strong>
-                      <%= product.state.state %>
-                    </p>
-                    <% } else if (product.state_id) { %>
-                      <p class="state"><strong>Estado:</strong>
-                        <%= product.state_id %>
-                      </p>
-                      <% } %>
-                        <% } else { %>
-                          <p class="price">Price not listed</p>
-                          <% } %>
-                            <div class="quantity-selector">
-                              <select>
-                                <option value="1">1</option>
-
-                              </select>
-                              <span>Cantidad</span>
-                            </div>
-                            <button class="add-to-cart">Agregar al carrito</button>
-                            <div class="mp-info">
-                              <img src="/images/institucional/mercado-pago-logo-0.png" alt="Mercado Pago">
-                              <a href="#">Comprar con Mercado Pago</a>
-                            </div>
-                            <% if (seller && seller.nombre) { %>
-                              <p class="seller-name">Vendido por: <%= seller.nombre %>
+                  <% if (card && card.cardmarket && card.cardmarket.prices && card.cardmarket.prices.trendPrice) { %>
+                    <% const publicado=product.precio; const tendencia=card.cardmarket.prices.trendPrice; let
+                      justo=null; if (publicado <=tendencia * 1.05 && publicado>= tendencia * 0.95) {
+                      justo = 'A precio de mercado';
+                      } else if (publicado < tendencia * 0.90) { justo='Por debajo del mercado' ; } else { justo='Por encima del mercado' ; } %>
+                        <div style="font-size:1.1em;margin-top:2px;">
+                          <span style="font-weight:600;">
+                            Precio vs tendencia:
+                          </span>
+                          <span style="margin-left:6px;">
+                            <% if (justo==='A precio de mercado' ) { %>
+                              <span style="color:#2196f3;font-weight:600;">A precio de mercado</span>
+                              <% } else if (justo==='Por debajo del mercado' ) { %>
+                                <span style="color:#43a047;font-weight:600;">Por debajo del mercado</span>
+                                <% } else { %>
+                                  <span style="color:#e53935;font-weight:600;">Por encima del mercado</span>
+                                  <% } %>
+                                    <span style="font-size:0.95em;color:#888;margin-left:8px;">(Tendencia: $<%=
+                                        tendencia.toFixed(2) %>)</span>
+                          </span>
+                        </div>
+                        <% } %>
+                          <% if (product.state && product.state.state) { %>
+                            <p class="state"><strong>Estado:</strong>
+                              <%= product.state.state %>
+                            </p>
+                            <% } else if (product.state_id) { %>
+                              <p class="state"><strong>Estado:</strong>
+                                <%= product.state_id %>
                               </p>
                               <% } %>
+                                <% } else { %>
+                                  <p class="price">Price not listed</p>
+                                  <% } %>
+                                    <div class="quantity-selector">
+                                      <select>
+                                        <option value="1">1</option>
+
+                                      </select>
+                                      <span>Cantidad</span>
+                                    </div>
+                                    <button class="add-to-cart">Agregar al carrito</button>
+                                    <div class="mp-info">
+                                      <img src="/images/institucional/mercado-pago-logo-0.png" alt="Mercado Pago">
+                                      <a href="#">Comprar con Mercado Pago</a>
+                                    </div>
+                                    <% if (seller && seller.nombre) { %>
+                                      <p class="seller-name">Vendido por: <%= seller.nombre %>
+                                      </p>
+                                      <% } %>
               </div>
               <div class="other-listings">
                 <a href="#">Ver otras publicaciones de esta carta</a>

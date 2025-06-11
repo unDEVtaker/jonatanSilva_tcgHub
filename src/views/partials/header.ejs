@@ -8,22 +8,28 @@
 
       <li><a href="/">Home</a></li>
       <li><a href="/shop">Shop</a></li>
-      <li><a href="#">On Sale</a></li>
+      <!-- <li><a href="#">On Sale</a></li> -->
       <li><a href="#">New Arrivals</a></li>
-      <li><a href="#">TCG Price Trends</a></li>
+      <!-- <li><a href="#">TCG Price Trends</a></li> -->
       <% if (locals.user) { %>
         <li><a href="/products/add">VENDER</a></li>
-        <% } %>
-          <div id="search-bar">
-            <form id="search-form">
-              <input autocomplete="off" class="search-field" id="search-text" name="search" placeholder="Search…"
-                type="text" />
-              <input style="display: none;" type="submit" value="" />
-            </form>
+      <% } %>
+      <li style="flex:1;max-width:400px;min-width:200px;list-style:none;">
+        <form class="mb-0" method="GET" action="/shop" id="main-search-form">
+          <div class="input-group">
+            <input type="text" class="form-control" name="search" id="main-search-input"
+              placeholder="Buscar por Nombre, ID, Rareza, Set, Número de Carta, Tipo de Foil"
+              style="border-radius:20px 0 0 20px;"
+              value="<%= typeof query !== 'undefined' && typeof query.search !== 'undefined' ? query.search : '' %>">
+            <button class="btn btn-primary" type="submit" style="border-radius:0 20px 20px 0;background:#3483fa;border:none;">
+              <i class="fa fa-search"></i>
+            </button>
           </div>
-          <li><a href="/users/login"><i id="lg-bag" class="fa fa-user"></i></a></li>
-          <li><a href="/cart"><i id="lg-bag" class="fa fa-shopping-cart"></i></a></li>
-          <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+        </form>
+      </li>
+      <li><a href="/users/login"><i id="lg-bag" class="fa fa-user"></i></a></li>
+      <li><a href="/cart"><i id="lg-bag" class="fa fa-shopping-cart"></i></a></li>
+      <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
     </ul>
   </div>
   <div id="mobile">
@@ -33,3 +39,18 @@
     <i id="bar" class="fa-solid fa-bars"></i>
   </div>
 </section>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('main-search-form');
+    const input = document.getElementById('main-search-input');
+    if(form && input) {
+      form.addEventListener('submit', function(e) {
+        if(input.value.trim().length < 2) {
+          e.preventDefault();
+          input.classList.add('is-invalid');
+          input.placeholder = 'Escribe al menos 2 letras';
+        }
+      });
+    }
+  });
+</script>

@@ -1,7 +1,5 @@
 'use strict';
 
-const { Seeder } = require('sequelize-cli');
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('products', [
