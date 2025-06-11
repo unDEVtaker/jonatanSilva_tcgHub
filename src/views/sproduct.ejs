@@ -422,9 +422,25 @@
             <div class="card-purchase-column">
               <div class="purchase-info">
                 <% if (product && (product.precio !==undefined && product.precio !==null && product.precio> 0)) { %>
-                  <p class="price">$<%= toThousand(product.precio) %>
-                  </p>
-                  <% if (card && card.cardmarket && card.cardmarket.prices && card.cardmarket.prices.trendPrice) { %>
+                  <p class="price">$<%= toThousand(product.precio) %></p>
+                  <% /* Conversión de monedas */
+  // Valores de ejemplo, puedes actualizar con tasas actuales o traerlas de una API
+  const USD_EUR = 0.92; // 1 USD = 0.92 EUR
+  const USD_ARS = 1200; // 1 USD = 1200 ARS (blue)
+  const USD_BTC = 1 / 108803.40; // 1 USD = 0.00000919 BTC (BTC ~108,803.40 USD)
+  const precio = product.precio;
+  const precioEUR = precio * USD_EUR;
+  const precioARS = precio * USD_ARS;
+  const precioBTC = precio * USD_BTC;
+%>
+<div style="font-size:1.05em; color:#888; margin-bottom:4px;">
+  <span>≈ <b>€<%= precioEUR.toFixed(2) %></b></span>
+  <span style="margin-left:10px;">| <b>₿<%= precioBTC.toFixed(6) %></b></span>
+  <span style="margin-left:10px;">| <b>AR$<%= toThousand(Math.round(precioARS)) %></b></span>
+</div>
+
+           <br>       
+<% if (card && card.cardmarket && card.cardmarket.prices && card.cardmarket.prices.trendPrice) { %>
                     <% const publicado=product.precio; const tendencia=card.cardmarket.prices.trendPrice; let
                       justo=null; if (publicado <=tendencia * 1.05 && publicado>= tendencia * 0.95) {
                       justo = 'A precio de mercado';
